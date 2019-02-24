@@ -1,19 +1,11 @@
 <div
   class="nav-container"
-  [class.nav-is-mobile]="mobileQuery.matches"
   *ngIf="userIsAuthentitcated"
 >
-  <mat-toolbar class="nav-toolbar sidenav-header">
-    <button
-      type="button"
-      class="btn btn-menu waves-effect px-3"
-      (click)="snav.toggle()"
-    >
-      <i class="fas fa-list"></i>
-    </button>
+  <mat-toolbar class="sidenav-header">
     <h1>
       <span>
-        <a class="navbar-logo" routerLink="/">
+        <a class="navbar-logo" routerLink="/dashboard">
           <div>
             <img
               src="assets/logo/logo-light.png"
@@ -39,20 +31,22 @@
   </mat-toolbar>
   <mat-sidenav-container
     class="sidenav-container"
-    [style.marginTop.px]="mobileQuery.matches ? 50 : 0"
   >
     <mat-sidenav
       #snav
-      [mode]="mobileQuery.matches ? 'over' : 'side'"
-      [fixedInViewport]="mobileQuery.matches"
-      fixedTopGap="50"
       class="sidenav-side"
-      [opened]="screenWidth > 840"
+      [opened]="screenWidth > 0"
     >
       <mat-nav-list>
-        <a mat-list-item routerLink="." *ngFor="let nav of fillerNav">{{
-          nav
-        }}</a>
+        <a mat-list-item routerLink=".">
+            <i class="fas fa-home"></i>
+            Home
+        </a>
+        <a mat-list-item routerLink=".">Savings Plan</a>
+        <a mat-list-item routerLink=".">Savings</a>
+        <a mat-list-item routerLink=".">Expenses</a>
+        <a mat-list-item routerLink=".">Reports</a>
+        <a mat-list-item routerLink=".">Create User</a>
       </mat-nav-list>
     </mat-sidenav>
   </mat-sidenav-container>
