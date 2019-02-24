@@ -7,8 +7,9 @@ mat-spinner {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 300px;
+  width: 400px;
   transform: translate(-50%, -50%);
+  border-radius: 25px;
 }
 
 .placeholder {
@@ -17,6 +18,7 @@ mat-spinner {
 
 .mat-form-field {
   color: #d1e8e2;
+  width: 200px;
 }
 
 .required {
@@ -28,9 +30,15 @@ mat-spinner {
   color: #ffcb9a;
 }
 
-.button {
+.mat-raised-button {
   color: #d1e8e2;
   background-color: #116466;
+  max-width: 100px;
+}
+
+.mat-raised-button:hover {
+  color: #116466;
+  background-color: #d1e8e2;
 }
 
 .link {
