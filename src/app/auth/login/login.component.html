@@ -1,0 +1,58 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<form
+  (submit)="onLogin(loginForm)"
+  #loginForm="ngForm"
+  *ngIf="!isLoading || !userIsAuthenticated"
+  class="text-center border border-light p-5 centeredForm"
+>
+  <img
+    src="assets/logo/logo-light.png"
+    width="200"
+    height="50"
+    alt="sMoneyTracker"
+  />
+  <mat-form-field>
+    <input
+      matInput
+      name="email"
+      ngModel
+      type="email"
+      class="form-control mb-4"
+      #emailInput="ngModel"
+      email
+    />
+    <mat-placeholder class="placeholder">E-Mail</mat-placeholder>
+    <mat-placeholder class="required">*</mat-placeholder>
+    <mat-error *ngIf="emailInput.invalid" class="error"
+      >Please enter a valid email</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="password"
+      name="password"
+      ngModel
+      matInput
+      class="form-control mb-4"
+      #passwordInput="ngModel"
+    />
+    <mat-placeholder class="placeholder">Password</mat-placeholder>
+    <mat-placeholder class="required">*</mat-placeholder>
+    <mat-error *ngIf="passwordInput.invalid" class="error"
+      >Please enter a valid password</mat-error
+    >
+  </mat-form-field>
+  <div class="d-flex justify-content-around">
+    <div>
+      <a href="" class="link">Forgot password?</a>
+    </div>
+  </div>
+  <button
+    mat-raised-button
+    class="btn btn-block my-4 button"
+    type="submit"
+    *ngIf="!isLoading"
+  >
+    Sign In
+  </button>
+</form>
