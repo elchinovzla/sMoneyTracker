@@ -7,7 +7,10 @@ exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hashPassword => {
     const user = new User({
       email: req.body.email,
-      password: hashPassword
+      password: hashPassword,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      isAdmin: req.body.isAdmin
     });
     user
       .save()
@@ -46,7 +49,10 @@ exports.userLogin = (req, res, next) => {
       const token = jwt.sign(
         {
           email: fetchedUser.email,
-          userId: fetchedUser._id
+          userId: fetchedUser._id,
+          firstName: fetchedUser.firstName,
+          lastName: fetchedUser.lastName,
+          isAdmin: fetchedUser.isAdmin
         },
         'secret_this_should_be_longer',
         { expiresIn: '1h' }

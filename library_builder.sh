@@ -22,7 +22,7 @@ npm install --save fs;
 #ng build --prod
 #sudo npm install -g firebase-tools
 #firebase login
-#firebase use -add //only if project has not been added yet
+#firebase use --add //only if project has not been added yet
 #firebase init
 #firebase deploy
 #firebase open hosting:site

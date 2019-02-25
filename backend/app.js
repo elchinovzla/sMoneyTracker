@@ -9,11 +9,7 @@ const app = express();
 
 mongoose
   .connect(
-    'mongodb+srv://' +
-      'USER' +
-      ':' +
-      'PASS' +
-      '@testing-bbqfj.mongodb.net/node-angular',
+    'mongodb://localhost:27017/smoney-tracker',
     {
       useNewUrlParser: true
     }

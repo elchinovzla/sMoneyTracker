@@ -14,49 +14,79 @@ export class AuthService {
   private isAuthenticated = false;
   private userId: string;
   private tokenTimer: any;
+  private firstNameToken: string;
+  private lastNameToken: string;
+  private isAdminToken: boolean;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  createUser(email: string, password: string) {
+  createUser(
+    email: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    isAdmin: boolean
+  ) {
     const authData: AuthData = {
       email: email,
-      password: password
+      password: password,
+      firstName: firstName,
+      lastName: lastName,
+      isAdmin: isAdmin
     };
-    this.http.post(BACK_END_URL + 'signup', authData).subscribe(
-      () => {
-        this.router.navigate(['/dashboard']);
-      },
-      error => {
-        console.log(error);
-        this.authStatusListener.next(false);
-      }
-    );
+    this.http
+      .post<{ message: string }>(BACK_END_URL + 'registration', authData)
+      .subscribe(
+        () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error => {
+          console.log(error);
+          this.authStatusListener.next(false);
+        }
+      );
   }
 
   login(email: string, password: string) {
     const authData: AuthData = {
       email: email,
-      password: password
+      password: password,
+      firstName: '',
+      lastName: '',
+      isAdmin: false
     };
     this.http
-      .post<{ token: string; expiresIn: number; userId: string }>(
-        BACK_END_URL + 'login',
-        authData
-      )
+      .post<{
+        token: string;
+        expiresIn: number;
+        userId: string;
+        firstName: string;
+        lastName: string;
+        isAdmin: boolean;
+      }>(BACK_END_URL + 'login', authData)
       .subscribe(
         response => {
           const token = response.token;
           this.token = token;
           if (token) {
-            console.log('token created');
             const expiresInDuration = response.expiresIn * 1000;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
+            this.isAdminToken = response.isAdmin;
+            this.firstNameToken = response.firstName;
+            this.lastNameToken = response.lastName;
             this.userId = response.userId;
             this.authStatusListener.next(true);
             const now = new Date();
             const expirationDate = new Date(now.getTime() + expiresInDuration);
-            this.saveAuthData(token, expirationDate, this.userId);
+            this.saveAuthData(
+              token,
+              expirationDate,
+              this.userId,
+              this.firstNameToken,
+              this.lastNameToken,
+              this.isAdminToken
+            );
             this.router.navigate(['/dashboard']);
           }
         },
@@ -72,6 +102,9 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.userId = null;
+    this.isAdminToken = false;
+    this.firstNameToken = null;
+    this.lastNameToken = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
@@ -88,6 +121,9 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
+      this.isAdminToken = authInformation.isAdmin.toLowerCase() == 'true';
+      this.firstNameToken = authInformation.firstName;
+      this.lastNameToken = authInformation.lastName;
       this.setAuthTimer(expiresIn);
       this.authStatusListener.next(true);
     }
@@ -109,35 +145,62 @@ export class AuthService {
     return this.userId;
   }
 
+  getIsAdmin() {
+    return this.isAdminToken;
+  }
+
+  getUserName() {
+    return this.firstNameToken + ' ' + this.lastNameToken;
+  }
+
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
       this.logout();
     }, duration);
   }
 
-  private saveAuthData(token: string, expirationDate: Date, userId: string) {
+  private saveAuthData(
+    token: string,
+    expirationDate: Date,
+    userId: string,
+    firstName: string,
+    lastName: string,
+    isAdmin: boolean
+  ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
     localStorage.setItem('userId', userId);
+    localStorage.setItem('firstName', firstName);
+    localStorage.setItem('lastName', lastName);
+    localStorage.setItem('isAdmin', String(isAdmin));
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('firstName');
+    localStorage.removeItem('lasstName');
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
+    const isAdmin = localStorage.getItem('isAdmin');
+    const firstName = localStorage.getItem('firstName');
+    const lastName = localStorage.getItem('lastName');
     if (!token || !expirationDate) {
       return;
     }
     return {
       token,
       expirationDate: new Date(expirationDate),
-      userId
+      userId,
+      firstName,
+      lastName,
+      isAdmin
     };
   }
 }

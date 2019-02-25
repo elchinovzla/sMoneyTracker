@@ -1,0 +1,83 @@
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<form
+  (submit)="onRegisterUser(createUserForm)"
+  #createUserForm="ngForm"
+  *ngIf="!isLoading"
+  class="text-center border border-light p-5 centeredForm"
+>
+  <mat-label class="header">Register New User</mat-label>
+  <hr />
+  <div class="form-row mb-4">
+    <div class="col">
+      <mat-form-field>
+        <input
+          matInput
+          name="firstName"
+          ngModel
+          type="text"
+          class="form-control mb-4"
+          #firstNameInput="ngModel"
+          required
+        />
+        <mat-placeholder class="placeholder">First Name</mat-placeholder>
+        <mat-error *ngIf="firstNameInput.invalid" class="error"
+          >Please enter a valid first name</mat-error
+        >
+      </mat-form-field>
+    </div>
+    <div class="col">
+      <mat-form-field>
+        <input
+          matInput
+          name="lastName"
+          ngModel
+          type="text"
+          class="form-control mb-4"
+          #lastNameInput="ngModel"
+          required
+        />
+        <mat-placeholder class="placeholder">Last Name</mat-placeholder>
+        <mat-error *ngIf="lastNameInput.invalid" class="error"
+          >Please enter a valid last name</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="form-row mb-4">
+    <div class="col">
+      <mat-form-field>
+        <input
+          matInput
+          name="email"
+          ngModel
+          type="email"
+          class="form-control mb-4"
+          #emailInput="ngModel"
+          required
+          email
+        />
+        <mat-placeholder class="placeholder">E-Mail</mat-placeholder>
+        <mat-error *ngIf="emailInput.invalid" class="error"
+          >Please enter a valid email</mat-error
+        >
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="col">
+    <mat-checkbox
+      name="isAdmin"
+      ngModel
+      #isAdminInput="ngModel"
+      class="placeholder"
+      >Is Admin?</mat-checkbox
+    >
+  </div>
+  <button
+    mat-raised-button
+    class="btn btn-block my-4"
+    type="submit"
+    *ngIf="!isLoading"
+  >
+    Create User
+  </button>
+</form>
