@@ -6,7 +6,7 @@ mat-spinner {
 }
 
 .centeredForm {
-  background-color: #2c3531;
+  background-color: #d1e8e2;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -16,13 +16,13 @@ mat-spinner {
 }
 
 .header {
-  color: #d9b08c;
+  color: #2c3531;
   font-size: x-large;
   font-weight: bolder;
 }
 
 .placeholder {
-  color: #d9b08c;
+  color: #2c3531;
 }
 
 .mat-form-field {
@@ -30,18 +30,9 @@ mat-spinner {
   width: 75%;
 }
 
-.required {
-  color: #ffcb9a;
-  padding-left: 5px;
-}
-
-.error {
-  color: #ffcb9a;
-}
-
 .mat-raised-button {
   color: #d1e8e2;
-  background-color: #116466;
+  background-color: #2c3531;
   max-width: 150px;
   text-align: center;
   font-size: large;
@@ -49,10 +40,10 @@ mat-spinner {
 
 .mat-raised-button:hover {
   color: #116466;
-  background-color: #d1e8e2;
+  background-color: #2c3531;
 }
 
 hr {
-  border: 1px solid #d1e8e2;
+  border: 1px solid #2c3531;
   border-radius: 0.5px;
 }

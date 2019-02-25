@@ -44,3 +44,12 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+.firebase/
+.firebaserc
+certificate.pem
+certrequest.csr
+firebase.json
+privatekey.pem
+startAngular.sh
+startNode.sh
