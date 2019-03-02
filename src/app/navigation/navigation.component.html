@@ -1,7 +1,4 @@
-<div
-  class="nav-container"
-  *ngIf="userIsAuthentitcated"
->
+<div class="nav-container" *ngIf="userIsAuthentitcated">
   <mat-toolbar class="sidenav-header">
     <h1>
       <span>
@@ -18,6 +15,7 @@
       </span>
     </h1>
     <span class="spacer"></span>
+    <mat-label>{{ userName }}</mat-label>
     <ul>
       <button
         mat-button
@@ -29,24 +27,28 @@
       </button>
     </ul>
   </mat-toolbar>
-  <mat-sidenav-container
-    class="sidenav-container"
-  >
-    <mat-sidenav
-      #snav
-      class="sidenav-side"
-      [opened]="screenWidth > 0"
-    >
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #snav class="sidenav-side" [opened]="screenWidth > 0">
       <mat-nav-list>
         <a mat-list-item routerLink="/dashboard">
-            <i class="fas fa-home"></i>
-            Home
+          <i class="fas fa-home"></i>
+          Home
         </a>
-        <a mat-list-item routerLink="/dashboard">Savings Plan</a>
-        <a mat-list-item routerLink="/dashboard">Savings</a>
-        <a mat-list-item routerLink="/dashboard">Expenses</a>
-        <a mat-list-item routerLink="/dashboard">Reports</a>
-        <a mat-list-item routerLink="/auth/registration">Create User</a>
+        <a mat-list-item *ngIf="!isUserAdmin" routerLink="/dashboard"
+          >Savings Plan</a
+        >
+        <a mat-list-item *ngIf="!isUserAdmin" routerLink="/dashboard"
+          >Savings</a
+        >
+        <a mat-list-item *ngIf="!isUserAdmin" routerLink="/dashboard"
+          >Expenses</a
+        >
+        <a mat-list-item *ngIf="!isUserAdmin" routerLink="/dashboard"
+          >Reports</a
+        >
+        <a mat-list-item *ngIf="isUserAdmin" routerLink="/auth/registration"
+          >Create User</a
+        >
       </mat-nav-list>
     </mat-sidenav>
   </mat-sidenav-container>

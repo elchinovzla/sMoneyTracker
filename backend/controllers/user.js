@@ -60,7 +60,10 @@ exports.userLogin = (req, res, next) => {
       res.status(200).json({
         token: token,
         expiresIn: 3600, //in seconds
-        userId: fetchedUser._id
+        userId: fetchedUser._id,
+        firstName: fetchedUser.firstName,
+        lastName: fetchedUser.lastName,
+        isAdmin: fetchedUser.isAdmin
       });
     })
     .catch(err => {

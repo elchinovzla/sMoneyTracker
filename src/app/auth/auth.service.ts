@@ -14,9 +14,9 @@ export class AuthService {
   private isAuthenticated = false;
   private userId: string;
   private tokenTimer: any;
-  private firstNameToken: string;
-  private lastNameToken: string;
-  private isAdminToken: boolean;
+  private firstName = '';
+  private lastName = '';
+  private isAdmin: boolean;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -72,9 +72,9 @@ export class AuthService {
             const expiresInDuration = response.expiresIn * 1000;
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
-            this.isAdminToken = response.isAdmin;
-            this.firstNameToken = response.firstName;
-            this.lastNameToken = response.lastName;
+            this.isAdmin = response.isAdmin;
+            this.firstName = response.firstName;
+            this.lastName = response.lastName;
             this.userId = response.userId;
             this.authStatusListener.next(true);
             const now = new Date();
@@ -83,9 +83,9 @@ export class AuthService {
               token,
               expirationDate,
               this.userId,
-              this.firstNameToken,
-              this.lastNameToken,
-              this.isAdminToken
+              this.firstName,
+              this.lastName,
+              this.isAdmin
             );
             this.router.navigate(['/dashboard']);
           }
@@ -102,9 +102,9 @@ export class AuthService {
     this.isAuthenticated = false;
     this.authStatusListener.next(false);
     this.userId = null;
-    this.isAdminToken = false;
-    this.firstNameToken = null;
-    this.lastNameToken = null;
+    this.isAdmin = false;
+    this.firstName = null;
+    this.lastName = null;
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
@@ -121,15 +121,15 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
-      this.isAdminToken = authInformation.isAdmin.toLowerCase() == 'true';
-      this.firstNameToken = authInformation.firstName;
-      this.lastNameToken = authInformation.lastName;
+      this.isAdmin = authInformation.isAdmin.toLowerCase() === 'true';
+      this.firstName = authInformation.firstName;
+      this.lastName = authInformation.lastName;
       this.setAuthTimer(expiresIn);
       this.authStatusListener.next(true);
     }
   }
 
-  getToken() {
+  getToken(): string {
     return this.token;
   }
 
@@ -137,20 +137,20 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  getIsAuth() {
+  getIsAuth(): boolean {
     return this.isAuthenticated;
   }
 
-  getUserId() {
+  getUserId(): string {
     return this.userId;
   }
 
-  getIsAdmin() {
-    return this.isAdminToken;
+  getIsAdmin(): boolean {
+    return this.isAdmin;
   }
 
-  getUserName() {
-    return this.firstNameToken + ' ' + this.lastNameToken;
+  getUserName(): string {
+    return (this.firstName.charAt(0) + this.lastName.charAt(0)).toUpperCase();
   }
 
   private setAuthTimer(duration: number) {
@@ -181,7 +181,7 @@ export class AuthService {
     localStorage.removeItem('userId');
     localStorage.removeItem('isAdmin');
     localStorage.removeItem('firstName');
-    localStorage.removeItem('lasstName');
+    localStorage.removeItem('lastName');
   }
 
   private getAuthData() {

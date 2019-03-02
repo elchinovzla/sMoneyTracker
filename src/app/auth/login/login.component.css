@@ -7,7 +7,7 @@ mat-spinner {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 400px;
+  width: 450px;
   transform: translate(-50%, -50%);
   border-radius: 25px;
 }
@@ -18,7 +18,7 @@ mat-spinner {
 
 .mat-form-field {
   color: #d1e8e2;
-  width: 200px;
+  width: 300px;
 }
 
 .required {
@@ -33,7 +33,8 @@ mat-spinner {
 .mat-raised-button {
   color: #d1e8e2;
   background-color: #116466;
-  max-width: 100px;
+  font-size: large;
+  max-width: 150px;
 }
 
 .mat-raised-button:hover {

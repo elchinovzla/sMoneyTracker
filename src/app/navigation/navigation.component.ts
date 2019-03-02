@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
 import { MatSidenav } from '@angular/material';
@@ -14,20 +9,28 @@ import { MatSidenav } from '@angular/material';
   styleUrls: ['./navigation.component.css']
 })
 export class NavigationComponent implements OnInit, OnDestroy {
+  @ViewChild('snav') sidenav: MatSidenav;
+  private authListenerSubs: Subscription;
+  userIsAuthentitcated: boolean;
+  isUserAdmin: boolean;
+  userName: string;
+  screenWidth: number;
+
   constructor(private authService: AuthService) {
     this.screenWidth = window.innerWidth;
   }
-  @ViewChild('snav') sidenav: MatSidenav;
-  private authListenerSubs: Subscription;
-  userIsAuthentitcated = false;
-  screenWidth: number;
 
   ngOnInit() {
     this.userIsAuthentitcated = this.authService.getIsAuth();
+    this.userName = this.authService.getUserName();
+    this.isUserAdmin = this.authService.getIsAdmin();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthentitcated = isAuthenticated;
+        this.userName = this.authService.getUserName();
+        this.isUserAdmin =
+          this.authService.getIsAdmin().toString() === 'true' ? true : false;
       });
   }
 
