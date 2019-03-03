@@ -20,7 +20,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     let defaultPassword = 'q1w2e3r4';
     this.authService.createUser(
-      form.value.email,
+      form.value.email.toLowerCase(),
       defaultPassword,
       form.value.firstName,
       form.value.lastName,

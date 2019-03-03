@@ -11,7 +11,7 @@
     height="75"
     alt="sMoneyTracker"
   />
-  <br>
+  <br />
   <mat-form-field>
     <input
       matInput
@@ -31,7 +31,7 @@
   <br />
   <mat-form-field>
     <input
-      type="password"
+      [type]="showPassword.checked ? 'text' : 'password'"
       name="password"
       ngModel
       matInput
@@ -48,7 +48,10 @@
   </mat-form-field>
   <br />
   <div class="d-flex justify-content-around">
-    <div>
+    <div class="col">
+        <mat-checkbox #showPassword class="link">Show Password</mat-checkbox>
+    </div>
+    <div class="col">
       <a href="" class="link">Forgot password?</a>
     </div>
   </div>

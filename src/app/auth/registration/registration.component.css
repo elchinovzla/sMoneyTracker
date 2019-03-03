@@ -6,11 +6,11 @@ mat-spinner {
 }
 
 .centeredForm {
-  background-color: #d1e8e2;
+  background-color: white;
   position: fixed;
   top: 50%;
-  left: 50%;
-  width: 600px;
+  left: 60%;
+  width: 500px;
   transform: translate(-50%, -50%);
   border-radius: 25px;
 }
@@ -26,7 +26,7 @@ mat-spinner {
 }
 
 .mat-form-field {
-  color: #d1e8e2;
+  color: #2c3531;
   width: 75%;
 }
 
