@@ -30,7 +30,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       defaultPassword,
       form.value.firstName,
       form.value.lastName,
-      form.value.isAdmin
+      form.value.isAdmin.toString() === 'true' ? true : false
     );
   }
 
