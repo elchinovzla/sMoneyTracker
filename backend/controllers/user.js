@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
+const INVALID_CREDENTIALS = 'Wrong Credentials email/password';
+
 exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hashPassword => {
     const user = new User({
@@ -22,7 +24,7 @@ exports.createUser = (req, res, next) => {
       })
       .catch(err => {
         res.status(500).json({
-          message: 'email already taken'
+          message: 'Email is taken'
         });
       });
   });
@@ -34,7 +36,7 @@ exports.userLogin = (req, res, next) => {
     .then(user => {
       if (!user) {
         return res.status(401).json({
-          message: 'Auth failed'
+          message: INVALID_CREDENTIALS
         });
       }
       fetchedUser = user;
@@ -43,7 +45,7 @@ exports.userLogin = (req, res, next) => {
     .then(result => {
       if (!result) {
         return res.status(401).json({
-          message: 'Auth failed'
+          message: INVALID_CREDENTIALS
         });
       }
       const token = jwt.sign(
@@ -68,7 +70,7 @@ exports.userLogin = (req, res, next) => {
     })
     .catch(err => {
       return res.status(401).json({
-        message: 'Auth failed'
+        message: INVALID_CREDENTIALS
       });
     });
 };
