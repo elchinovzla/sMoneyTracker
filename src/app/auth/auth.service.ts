@@ -103,8 +103,8 @@ export class AuthService {
     this.authStatusListener.next(false);
     this.userId = null;
     this.isAdmin = false;
-    this.firstName = null;
-    this.lastName = null;
+    this.firstName = '';
+    this.lastName = '';
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/']);
