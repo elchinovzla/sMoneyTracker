@@ -12,6 +12,7 @@ npm install --save bcryptjs
 npm install --save jsonwebtoken;
 npm install --save https;
 npm install --save fs;
+npm install --save angular-notifier;
 
 #CREATE SSL KEYS
 #openssl genrsa -out privatekey.pem 1024

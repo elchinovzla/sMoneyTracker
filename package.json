@@ -26,6 +26,7 @@
     "@fortawesome/fontawesome-free": "^5.7.2",
     "@types/chart.js": "^2.7.45",
     "angular-bootstrap-md": "^7.4.1",
+    "angular-notifier": "^4.1.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "chart.js": "^2.5.0",

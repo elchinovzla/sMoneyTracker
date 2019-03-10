@@ -49,7 +49,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   onLoggedout() {
-    alert('peace out!');
     this.authService.logout();
   }
 }

@@ -100,4 +100,16 @@ $topnav-background-color: #2c3531;
   .link:hover {
     color: #d1e8e2;
   }
+
+  .mat-raised-button {
+    color: #d1e8e2;
+    background-color: #116466;
+    font-size: large;
+    max-width: 150px;
+  }
+
+  .mat-raised-button:hover {
+    color: #116466;
+    background-color: #d1e8e2;
+  }
 }

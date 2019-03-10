@@ -39,13 +39,9 @@ export class SidebarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isActive = false;
-    this.collapsed = false;
-    this.showMenu = '';
-    this.pushRightClass = 'push-right';
     this.userIsAuthentitcated = this.authService.getIsAuth();
     this.userName = this.authService.getUserName();
-    this.isUserAdmin = this.authService.getIsAdmin();
+    this.isUserAdmin = this.authService.getIsAdmin().toString() === 'true' ? true : false;;
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
@@ -58,6 +54,10 @@ export class SidebarComponent implements OnInit, OnDestroy {
           this.isUserAdmin = false;
         }
       });
+    this.isActive = false;
+    this.collapsed = false;
+    this.showMenu = '';
+    this.pushRightClass = 'push-right';
   }
 
   ngOnDestroy(): void {
