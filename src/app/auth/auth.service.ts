@@ -107,7 +107,7 @@ export class AuthService {
     this.lastName = '';
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth/login']);
   }
 
   autoAuthUser() {
@@ -150,7 +150,7 @@ export class AuthService {
   }
 
   getUserName(): string {
-    return (this.firstName.charAt(0) + this.lastName.charAt(0)).toUpperCase();
+    return this.firstName + ' ' + this.lastName;
   }
 
   private setAuthTimer(duration: number) {
