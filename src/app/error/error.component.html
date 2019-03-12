@@ -1,5 +1,9 @@
-<p *ngFor="let alert of alerts">
-  <ngb-alert [type]="alert.type" (close)="close(alert)" [dismissible]="true">
-    <strong>Error has occurred: </strong>{{ alert.message }}</ngb-alert
-  >
-</p>
+<div class="row fixed-top">
+  <div class="col-lg-12">
+    <p *ngFor="let alert of alerts">
+      <ngb-alert [type]="alert.type" (close)="closeAlert(alert)">
+        <strong>An Error Occurred: </strong>{{ alert.message }}</ngb-alert
+      >
+    </p>
+  </div>
+</div>

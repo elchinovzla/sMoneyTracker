@@ -38,7 +38,7 @@ export class AuthService {
       .post<{ message: string }>(BACK_END_URL + 'registration', authData)
       .subscribe(
         () => {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['/user']);
         },
         error => {
           console.log(error);

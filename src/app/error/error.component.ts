@@ -7,7 +7,8 @@ interface Alert {
 }
 
 @Component({
-  templateUrl: './error.component.html'
+  templateUrl: './error.component.html',
+  styleUrls: ['./error.component.css']
 })
 export class ErrorComponent {
   alerts: Alert[];
@@ -18,5 +19,9 @@ export class ErrorComponent {
 
   close(alert: Alert) {
     this.alerts.splice(this.alerts.indexOf(alert), 1);
+  }
+  public closeAlert(alert: any) {
+    const index: number = this.alerts.indexOf(alert);
+    this.alerts.splice(index, 1);
   }
 }
