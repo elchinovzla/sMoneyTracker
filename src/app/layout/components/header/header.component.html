@@ -15,11 +15,13 @@
         </a>
         <div class="dropdown-menu-right" ngbDropdownMenu>
           <a class="dropdown-item" href="javascript:void(0)">
-            <i class="fa fa-fw fa-user"></i>Profile</a
+            <i class="fas fa-user-cog"></i>Profile</a
           >
           <a
             class="dropdown-item"
-            [routerLink]="['/auth/login']" (click)="onLoggedout()">
+            [routerLink]="['/auth/login']"
+            (click)="onLoggedout()"
+          >
             <i class="fa fa-fw fa-sign-out-alt"></i>Log Out</a
           >
         </div>
