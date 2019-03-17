@@ -30,7 +30,8 @@ export class UserService {
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
-                isAdmin: user.isAdmin
+                isAdmin: user.isAdmin,
+                isActive: user.isActive
               };
             }),
             maxUsers: userData.maxUsers
@@ -53,6 +54,7 @@ export class UserService {
       lastName: string;
       email: string;
       isAdmin: boolean;
+      isActive: boolean;
     }>(BACK_END_URL + id);
   }
 

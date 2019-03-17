@@ -4,4 +4,5 @@ export interface AuthData {
   firstName: string;
   lastName: string;
   isAdmin: boolean;
+  isActive: boolean;
 }

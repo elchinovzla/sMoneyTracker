@@ -17,6 +17,7 @@ export class AuthService {
   private firstName = '';
   private lastName = '';
   private isAdmin: boolean;
+  private isActive: boolean;
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -32,7 +33,8 @@ export class AuthService {
       password: password,
       firstName: firstName,
       lastName: lastName,
-      isAdmin: isAdmin
+      isAdmin: isAdmin,
+      isActive: true
     };
     this.http
       .post<{ message: string }>(BACK_END_URL + 'registration', authData)
@@ -53,7 +55,8 @@ export class AuthService {
       password: password,
       firstName: '',
       lastName: '',
-      isAdmin: false
+      isAdmin: false,
+      isActive: false
     };
     this.http
       .post<{
@@ -63,6 +66,7 @@ export class AuthService {
         firstName: string;
         lastName: string;
         isAdmin: boolean;
+        isActive: boolean;
       }>(BACK_END_URL + 'login', authData)
       .subscribe(
         response => {
@@ -73,6 +77,7 @@ export class AuthService {
             this.setAuthTimer(expiresInDuration);
             this.isAuthenticated = true;
             this.isAdmin = response.isAdmin;
+            this.isActive = response.isActive;
             this.firstName = response.firstName;
             this.lastName = response.lastName;
             this.userId = response.userId;
@@ -85,7 +90,8 @@ export class AuthService {
               this.userId,
               this.firstName,
               this.lastName,
-              this.isAdmin
+              this.isAdmin,
+              this.isActive
             );
             this.router.navigate(['/dashboard']);
           }
@@ -103,6 +109,7 @@ export class AuthService {
     this.authStatusListener.next(false);
     this.userId = null;
     this.isAdmin = false;
+    this.isActive = false;
     this.firstName = '';
     this.lastName = '';
     clearTimeout(this.tokenTimer);
@@ -122,6 +129,7 @@ export class AuthService {
       this.isAuthenticated = true;
       this.userId = authInformation.userId;
       this.isAdmin = authInformation.isAdmin.toLowerCase() === 'true';
+      this.isActive = authInformation.isActive.toLowerCase() === 'true';
       this.firstName = authInformation.firstName;
       this.lastName = authInformation.lastName;
       this.setAuthTimer(expiresIn);
@@ -149,6 +157,10 @@ export class AuthService {
     return this.isAdmin;
   }
 
+  getIsActive(): boolean {
+    return this.isActive;
+  }
+
   getUserName(): string {
     return this.firstName + ' ' + this.lastName;
   }
@@ -165,7 +177,8 @@ export class AuthService {
     userId: string,
     firstName: string,
     lastName: string,
-    isAdmin: boolean
+    isAdmin: boolean,
+    isActive: boolean
   ) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
@@ -173,6 +186,7 @@ export class AuthService {
     localStorage.setItem('firstName', firstName);
     localStorage.setItem('lastName', lastName);
     localStorage.setItem('isAdmin', String(isAdmin));
+    localStorage.setItem('isActive', String(isActive));
   }
 
   private clearAuthData() {
@@ -180,6 +194,7 @@ export class AuthService {
     localStorage.removeItem('expiration');
     localStorage.removeItem('userId');
     localStorage.removeItem('isAdmin');
+    localStorage.removeItem('isActive');
     localStorage.removeItem('firstName');
     localStorage.removeItem('lastName');
   }
@@ -189,6 +204,7 @@ export class AuthService {
     const expirationDate = localStorage.getItem('expiration');
     const userId = localStorage.getItem('userId');
     const isAdmin = localStorage.getItem('isAdmin');
+    const isActive = localStorage.getItem('isActive');
     const firstName = localStorage.getItem('firstName');
     const lastName = localStorage.getItem('lastName');
     if (!token || !expirationDate) {
@@ -200,7 +216,8 @@ export class AuthService {
       userId,
       firstName,
       lastName,
-      isAdmin
+      isAdmin,
+      isActive
     };
   }
 }

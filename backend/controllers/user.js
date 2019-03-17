@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 
 const INVALID_CREDENTIALS = 'Wrong Credentials email/password';
+const INACTIVE_USER = 'You no longer has access to this site';
 
 exports.createUser = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(hashPassword => {
@@ -12,7 +13,8 @@ exports.createUser = (req, res, next) => {
       password: hashPassword,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
-      isAdmin: req.body.isAdmin
+      isAdmin: req.body.isAdmin,
+      isActive: req.body.isActive
     });
     user
       .save()
@@ -48,13 +50,21 @@ exports.userLogin = (req, res, next) => {
           message: INVALID_CREDENTIALS
         });
       }
+    })
+    .then(() => {
+      if (fetchedUser.isActive.toString() === 'false') {
+        return res.status(401).json({
+          message: INACTIVE_USER
+        });
+      }
       const token = jwt.sign(
         {
           email: fetchedUser.email,
           userId: fetchedUser._id,
           firstName: fetchedUser.firstName,
           lastName: fetchedUser.lastName,
-          isAdmin: fetchedUser.isAdmin
+          isAdmin: fetchedUser.isAdmin,
+          isActive: fetchedUser.isActive
         },
         'secret_this_should_be_longer',
         { expiresIn: '1h' }
@@ -65,7 +75,8 @@ exports.userLogin = (req, res, next) => {
         userId: fetchedUser._id,
         firstName: fetchedUser.firstName,
         lastName: fetchedUser.lastName,
-        isAdmin: fetchedUser.isAdmin
+        isAdmin: fetchedUser.isAdmin,
+        isActive: fetchedUser.isActive
       });
     })
     .catch(err => {
