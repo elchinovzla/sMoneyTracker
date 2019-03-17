@@ -74,3 +74,46 @@ exports.userLogin = (req, res, next) => {
       });
     });
 };
+
+exports.getUsers = (req, res, next) => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const userQuery = User.find({}).sort([['firstName', 1], ['lastName', 1]]);
+  let fetchedUsers;
+  if (pageSize && currentPage) {
+    userQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+  }
+  userQuery
+    .then(documents => {
+      fetchedUsers = documents;
+      return User.count();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Users fetched successfully',
+        users: fetchedUsers,
+        maxUsers: count
+      });
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Failed to get users'
+      });
+    });
+};
+
+exports.getUser = (req, res, next) => {
+  User.findById(req.params.id)
+    .then(user => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        res.status(400).json({ message: 'User not found' });
+      }
+    })
+    .catch(error => {
+      res.status(500).json({
+        message: 'Failed to get user'
+      });
+    });
+};

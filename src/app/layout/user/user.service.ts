@@ -2,73 +2,62 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { User } from './user.model';
+import { Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const BACK_END_URL = environment.apiUrl + '/user/';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  // private posts: Post[] = [];
-  // private postUpdated = new Subject<{ posts: Post[]; postCount: number }>();
+  private users: User[] = [];
+  private userUpdated = new Subject<{ users: User[]; userCount: number }>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
   getUsers(usersPerPage: number, currentPage: number) {
-    // const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
-    // this.http
-    //   .get<{ message: string; posts: any; maxPosts: number }>(
-    //     BACK_END_URL + queryParams
-    //   )
-    //   .pipe(
-    //     map(postData => {
-    //       return {
-    //         posts: postData.posts.map(post => {
-    //           return {
-    //             title: post.title,
-    //             content: post.content,
-    //             id: post._id,
-    //             imagePath: post.imagePath,
-    //             creator: post.creator
-    //           };
-    //         }),
-    //         maxPosts: postData.maxPosts
-    //       };
-    //     })
-    //   )
-    //   .subscribe(transformedPostData => {
-    //     this.posts = transformedPostData.posts;
-    //     this.postUpdated.next({
-    //       posts: [...this.posts],
-    //       postCount: transformedPostData.maxPosts
-    //     });
-    //   });
+    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    this.http
+      .get<{ message: string; users: any; maxUsers: number }>(
+        BACK_END_URL + queryParams
+      )
+      .pipe(
+        map(userData => {
+          return {
+            users: userData.users.map(user => {
+              return {
+                id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                isAdmin: user.isAdmin
+              };
+            }),
+            maxUsers: userData.maxUsers
+          };
+        })
+      )
+      .subscribe(transformedUserData => {
+        this.users = transformedUserData.users;
+        this.userUpdated.next({
+          users: [...this.users],
+          userCount: transformedUserData.maxUsers
+        });
+      });
   }
 
   getUser(id: string) {
-    // return this.http.get<{
-    //   _id: string;
-    //   title: string;
-    //   content: string;
-    //   imagePath: string;
-    //   creator: string;
-    // }>(BACK_END_URL + id);
+    return this.http.get<{
+      _id: string;
+      firstName: string;
+      lastName: string;
+      email: string;
+      isAdmin: boolean;
+    }>(BACK_END_URL + id);
   }
 
   getUserUpdateListener() {
-    // return this.postUpdated.asObservable();
-  }
-
-  addUser(firstName: string, lastName: string, email: string, password: string, isAdmin: boolean) {
-    // const userData = new FormData();
-    // userData.append('firstName', firstName);
-    // userData.append('lastName', lastName);
-    // userData.append('email', email);
-    // userData.append('password', password);
-    // userData.append('isAdmin', isAdmin.toString());
-    // this.http
-    //   .post<{ message: string; user: User }>(BACK_END_URL, userData)
-    //   .subscribe(() => {
-    //     this.router.navigate(['/user']);
-    //   });
+    return this.userUpdated.asObservable();
   }
 
   updateUser(id: string, title: string, content: string, image: File | string) {

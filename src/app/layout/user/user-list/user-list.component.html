@@ -1,1 +1,35 @@
-<h1>SONNY</h1>
+<mat-accordion
+  multi="true"
+  *ngIf="users.length > 0"
+  class="accordion md-accordion accordion-blocks"
+>
+  <mat-expansion-panel *ngFor="let user of users" class="card mb-1">
+    <mat-expansion-panel-header class="card-header z-depth-1">
+      <h4 class="text-uppercase white-text mb-0 py-3 mt-1">
+        {{ user.firstName + ' ' + user.lastName }}
+      </h4>
+    </mat-expansion-panel-header>
+    <div class="card-body rgba-black-light white-text z-depth-1">
+      <div>
+        <h5>
+          E-Mail <span class="badge badge-info">{{ user.email }}</span>
+        </h5>
+        <h5>
+          Is Admin <span class="badge badge-info">{{ user.isAdmin }}</span>
+        </h5>
+      </div>
+    </div>
+    <mat-action-row>
+      <a mat-button color="primary" [routerLink]="['/edit', user.id]"
+        >Edit User</a
+      >
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  [length]="totalUsers"
+  [pageSize]="usersPerPage"
+  (page)="onChangedPage($event)"
+  [hidePageSize]="true"
+  [showFirstLastButtons]="true"
+></mat-paginator>
