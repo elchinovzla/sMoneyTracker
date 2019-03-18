@@ -75,6 +75,7 @@ exports.userLogin = (req, res, next) => {
         userId: fetchedUser._id,
         firstName: fetchedUser.firstName,
         lastName: fetchedUser.lastName,
+        email: fetchedUser.email,
         isAdmin: fetchedUser.isAdmin,
         isActive: fetchedUser.isActive
       });
@@ -142,9 +143,33 @@ exports.modifyUser = (req, res, next) => {
         message: 'User Updated'
       });
     })
-    .catch(() => {
+    .catch(error => {
       res.status(500).json({
         message: 'Failed to update user' + error
       });
     });
+};
+
+exports.updateProfile = (req, res, next) => {
+  bcrypt.hash(req.body.password, 10).then(hashPassword => {
+    User.findOneAndUpdate(
+      { _id: req.body.id },
+      {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: hashPassword
+      }
+    )
+      .then(() => {
+        res.status(201).json({
+          message: 'User Updated'
+        });
+      })
+      .catch(error => {
+        res.status(500).json({
+          message: 'Failed to update user' + error
+        });
+      });
+  });
 };

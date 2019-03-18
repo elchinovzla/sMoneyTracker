@@ -61,7 +61,7 @@
         <li class="nested" [class.expand]="showMenu === 'profile'">
           <ul class="submenu">
             <li>
-              <a href="javascript:void(0)">
+              <a (click)="openEditProfile()">
                 <span><i class="fas fa-user-cog"></i>Profile</span>
               </a>
             </li>

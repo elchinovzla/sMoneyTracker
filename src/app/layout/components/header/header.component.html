@@ -14,7 +14,7 @@
           <i class="fa fa-user"></i> {{ userName }} <b class="caret"></b>
         </a>
         <div class="dropdown-menu-right" ngbDropdownMenu>
-          <a class="dropdown-item" href="javascript:void(0)">
+          <a class="dropdown-item" (click)="openEditProfile()">
             <i class="fas fa-user-cog"></i>Profile</a
           >
           <a

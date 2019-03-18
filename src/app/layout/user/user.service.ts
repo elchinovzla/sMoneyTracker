@@ -73,6 +73,7 @@ export class UserService {
       firstName: '',
       lastName: '',
       email: '',
+      password: '',
       isAdmin: isAdmin,
       isActive: isActive
     };
@@ -81,6 +82,38 @@ export class UserService {
       .subscribe(
         () => {
           this.router.navigate(['/user']);
+        },
+        error => {
+          console.log(error);
+          this.userStatusListener.next(true);
+        }
+      );
+  }
+
+  updateProfile(
+    id: string,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string
+  ) {
+    const userData: User = {
+      id: id,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      isAdmin: false,
+      isActive: false
+    };
+    this.http
+      .patch<{ message: string }>(
+        BACK_END_URL + 'profile/' + id,
+        userData
+      )
+      .subscribe(
+        () => {
+          this.router.navigate(['/dashboard']);
         },
         error => {
           console.log(error);

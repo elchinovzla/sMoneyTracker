@@ -16,6 +16,7 @@ export class AuthService {
   private tokenTimer: any;
   private firstName = '';
   private lastName = '';
+  private email = '';
   private isAdmin: boolean;
   private isActive: boolean;
 
@@ -65,6 +66,7 @@ export class AuthService {
         userId: string;
         firstName: string;
         lastName: string;
+        email: string;
         isAdmin: boolean;
         isActive: boolean;
       }>(BACK_END_URL + 'login', authData)
@@ -80,6 +82,7 @@ export class AuthService {
             this.isActive = response.isActive;
             this.firstName = response.firstName;
             this.lastName = response.lastName;
+            this.email = response.email;
             this.userId = response.userId;
             this.authStatusListener.next(true);
             const now = new Date();
@@ -90,6 +93,7 @@ export class AuthService {
               this.userId,
               this.firstName,
               this.lastName,
+              this.email,
               this.isAdmin,
               this.isActive
             );
@@ -112,6 +116,7 @@ export class AuthService {
     this.isActive = false;
     this.firstName = '';
     this.lastName = '';
+    this.email = '';
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
     this.router.navigate(['/auth/login']);
@@ -132,6 +137,7 @@ export class AuthService {
       this.isActive = authInformation.isActive.toLowerCase() === 'true';
       this.firstName = authInformation.firstName;
       this.lastName = authInformation.lastName;
+      this.email = authInformation.email;
       this.setAuthTimer(expiresIn);
       this.authStatusListener.next(true);
     }
@@ -165,6 +171,18 @@ export class AuthService {
     return this.firstName + ' ' + this.lastName;
   }
 
+  getFirstName(): string {
+    return this.firstName;
+  }
+
+  getLastName(): string {
+    return this.lastName;
+  }
+
+  getEmail(): string {
+    return this.email;
+  }
+
   private setAuthTimer(duration: number) {
     this.tokenTimer = setTimeout(() => {
       this.logout();
@@ -177,6 +195,7 @@ export class AuthService {
     userId: string,
     firstName: string,
     lastName: string,
+    email: string,
     isAdmin: boolean,
     isActive: boolean
   ) {
@@ -185,6 +204,7 @@ export class AuthService {
     localStorage.setItem('userId', userId);
     localStorage.setItem('firstName', firstName);
     localStorage.setItem('lastName', lastName);
+    localStorage.setItem('email', email);
     localStorage.setItem('isAdmin', String(isAdmin));
     localStorage.setItem('isActive', String(isActive));
   }
@@ -197,6 +217,7 @@ export class AuthService {
     localStorage.removeItem('isActive');
     localStorage.removeItem('firstName');
     localStorage.removeItem('lastName');
+    localStorage.removeItem('email');
   }
 
   private getAuthData() {
@@ -207,6 +228,8 @@ export class AuthService {
     const isActive = localStorage.getItem('isActive');
     const firstName = localStorage.getItem('firstName');
     const lastName = localStorage.getItem('lastName');
+    const email = localStorage.getItem('email');
+
     if (!token || !expirationDate) {
       return;
     }
@@ -216,6 +239,7 @@ export class AuthService {
       userId,
       firstName,
       lastName,
+      email,
       isAdmin,
       isActive
     };

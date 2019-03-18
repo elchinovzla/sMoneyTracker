@@ -13,6 +13,7 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { MaterialModule } from './material-modules';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentsModule } from './layout/components/components.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     MaterialModule,
     NotifierModule,
     NgbModule,
+    ComponentsModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [

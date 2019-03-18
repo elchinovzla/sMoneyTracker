@@ -8,6 +8,8 @@ import {
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ProfileUpdateComponent } from '../profile-update/profile-update.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,7 +28,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
 
-  constructor(private authService: AuthService, public router: Router) {
+  constructor(
+    private modalService: NgbModal,
+    private authService: AuthService,
+    public router: Router
+  ) {
     this.router.events.subscribe(val => {
       if (
         val instanceof NavigationEnd &&
@@ -41,7 +47,8 @@ export class SidebarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userIsAuthentitcated = this.authService.getIsAuth();
     this.userName = this.authService.getUserName();
-    this.isUserAdmin = this.authService.getIsAdmin().toString() === 'true' ? true : false;;
+    this.isUserAdmin =
+      this.authService.getIsAdmin().toString() === 'true' ? true : false;
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
@@ -93,5 +100,11 @@ export class SidebarComponent implements OnInit, OnDestroy {
 
   onLoggedout() {
     this.authService.logout();
+  }
+
+  openEditProfile() {
+    this.modalService.open(ProfileUpdateComponent, {
+      centered: true
+    });
   }
 }

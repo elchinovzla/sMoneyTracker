@@ -13,4 +13,6 @@ router.get('/:id', userController.getUser);
 
 router.patch('/modify/:id', userController.modifyUser)
 
+router.patch('/profile/:id', userController.updateProfile)
+
 module.exports = router;
