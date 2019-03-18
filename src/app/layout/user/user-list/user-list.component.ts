@@ -3,6 +3,8 @@ import { User } from '../user.model';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
 import { PageEvent } from '@angular/material';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserModifyComponent } from '../user-modify/user-modify.component';
 
 @Component({
   selector: 'app-user-list',
@@ -16,7 +18,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   private userSub: Subscription;
 
-  constructor(public userService: UserService) {}
+  constructor(
+    private modalService: NgbModal,
+    public userService: UserService
+  ) {}
 
   ngOnInit() {
     this.userService.getUsers(this.usersPerPage, this.currentPage);
@@ -36,5 +41,14 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.usersPerPage = pageData.pageSize;
     this.userService.getUsers(this.usersPerPage, this.currentPage);
+  }
+
+  isUserActive(user: User): boolean {
+    return user.isActive.toString() === 'true';
+  }
+
+  open(user: User) {
+    const activeModal = this.modalService.open(UserModifyComponent, { centered: true });
+    activeModal.componentInstance.user = user;
   }
 }

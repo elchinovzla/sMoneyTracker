@@ -128,3 +128,23 @@ exports.getUser = (req, res, next) => {
       });
     });
 };
+
+exports.modifyUser = (req, res, next) => {
+  User.findOneAndUpdate(
+    { _id: req.body.id },
+    {
+      isAdmin: req.body.isAdmin,
+      isActive: req.body.isActive
+    }
+  )
+    .then(() => {
+      res.status(201).json({
+        message: 'User Updated'
+      });
+    })
+    .catch(() => {
+      res.status(500).json({
+        message: 'Failed to update user' + error
+      });
+    });
+};

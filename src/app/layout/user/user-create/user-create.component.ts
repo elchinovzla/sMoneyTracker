@@ -2,10 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NgForm } from '@angular/forms';
-import { UserService } from '../user.service';
 import { User } from '../user.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-user-create',

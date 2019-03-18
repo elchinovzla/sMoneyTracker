@@ -14,10 +14,10 @@
           </div>
           <div class="mr-auto col-xl-1 col-lg-1 align-items-end">
             <h5 class="text-uppercase white-text mb-0 py-3 mt-1">
-              <span class="badge badge-success" *ngIf="user.isActive === 'true'"
+              <span class="badge badge-success" *ngIf="isUserActive(user)"
                 >Active</span
               >
-              <span class="badge badge-danger" *ngIf="user.isActive === 'false'"
+              <span class="badge badge-danger" *ngIf="!isUserActive(user)"
                 >Inactive</span
               >
             </h5>
@@ -36,9 +36,12 @@
       </div>
     </div>
     <mat-action-row>
-      <a mat-button color="primary" [routerLink]="['/edit', user.id]"
-        >Edit User</a
+      <button
+        class="btn btn-primary my-2 my-sm-0"
+        (click)="open(user)"
       >
+        Edit User
+      </button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

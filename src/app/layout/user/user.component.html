@@ -3,12 +3,9 @@
     <div class="navbar-nav mr-auto">
       <h2 class="text-muted">Manage Users</h2>
     </div>
-    <button class="btn btn-dark my-2 my-sm-0" (click)="open(content)">
+    <button class="btn btn-dark my-2 my-sm-0" (click)="open()">
       Create New User
     </button>
-    <ng-template #content>
-      <app-user-create></app-user-create>
-    </ng-template>
   </nav>
   <hr />
   <app-user-list></app-user-list>

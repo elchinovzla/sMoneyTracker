@@ -11,4 +11,6 @@ router.get('', userController.getUsers);
 
 router.get('/:id', userController.getUser);
 
+router.patch('/modify/:id', userController.modifyUser)
+
 module.exports = router;

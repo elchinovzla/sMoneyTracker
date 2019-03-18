@@ -9,9 +9,15 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserCreateComponent } from './user-create/user-create.component';
 import { FormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material-modules';
+import { UserModifyComponent } from './user-modify/user-modify.component';
 
 @NgModule({
-  declarations: [UserComponent, UserCreateComponent, UserListComponent],
+  declarations: [
+    UserComponent,
+    UserCreateComponent,
+    UserListComponent,
+    UserModifyComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -20,7 +26,7 @@ import { MaterialModule } from 'src/app/material-modules';
     PageHeaderModule,
     UserRoutingModule
   ],
-  exports: [UserCreateComponent],
-  entryComponents: [UserCreateComponent]
+  exports: [UserCreateComponent, UserModifyComponent],
+  entryComponents: [UserCreateComponent, UserModifyComponent]
 })
 export class UserModule {}

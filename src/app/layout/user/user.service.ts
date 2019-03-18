@@ -12,6 +12,7 @@ const BACK_END_URL = environment.apiUrl + '/user/';
 export class UserService {
   private users: User[] = [];
   private userUpdated = new Subject<{ users: User[]; userCount: number }>();
+  private userStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -62,29 +63,29 @@ export class UserService {
     return this.userUpdated.asObservable();
   }
 
-  updateUser(id: string, title: string, content: string, image: File | string) {
-    // let postData: Post | FormData;
-    // if (typeof image === 'object') {
-    //   postData = new FormData();
-    //   postData.append('id', id);
-    //   postData.append('title', title);
-    //   postData.append('content', content);
-    //   postData.append('image', image, title);
-    // } else {
-    //   postData = {
-    //     id: id,
-    //     title: title,
-    //     content: content,
-    //     imagePath: image,
-    //     creator: null
-    //   };
-    // }
-    // this.http.put(BACK_END_URL + id, postData).subscribe(() => {
-    //   this.router.navigate(['/']);
-    // });
+  getUserListener() {
+    return this.userStatusListener.asObservable();
   }
 
-  deleteUser(userId: string) {
-    return this.http.delete(BACK_END_URL + userId);
+  modifyUser(id: string, isAdmin: boolean, isActive: boolean) {
+    const userData: User = {
+      id: id,
+      firstName: '',
+      lastName: '',
+      email: '',
+      isAdmin: isAdmin,
+      isActive: isActive
+    };
+    this.http
+      .patch<{ message: string }>(BACK_END_URL + 'modify/' + id, userData)
+      .subscribe(
+        () => {
+          this.router.navigate(['/user']);
+        },
+        error => {
+          console.log(error);
+          this.userStatusListener.next(true);
+        }
+      );
   }
 }
