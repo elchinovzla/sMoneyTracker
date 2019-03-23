@@ -54,3 +54,4 @@ privatekey.pem
 startAngular.sh
 startNode.sh
 backend/middleware/authentication.js
+backend/smoney-tracker-api/
