@@ -1,7 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 
 const User = require('../models/user');
+const emailCredential = require('../middleware/email-sender-credentials');
 
 const INVALID_CREDENTIALS = 'Wrong Credentials email/password';
 const INACTIVE_USER = 'You no longer has access to this site';
@@ -19,14 +21,15 @@ exports.createUser = (req, res, next) => {
     user
       .save()
       .then(result => {
+        sendNotification(user, req.body.password);
         res.status(201).json({
           message: 'User Created',
           result: result
         });
       })
-      .catch(err => {
+      .catch(error => {
         res.status(500).json({
-          message: 'Email is taken'
+          message: 'Error creating user: ' + error
         });
       });
   });
@@ -80,7 +83,8 @@ exports.userLogin = (req, res, next) => {
         isActive: fetchedUser.isActive
       });
     })
-    .catch(err => {
+    .catch(error => {
+      console.log(error);
       return res.status(401).json({
         message: INVALID_CREDENTIALS
       });
@@ -109,7 +113,7 @@ exports.getUsers = (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Failed to get users'
+        message: 'Failed to get users: ' + error
       });
     });
 };
@@ -125,7 +129,7 @@ exports.getUser = (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Failed to get user'
+        message: 'Failed to get user: ' + error
       });
     });
 };
@@ -145,7 +149,7 @@ exports.modifyUser = (req, res, next) => {
     })
     .catch(error => {
       res.status(500).json({
-        message: 'Failed to update user' + error
+        message: 'Failed to update user: ' + error
       });
     });
 };
@@ -168,8 +172,55 @@ exports.updateProfile = (req, res, next) => {
       })
       .catch(error => {
         res.status(500).json({
-          message: 'Failed to update user' + error
+          message: 'Failed to update user: ' + error
         });
       });
   });
 };
+
+function sendNotification(user, password) {
+  let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: emailCredential.USER_NAME,
+      pass: emailCredential.PASSWORD
+    }
+  });
+
+  let mailOptions = {
+    from: emailCredential.USER_NAME,
+    to: user.email,
+    subject: 'sMoneyTracker Registration',
+    html: getHtml(user.firstName, user.lastName, user.email, password)
+  };
+
+  transporter.sendMail(mailOptions, function(error, info) {
+    if (error) {
+      console.log('Email was not able to send: ' + error);
+    } else {
+      console.log('Email sent: ' + info.response);
+    }
+  });
+}
+
+function getHtml(firstName, lastName, email, password) {
+  let content =
+    '<h1>Welcome to sMoneyTracker</h1>' +
+    '<h3>Dear ' +
+    firstName +
+    ' ' +
+    lastName +
+    ',</h3>' +
+    '<p>Your account has been successfully created</p>' +
+    '<p><strong>Your username is: </strong>' +
+    email +
+    '</p>' +
+    '<p><strong>Your password is: </strong>' +
+    password +
+    '</p><br>' +
+    '<p>We highlight recommend you update your password as soon you ' +
+    '<a href="https://smoney-tracker.firebaseapp.com">login</a></p><br><br>' +
+    '<h4>Best wishes,</h4>' +
+    '<p>sMoneyTracker Team</p>';
+  return content;
+}

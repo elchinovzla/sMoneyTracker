@@ -1,10 +1,9 @@
-const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user');
-const dbCredentials = require('./middleware/authentication');
+const dbCredentials = require('./middleware/db-credentials');
 
 const app = express();
 
