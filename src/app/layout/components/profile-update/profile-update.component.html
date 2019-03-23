@@ -72,7 +72,7 @@
               <input
                 name="password"
                 ngModel
-                type="password"
+                [type]="showPassword.checked ? 'text' : 'password'"
                 class="form-control validate"
                 #passwordInput="ngModel"
                 required
@@ -80,6 +80,11 @@
               <mat-error *ngIf="passwordInput.invalid" class="error"
                 >Please enter a valid password</mat-error
               >
+            </div>
+            <div class="d-flex justify-content-around">
+              <div class="col">
+                <mat-checkbox #showPassword>Show Password</mat-checkbox>
+              </div>
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">

@@ -32,7 +32,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return;
     }
-    let defaultPassword =
+    let randomPassword =
       Math.random()
         .toString(36)
         .substring(2, 8) +
@@ -42,7 +42,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
 
     this.authService.createUser(
       form.value.email.toLowerCase(),
-      defaultPassword,
+      randomPassword,
       form.value.firstName,
       form.value.lastName,
       form.value.isUserAdmin.toString() === 'true' ? true : false

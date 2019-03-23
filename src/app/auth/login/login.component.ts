@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth.service';
 import { routerTransition } from 'src/app/router.animations';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecoverPasswordComponent } from '../recover-password/recover-password.component';
 
 @Component({
   selector: 'app-login',
@@ -15,12 +17,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
   userIsAuthenticated = false;
 
-  constructor(public authService: AuthService, public router: Router) {}
+  constructor(
+    private modalService: NgbModal,
+    public authService: AuthService,
+    public router: Router
+  ) {}
 
   ngOnInit() {
-    this.authStatusSub = this.authService
-      .getAuthStatusListener()
-      .subscribe();
+    this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
   }
 
   ngOnDestroy() {
@@ -32,5 +36,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
     this.authService.login(form.value.email.toLowerCase(), form.value.password);
+  }
+
+  openForgotPassword() {
+    this.modalService.open(RecoverPasswordComponent, { centered: true });
   }
 }

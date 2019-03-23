@@ -21,7 +21,16 @@ exports.createUser = (req, res, next) => {
     user
       .save()
       .then(result => {
-        sendNotification(user, req.body.password);
+        sendNotification(
+          user.email,
+          'sMoneyTracker Registration',
+          getNewUserHtml(
+            user.firstName,
+            user.lastName,
+            user.email,
+            req.body.password
+          )
+        );
         res.status(201).json({
           message: 'User Created',
           result: result
@@ -178,7 +187,38 @@ exports.updateProfile = (req, res, next) => {
   });
 };
 
-function sendNotification(user, password) {
+exports.resetPassword = (req, res, next) => {
+  bcrypt.hash(req.body.password, 10).then(hashPassword => {
+    User.findOneAndUpdate(
+      { email: req.body.email },
+      {
+        password: hashPassword
+      }
+    )
+      .then(user => {
+        sendNotification(
+          user.email,
+          'sMoneyTracker Recover Password',
+          getRecoverPasswordHtml(
+            user.firstName,
+            user.lastName,
+            user.email,
+            req.body.password
+          )
+        );
+        res.status(201).json({
+          message: 'User Updated'
+        });
+      })
+      .catch(error => {
+        res.status(500).json({
+          message: 'Failed to update user: ' + error
+        });
+      });
+  });
+};
+
+function sendNotification(recipientEmail, subject, html) {
   let transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -189,9 +229,9 @@ function sendNotification(user, password) {
 
   let mailOptions = {
     from: emailCredential.USER_NAME,
-    to: user.email,
-    subject: 'sMoneyTracker Registration',
-    html: getHtml(user.firstName, user.lastName, user.email, password)
+    to: recipientEmail,
+    subject: subject,
+    html: html
   };
 
   transporter.sendMail(mailOptions, function(error, info) {
@@ -203,24 +243,52 @@ function sendNotification(user, password) {
   });
 }
 
-function getHtml(firstName, lastName, email, password) {
-  let content =
+function getNewUserHtml(firstName, lastName, email, password) {
+  let intro = getIntroHtlm(firstName, lastName);
+  let userInfo = getUserInfoHtml(email, password);
+  let footer = getFooterHtml();
+  let html =
     '<h1>Welcome to sMoneyTracker</h1>' +
-    '<h3>Dear ' +
-    firstName +
-    ' ' +
-    lastName +
-    ',</h3>' +
+    intro +
+    userInfo +
     '<p>Your account has been successfully created</p>' +
+    footer;
+  return html;
+}
+
+function getRecoverPasswordHtml(firstName, lastName, email, password) {
+  let intro = getIntroHtlm(firstName, lastName);
+  let userInfo = getUserInfoHtml(email, password);
+  let footer = getFooterHtml();
+  let html =
+    '<h1>sMoneyTracker Recover Password</h1>' +
+    intro +
+    userInfo +
+    '<p>Your password has been successfully updated</p>' +
+    footer;
+  return html;
+}
+
+function getIntroHtlm(firstName, lastName) {
+  return '<h3>Dear ' + firstName + ' ' + lastName + ',</h3>';
+}
+
+function getUserInfoHtml(email, password) {
+  return (
     '<p><strong>Your username is: </strong>' +
     email +
     '</p>' +
     '<p><strong>Your password is: </strong>' +
     password +
-    '</p><br>' +
-    '<p>We highlight recommend you update your password as soon you ' +
+    '</p><br>'
+  );
+}
+
+function getFooterHtml() {
+  return (
+    '<p>We highlight recommend you to update your password as soon you ' +
     '<a href="https://smoney-tracker.firebaseapp.com">login</a></p><br><br>' +
     '<h4>Best wishes,</h4>' +
-    '<p>sMoneyTracker Team</p>';
-  return content;
+    '<p>sMoneyTracker Team</p>'
+  );
 }

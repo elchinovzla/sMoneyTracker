@@ -107,13 +107,33 @@ export class UserService {
       isActive: false
     };
     this.http
-      .patch<{ message: string }>(
-        BACK_END_URL + 'profile/' + id,
-        userData
-      )
+      .patch<{ message: string }>(BACK_END_URL + 'profile/' + id, userData)
       .subscribe(
         () => {
           this.router.navigate(['/dashboard']);
+        },
+        error => {
+          console.log(error);
+          this.userStatusListener.next(true);
+        }
+      );
+  }
+
+  recoverPassword(email: string, password: string) {
+    const userData: User = {
+      id: '',
+      firstName: '',
+      lastName: '',
+      email: email,
+      password: password,
+      isAdmin: false,
+      isActive: false
+    };
+    this.http
+      .patch<{ message: string }>(BACK_END_URL + 'resetpassword', userData)
+      .subscribe(
+        () => {
+          this.router.navigate(['/auth/login']);
         },
         error => {
           console.log(error);

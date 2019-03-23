@@ -14,11 +14,14 @@ import { ErrorInterceptor } from './error-interceptor';
 import { MaterialModule } from './material-modules';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ComponentsModule } from './layout/components/components.module';
+import { RecoverPasswordComponent } from './auth/recover-password/recover-password.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ErrorComponent
+    ErrorComponent,
+    RecoverPasswordComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { ComponentsModule } from './layout/components/components.module';
     MaterialModule,
     NotifierModule,
     NgbModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
@@ -37,6 +41,7 @@ import { ComponentsModule } from './layout/components/components.module';
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  exports: [RecoverPasswordComponent],
+  entryComponents: [ErrorComponent, RecoverPasswordComponent]
 })
 export class AppModule {}
