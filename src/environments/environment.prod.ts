@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://smoney-tracker-api.herokuapp.com/api'
+  apiUrl: 'https://lit-taiga-23712.herokuapp.com/api'
 };
