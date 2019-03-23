@@ -4,12 +4,17 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user');
+const dbCredentials = require('./middleware/authentication');
 
 const app = express();
 
 mongoose
   .connect(
-    'mongodb://localhost:27017/smoney-tracker',
+    'mongodb+srv://' +
+      dbCredentials.USER_NAME +
+      ':' +
+      dbCredentials.PASSWORD +
+      '@cluster0-fkcx5.mongodb.net/smoney-tracker',
     {
       useNewUrlParser: true
     }

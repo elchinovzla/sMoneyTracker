@@ -53,3 +53,4 @@ firebase.json
 privatekey.pem
 startAngular.sh
 startNode.sh
+backend/middleware/authentication.js
