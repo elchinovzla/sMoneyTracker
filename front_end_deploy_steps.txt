@@ -1,0 +1,12 @@
+DEPLOY IN FIREBASE
+* ng build --prod
+* sudo npm install -g firebase-tools
+* firebase login
+* firebase use --add
+* firebase init
+* firebase deploy
+* firebase open hosting:site
+
+UPDATE FIREBASE SOLUTION
+* ng build --prod
+* firebase deploy

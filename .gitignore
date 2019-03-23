@@ -45,13 +45,11 @@ testem.log
 .DS_Store
 Thumbs.db
 
+# Firebase
 .firebase/
 .firebaserc
-certificate.pem
-certrequest.csr
 firebase.json
-privatekey.pem
-startAngular.sh
-startNode.sh
+
+# Private data
 backend/middleware/authentication.js
 
