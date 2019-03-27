@@ -15,6 +15,6 @@ export class UserComponent implements OnInit {
   ngOnInit() {}
 
   open() {
-    this.modalService.open(UserCreateComponent, { windowClass: 'dark-modal' });
+    this.modalService.open(UserCreateComponent, { centered: true });
   }
 }

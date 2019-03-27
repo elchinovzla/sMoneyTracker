@@ -1,0 +1,50 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-nav mr-auto">
+      <h2 class="text-muted">Budget</h2>
+    </div>
+    <div class="row">
+      <div class="col-xl-3">
+        <button class="btn btn-dark my-2 my-sm-0" (click)="openCreateSalary()">
+          Salary
+        </button>
+      </div>
+      <div class="col-xl-3">
+        <button
+          class="btn btn-dark my-2 my-sm-0"
+          (click)="openCreateEstimatedExpense()"
+        >
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          Estimated Expense
+        </button>
+      </div>
+    </div>
+  </nav>
+  <hr />
+  <div class="row">
+    <div class="col-xl-4">
+      <strong>
+        Monthly Salary:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ monthlySalary }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-4">
+      <strong>
+        Monthly Total Expected Expense:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ monthlyExpectedExpense }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-4">
+      <strong>
+        Monthly Total Spare Amount:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ monthlyTotalSpareAmount }}</div>
+  </div>
+  <hr />
+  <app-expense-estimate-list></app-expense-estimate-list>
+</div>

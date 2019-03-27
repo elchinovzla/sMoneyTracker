@@ -15,6 +15,11 @@ const routes: Routes = [
       {
         path: 'user',
         loadChildren: './user/user.module#UserModule'
+      },
+      {
+        path: 'expense-estimator',
+        loadChildren:
+          './expense-estimator/expense-estimator.module#ExpenseEstimatorModule'
       }
     ]
   }
