@@ -5,8 +5,6 @@ import { SalaryComponent } from './salary/salary.component';
 import { ExpenseEstimateCreateComponent } from './expense-estimate-create/expense-estimate-create.component';
 import { ExpenseEstimatorService } from './expense-estimator.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { Salary } from './salary.model';
-import { SalaryType } from './salary-type';
 
 @Component({
   selector: 'app-expense-estimator',
@@ -15,7 +13,7 @@ import { SalaryType } from './salary-type';
   animations: [routerTransition()]
 })
 export class ExpenseEstimatorComponent implements OnInit {
-  monthlySalary;
+  monthlySalary: string;
   monthlyExpectedExpense = '$3,000.00';
   monthlyTotalSpareAmount = '$1,000.00';
   private salaryId: string;
@@ -29,10 +27,12 @@ export class ExpenseEstimatorComponent implements OnInit {
   ngOnInit() {
     this.expenseEstimatorService
       .getSalaryByOwner(this.authService.getUserId())
-      .subscribe((salaryData: { salaryId: string; monthlySalaryAmount: string }) => {
-        this.salaryId = salaryData.salaryId;
-        this.monthlySalary = salaryData.monthlySalaryAmount;
-      });
+      .subscribe(
+        (salaryData: { salaryId: string; monthlySalaryAmount: string }) => {
+          this.salaryId = salaryData.salaryId;
+          this.monthlySalary = salaryData.monthlySalaryAmount;
+        }
+      );
   }
 
   openCreateSalary() {

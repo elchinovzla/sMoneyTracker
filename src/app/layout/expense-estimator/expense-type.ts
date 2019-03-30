@@ -1,10 +1,10 @@
 export enum ExpenseType {
-  Gift,
-  Groceries,
-  House,
-  Membership,
-  Other,
-  Restaurant,
-  Transportation,
-  Travel
+  DINE_OUT = 1,
+  GIFT,
+  GROCERY,
+  HOUSE,
+  MEMBERSHIP,
+  OTHER,
+  TRANSPORTATION,
+  TRAVEL
 }
