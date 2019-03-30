@@ -29,12 +29,10 @@ export class ExpenseEstimatorComponent implements OnInit {
   ngOnInit() {
     this.expenseEstimatorService
       .getSalaryByOwner(this.authService.getUserId())
-      .subscribe(
-        (salaryData: { salaryId: string; monthlySalaryAmount: string }) => {
-          this.salaryId = salaryData.salaryId;
-          this.monthlySalary = salaryData.monthlySalaryAmount;
-        }
-      );
+      .subscribe((salaryData: { salaryId: string; monthlySalaryAmount: string }) => {
+        this.salaryId = salaryData.salaryId;
+        this.monthlySalary = salaryData.monthlySalaryAmount;
+      });
   }
 
   openCreateSalary() {

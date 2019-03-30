@@ -180,7 +180,7 @@ export class ExpenseEstimatorService {
 
   getSalaryByOwner(createdById: string) {
     return this.http.get<{
-      _id: string;
+      salaryId: string;
       monthlySalaryAmount: string;
     }>(EXPENSE_BACK_END_URL + 'salaryByOwner/' + createdById);
   }

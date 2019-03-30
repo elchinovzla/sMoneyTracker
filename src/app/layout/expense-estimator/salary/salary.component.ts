@@ -89,4 +89,14 @@ export class SalaryComponent implements OnInit, OnDestroy {
     this.form.reset();
     this.activeModal.dismiss();
   }
+
+  makeEnumPretty(value:string): string {
+    return value
+      .toLowerCase()
+      .split('_')
+      .map(function(word) {
+        return word.replace(word[0], word[0].toUpperCase());
+      })
+      .join('-');
+  }
 }
