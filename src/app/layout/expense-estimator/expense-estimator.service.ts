@@ -14,7 +14,6 @@ export class ExpenseEstimatorService {
   private expenseEstimates: ExpenseEstimate[] = [];
   private expenseEstimatorUpdated = new Subject<{
     expenseEstimates: ExpenseEstimate[];
-    expenseEstimateCount: number;
   }>();
   private expenseEstimatorStatusListener = new Subject<boolean>();
 
@@ -64,7 +63,7 @@ export class ExpenseEstimatorService {
   ) {
     const queryParams = `?pagesize=${expenseEstimatesPerPage}&page=${currentPage}&createdById=${createdById}`;
     this.http
-      .get<{ message: string; estimatedExpenses: any; maxExpenses: number }>(
+      .get<{ message: string; estimatedExpenses: any }>(
         EXPENSE_BACK_END_URL + 'expense-estimator' + queryParams
       )
       .pipe(
@@ -80,18 +79,22 @@ export class ExpenseEstimatorService {
                   createdById: expenseEstimate.createdById
                 };
               }
-            ),
-            maxExpenses: expenseEstimateData.maxExpenses
+            )
           };
         })
       )
       .subscribe(transformedExpenseData => {
         this.expenseEstimates = transformedExpenseData.expenseEstimates;
         this.expenseEstimatorUpdated.next({
-          expenseEstimates: [...this.expenseEstimates],
-          expenseEstimateCount: transformedExpenseData.maxExpenses
+          expenseEstimates: [...this.expenseEstimates]
         });
       });
+  }
+
+  getExpenseEstimateTotalCount(createdById: string) {
+    return this.http.get<{ maxEstimatedExpenses: number }>(
+      EXPENSE_BACK_END_URL + 'expense-estimator-count/' + createdById
+    );
   }
 
   getExpenseEstimate(id: string) {
@@ -210,9 +213,7 @@ export class ExpenseEstimatorService {
 
   getExpectedExpenseAmountsByOwner(createdById: string) {
     return this.http.get<{
-      monthlyTotalExpectedExpenseAmount: number
-    }>(
-      EXPENSE_BACK_END_URL + 'expense-estimatorByOwner/' + createdById
-    );
+      monthlyTotalExpectedExpenseAmount: number;
+    }>(EXPENSE_BACK_END_URL + 'expense-estimatorByOwner/' + createdById);
   }
 }

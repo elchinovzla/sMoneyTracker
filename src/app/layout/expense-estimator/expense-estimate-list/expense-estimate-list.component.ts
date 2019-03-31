@@ -26,6 +26,11 @@ export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.expenseEstimatorService
+      .getExpenseEstimateTotalCount(this.authService.getUserId())
+      .subscribe(totalData => {
+        this.totalEstimatedExpenses = totalData.maxEstimatedExpenses;
+      });
     this.expenseEstimatorService.getExpenseEstimates(
       this.estimatedExpensesPerPage,
       this.currentPage,
@@ -34,13 +39,8 @@ export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
     this.expenseSub = this.expenseEstimatorService
       .getExpenseEstimatorUpdateListener()
       .subscribe(
-        (expenseEstimateData: {
-          expenseEstimates: ExpenseEstimate[];
-          expenseEstimateCount: number;
-        }) => {
+        (expenseEstimateData: { expenseEstimates: ExpenseEstimate[] }) => {
           this.estimatedExpenses = expenseEstimateData.expenseEstimates;
-          this.totalEstimatedExpenses =
-            expenseEstimateData.expenseEstimateCount;
         }
       );
   }

@@ -44,13 +44,6 @@ exports.getEstimatedExpense = (req, res, next) => {
 exports.getEstimatedExpenses = (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
-  let totalEstimatedExpensesCount = 0;
-  EstimatedExpense.count({ createdById: req.query.createdById }, function(
-    err,
-    count
-  ) {
-    totalEstimatedExpensesCount = count;
-  });
   const estimatedExpenseQuery = EstimatedExpense.find({
     createdById: req.query.createdById
   }).sort([['description', 1]]);
@@ -58,11 +51,10 @@ exports.getEstimatedExpenses = (req, res, next) => {
     estimatedExpenseQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
   }
   estimatedExpenseQuery
-    .then(documents => {
+    .then(estimatedExpenses => {
       res.status(200).json({
         message: 'Estimated expense fetched successfully',
-        estimatedExpenses: documents,
-        maxExpenses: totalEstimatedExpensesCount
+        estimatedExpenses: estimatedExpenses
       });
     })
     .catch(error => {
@@ -70,6 +62,22 @@ exports.getEstimatedExpenses = (req, res, next) => {
         message: 'Failed to get estimated expenses: ' + error
       });
     });
+};
+
+exports.getTotalCountEstimatedExpenses = (req, res, next) => {
+  EstimatedExpense.find({ createdById: req.params.createdById }).then(
+    estimatedExpenses => {
+      if (estimatedExpenses) {
+        res.status(200).json({
+          maxEstimatedExpenses: getTotal(estimatedExpenses)
+        });
+      } else {
+        res.status(200).json({
+          maxEstimatedExpenses: 0
+        });
+      }
+    }
+  );
 };
 
 exports.updateEstimatedExpense = (req, res, next) => {
@@ -314,4 +322,12 @@ function getTotalEstimatedExpenses(estimatedExpenses, expenseType) {
     });
   }
   return totalAmount.getAmount() / 100;
+}
+
+function getTotal(estimatedExpenses) {
+  let totalCount = 0;
+  estimatedExpenses.forEach(function() {
+    totalCount++;
+  });
+  return totalCount;
 }

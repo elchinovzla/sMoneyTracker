@@ -14,6 +14,11 @@ router.get(
 );
 
 router.get(
+  '/expense-estimator-count/:createdById',
+  expenseEstimatorController.getTotalCountEstimatedExpenses
+)
+
+router.get(
   '/expense-estimator/:id',
   expenseEstimatorController.getEstimatedExpense
 );
