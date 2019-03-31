@@ -31,6 +31,7 @@
     "body-parser": "^1.18.3",
     "chart.js": "^2.5.0",
     "core-js": "^2.5.4",
+    "dinero.js": "^1.6.0",
     "express": "^4.16.4",
     "font-awesome": "^4.7.0",
     "fs": "0.0.1-security",

@@ -9,14 +9,12 @@ import { PageHeaderModule } from 'src/app/shared';
 import { ExpenseEstimatorRoutingModule } from './expense-estimator-routing.module';
 import { ExpenseEstimateCreateComponent } from './expense-estimate-create/expense-estimate-create.component';
 import { ExpenseEstimateListComponent } from './expense-estimate-list/expense-estimate-list.component';
-import { ExpenseEstimateModifyComponent } from './expense-estimate-modify/expense-estimate-modify.component';
 
 @NgModule({
   declarations: [
     ExpenseEstimatorComponent,
     ExpenseEstimateCreateComponent,
     ExpenseEstimateListComponent,
-    ExpenseEstimateModifyComponent,
     SalaryComponent
   ],
   imports: [
@@ -28,15 +26,7 @@ import { ExpenseEstimateModifyComponent } from './expense-estimate-modify/expens
     ExpenseEstimatorRoutingModule,
     ReactiveFormsModule
   ],
-  exports: [
-    ExpenseEstimateCreateComponent,
-    ExpenseEstimateModifyComponent,
-    SalaryComponent
-  ],
-  entryComponents: [
-    ExpenseEstimateCreateComponent,
-    ExpenseEstimateModifyComponent,
-    SalaryComponent
-  ]
+  exports: [ExpenseEstimateCreateComponent, SalaryComponent],
+  entryComponents: [ExpenseEstimateCreateComponent, SalaryComponent]
 })
 export class ExpenseEstimatorModule {}

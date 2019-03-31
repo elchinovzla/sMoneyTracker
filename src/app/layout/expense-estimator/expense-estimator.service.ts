@@ -178,13 +178,6 @@ export class ExpenseEstimatorService {
     }>(EXPENSE_BACK_END_URL + 'salary/' + id);
   }
 
-  getSalaryByOwner(createdById: string) {
-    return this.http.get<{
-      salaryId: string;
-      monthlySalaryAmount: string;
-    }>(EXPENSE_BACK_END_URL + 'salaryByOwner/' + createdById);
-  }
-
   updateSalary(id: string, salaryType: string, amount: number) {
     const expenseData: Salary = {
       id: id,
@@ -206,5 +199,20 @@ export class ExpenseEstimatorService {
           this.expenseEstimatorStatusListener.next(true);
         }
       );
+  }
+
+  getSalaryByOwner(createdById: string) {
+    return this.http.get<{
+      salaryId: string;
+      monthlySalaryAmount: number;
+    }>(EXPENSE_BACK_END_URL + 'salaryByOwner/' + createdById);
+  }
+
+  getExpectedExpenseAmountsByOwner(createdById: string) {
+    return this.http.get<{
+      monthlyTotalExpectedExpenseAmount: number
+    }>(
+      EXPENSE_BACK_END_URL + 'expense-estimatorByOwner/' + createdById
+    );
   }
 }

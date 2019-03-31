@@ -1,1 +1,63 @@
-<h1>expense list</h1>
+<mat-accordion
+  multi="true"
+  *ngIf="estimatedExpenses.length > 0; else noEstimatedExpenses"
+  class="accordion md-accordion accordion-blocks"
+>
+  <mat-expansion-panel
+    *ngFor="let estimatedExpense of estimatedExpenses"
+    class="card mb-1"
+  >
+    <mat-expansion-panel-header class="card-header z-depth-1">
+      <div class="container">
+        <div class="d-flex">
+          <div class="mr-auto col-xl-8 col-lg-6">
+            <h4 class="text white-text mb-0 py-3 mt-1">
+              {{ estimatedExpense.description }}
+            </h4>
+          </div>
+          <div class="mr-auto col-xl-1 col-lg-1 align-items-end">
+            <h5 class="text-uppercase white-text mb-0 py-3 mt-1">
+              <span class="badge badge-info">{{
+                convertToMoney(estimatedExpense.amount)
+              }}</span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="card-body rgba-black-light white-text z-depth-1">
+      <div>
+        <h5>
+          Expense Type
+          <span class="badge badge-info">{{
+            makeEnumPretty(estimatedExpense.expenseType)
+          }}</span>
+        </h5>
+      </div>
+    </div>
+    <mat-action-row>
+      <button
+        class="btn btn-primary my-2 my-sm-0 z-depth-2 mr-1"
+        (click)="open(estimatedExpense)"
+      >
+        Edit
+      </button>
+      <button
+        class="btn btn-danger my-2 my-sm-0 z-depth-2"
+        (click)="delete(estimatedExpense)"
+      >
+        Delete
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  [length]="totalEstimatedExpenses"
+  [pageSize]="estimatedExpensesPerPage"
+  (page)="onChangedPage($event)"
+  [hidePageSize]="true"
+  [showFirstLastButtons]="true"
+></mat-paginator>
+<ng-template #noEstimatedExpenses>
+  <h3>No Data</h3>
+</ng-template>

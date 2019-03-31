@@ -14,8 +14,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 })
 export class ExpenseEstimatorComponent implements OnInit {
   monthlySalary: string;
-  monthlyExpectedExpense = '$3,000.00';
-  monthlyTotalSpareAmount = '$1,000.00';
+  monthlyTotalExpectedExpense: string;
   private salaryId: string;
 
   constructor(
@@ -28,9 +27,22 @@ export class ExpenseEstimatorComponent implements OnInit {
     this.expenseEstimatorService
       .getSalaryByOwner(this.authService.getUserId())
       .subscribe(
-        (salaryData: { salaryId: string; monthlySalaryAmount: string }) => {
+        (salaryData: { salaryId: string; monthlySalaryAmount: number }) => {
           this.salaryId = salaryData.salaryId;
-          this.monthlySalary = salaryData.monthlySalaryAmount;
+          this.monthlySalary = this.convertToMoney(
+            salaryData.monthlySalaryAmount
+          );
+        }
+      );
+    this.expenseEstimatorService
+      .getExpectedExpenseAmountsByOwner(this.authService.getUserId())
+      .subscribe(
+        (expectedExpenseData: {
+          monthlyTotalExpectedExpenseAmount: number;
+        }) => {
+          this.monthlyTotalExpectedExpense = this.convertToMoney(
+            expectedExpenseData.monthlyTotalExpectedExpenseAmount
+          );
         }
       );
   }
@@ -46,5 +58,9 @@ export class ExpenseEstimatorComponent implements OnInit {
 
   openCreateEstimatedExpense() {
     this.modalService.open(ExpenseEstimateCreateComponent, { centered: true });
+  }
+
+  convertToMoney(amount: Number): string {
+    return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
 }

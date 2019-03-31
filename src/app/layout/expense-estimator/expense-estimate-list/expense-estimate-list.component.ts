@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExpenseEstimatorService } from '../expense-estimator.service';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ExpenseEstimateModifyComponent } from '../expense-estimate-modify/expense-estimate-modify.component';
+import { ExpenseEstimateCreateComponent } from '../expense-estimate-create/expense-estimate-create.component';
+import { PageEvent } from '@angular/material';
 
 @Component({
   selector: 'app-expense-estimate-list',
@@ -12,9 +13,9 @@ import { ExpenseEstimateModifyComponent } from '../expense-estimate-modify/expen
   styleUrls: ['./expense-estimate-list.component.scss']
 })
 export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
-  expenseEstimates: ExpenseEstimate[] = [];
-  totalExpenseEstimates = 0;
-  expenseEstimatesPerPage = 10;
+  estimatedExpenses: ExpenseEstimate[] = [];
+  totalEstimatedExpenses = 0;
+  estimatedExpensesPerPage = 10;
   currentPage = 1;
   private expenseSub: Subscription;
 
@@ -26,7 +27,7 @@ export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.expenseEstimatorService.getExpenseEstimates(
-      this.expenseEstimatesPerPage,
+      this.estimatedExpensesPerPage,
       this.currentPage,
       this.authService.getUserId()
     );
@@ -37,8 +38,9 @@ export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
           expenseEstimates: ExpenseEstimate[];
           expenseEstimateCount: number;
         }) => {
-          this.expenseEstimates = expenseEstimateData.expenseEstimates;
-          this.totalExpenseEstimates = expenseEstimateData.expenseEstimateCount;
+          this.estimatedExpenses = expenseEstimateData.expenseEstimates;
+          this.totalEstimatedExpenses =
+            expenseEstimateData.expenseEstimateCount;
         }
       );
   }
@@ -47,10 +49,38 @@ export class ExpenseEstimateListComponent implements OnInit, OnDestroy {
     this.expenseSub.unsubscribe();
   }
 
-  open(expenseEstimate: ExpenseEstimate) {
-    const activeModal = this.modalService.open(ExpenseEstimateModifyComponent, {
+  open(estimatedExpense: ExpenseEstimate) {
+    const activeModal = this.modalService.open(ExpenseEstimateCreateComponent, {
       centered: true
     });
-    activeModal.componentInstance.expenseEstimate = expenseEstimate;
+    activeModal.componentInstance.estimatedExpeseId = estimatedExpense.id;
+  }
+
+  delete(estimatedExpense: ExpenseEstimate) {
+    this.expenseEstimatorService.deleteExpenseEstimate(estimatedExpense.id);
+  }
+
+  onChangedPage(pageData: PageEvent) {
+    this.currentPage = pageData.pageIndex + 1;
+    this.estimatedExpensesPerPage = pageData.pageSize;
+    this.expenseEstimatorService.getExpenseEstimates(
+      this.estimatedExpensesPerPage,
+      this.currentPage,
+      this.authService.getUserId()
+    );
+  }
+
+  convertToMoney(amount: Number) {
+    return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  }
+
+  makeEnumPretty(value: string): string {
+    return value
+      .toLowerCase()
+      .split('_')
+      .map(function(word) {
+        return word.replace(word[0], word[0].toUpperCase());
+      })
+      .join('-');
   }
 }

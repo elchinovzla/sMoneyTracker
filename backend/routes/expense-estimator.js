@@ -24,7 +24,7 @@ router.patch(
 );
 
 router.delete(
-  '/expense-estimator',
+  '/expense-estimator/:id',
   expenseEstimatorController.deleteEstimatedExpense
 );
 
@@ -32,8 +32,18 @@ router.post('/salary', expenseEstimatorController.createSalary);
 
 router.get('/salary/:id', expenseEstimatorController.getSalary);
 
+router.patch('/salary/:id', expenseEstimatorController.updateSalary);
+
 router.get('/salaryByOwner/:id', expenseEstimatorController.getSalaryByOwner);
 
-router.patch('/salary/:id', expenseEstimatorController.updateSalary);
+router.get(
+  '/expense-estimatorByOwner/:id',
+  expenseEstimatorController.getMonthlyExpensesByOwner
+);
+
+router.get(
+  '/expense-estimator-detailedByOwner/:id',
+  expenseEstimatorController.getDetailedMonthlyExpensesByOwner
+);
 
 module.exports = router;
