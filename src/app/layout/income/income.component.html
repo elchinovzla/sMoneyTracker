@@ -1,0 +1,64 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-nav mr-auto">
+      <h2 class="text-muted">Earnings</h2>
+    </div>
+    <div class="row">
+      <div class="col-xl-3">
+        <button class="btn btn-dark my-2 my-sm-0" (click)="openCreateIncome()">
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          Earning
+        </button>
+      </div>
+    </div>
+  </nav>
+  <hr />
+  <form [formGroup]="form">
+    <div style="position: relative">
+      <div class="input-group date">
+        <input
+          id="date"
+          type="hidden"
+          formControlName="date"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          required
+        />
+      </div>
+    </div>
+  </form>
+  <div class="row datepicker-input">
+    <div class="col-xl-3">
+      <strong>Month:</strong>
+    </div>
+    <div class="col-xl-4">
+      <label class="dateFormat">{{ selectedDate }}</label>
+      <button
+        class="input-group-addon btn-dark"
+        (click)="d.toggle()"
+        type="button"
+      >
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        Change Date
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Monthly Total Earnings:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ monthlyIncome }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Annual Total Earnings:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ annualIncome }}</div>
+  </div>
+  <hr />
+  <app-income-list></app-income-list>
+</div>

@@ -1,0 +1,124 @@
+<div class="modal-header">
+  <h4 class="modal-title" *ngIf="incomeId; else createNew">
+    Update Earning
+  </h4>
+  <ng-template #createNew>
+    <h4 class="modal-title">
+      Create New Earning
+    </h4>
+  </ng-template>
+  <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" (submit)="onSaveIncome()">
+    <div
+      tabindex="1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body mx-6">
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-3">
+                <label>Name</label>
+              </div>
+              <div class="col-xl-6">
+                <input
+                  id="name"
+                  type="text"
+                  class="py-0"
+                  placeholder="Income Name"
+                  formControlName="name"
+                />
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('name').invalid" class="error"
+                >Please enter a valid Name</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-3">
+                <label>Amount</label>
+              </div>
+              <div class="col-xl-6">
+                <label class="sr-only" for="amount">Earning Amount</label>
+                <div class="input-group mb-2 mr-sm-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control py-0"
+                    id="amount"
+                    placeholder="Earning Amount"
+                    formControlName="amount"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('amount').invalid" class="error"
+                >Please enter a valid amount</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2 datepicker-input">
+              <div class="col-xl-3">
+                <label>Date</label>
+              </div>
+              <div class="col-xl-6">
+                <input
+                  id="date"
+                  type="date"
+                  class="py-0"
+                  formControlName="date"
+                  placeholder="yyyy-mm-dd"
+                  ngbDatepicker
+                  #d="ngbDatepicker"
+                />
+                <button
+                  class="input-group-addon"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <span class="fa fa-calendar"></span>
+                </button>
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('date').invalid" class="error"
+                >Please enter a valid Date</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-3">
+                <label>Note</label>
+              </div>
+              <div class="col-xl-6">
+                <input
+                  id="note"
+                  type="text"
+                  class="py-0"
+                  placeholder="Note"
+                  formControlName="note"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">
+              Save
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="onClose()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

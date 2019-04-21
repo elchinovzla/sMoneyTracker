@@ -15,3 +15,4 @@ npm install --save fs;
 npm install --save angular-notifier;
 npm install --save nodemailer;
 npm install --save dinero.js;
+npm install --save moment;

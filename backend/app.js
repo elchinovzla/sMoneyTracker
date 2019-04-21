@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const userRoutes = require('./routes/user');
 const expenseEstimatorRoutes = require('./routes/expense-estimator');
+const incomeRoutes = require('./routes/income');
 const dbCredentials = require('./middleware/db-credentials');
 
 const app = express();
@@ -43,5 +44,6 @@ app.use((req, res, next) => {
 
 app.use('/api/user', userRoutes);
 app.use('/api/expense-estimator', expenseEstimatorRoutes);
+app.use('/api/income', incomeRoutes);
 
 module.exports = app;

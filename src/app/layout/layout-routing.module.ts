@@ -20,6 +20,10 @@ const routes: Routes = [
         path: 'expense-estimator',
         loadChildren:
           './expense-estimator/expense-estimator.module#ExpenseEstimatorModule'
+      },
+      {
+        path: 'income',
+        loadChildren: './income/income.module#IncomeModule'
       }
     ]
   }
