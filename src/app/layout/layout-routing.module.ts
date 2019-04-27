@@ -24,6 +24,10 @@ const routes: Routes = [
       {
         path: 'income',
         loadChildren: './income/income.module#IncomeModule'
+      },
+      {
+        path: 'money',
+        loadChildren: './money/money.module#MoneyModule'
       }
     ]
   }
@@ -33,4 +37,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LayoutRoutingModule {}
+export class LayoutRoutingModule { }

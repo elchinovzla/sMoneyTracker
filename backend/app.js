@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const userRoutes = require('./routes/user');
 const expenseEstimatorRoutes = require('./routes/expense-estimator');
 const incomeRoutes = require('./routes/income');
+const moneyRoutes = require('./routes/money');
 const dbCredentials = require('./middleware/db-credentials');
 
 const app = express();
@@ -12,10 +13,10 @@ const app = express();
 mongoose
   .connect(
     'mongodb+srv://' +
-      dbCredentials.USER_NAME +
-      ':' +
-      dbCredentials.PASSWORD +
-      '@cluster0-fkcx5.mongodb.net/smoney-tracker',
+    dbCredentials.USER_NAME +
+    ':' +
+    dbCredentials.PASSWORD +
+    '@cluster0-fkcx5.mongodb.net/smoney-tracker',
     {
       useNewUrlParser: true
     }
@@ -45,5 +46,6 @@ app.use((req, res, next) => {
 app.use('/api/user', userRoutes);
 app.use('/api/expense-estimator', expenseEstimatorRoutes);
 app.use('/api/income', incomeRoutes);
+app.use('/api/money', moneyRoutes);
 
 module.exports = app;

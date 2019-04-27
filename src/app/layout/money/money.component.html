@@ -1,0 +1,70 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-nav mr-auto">
+      <h2 class="text-muted">Monetary Info</h2>
+    </div>
+    <div class="row">
+      <div class="col-xl-3">
+        <button class="btn btn-dark my-2 my-sm-0" (click)="openCreateMoney()">
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          Money Info
+        </button>
+      </div>
+    </div>
+  </nav>
+  <hr />
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Money in the bank:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ moneyInTheBank }}</div>
+    <ng-container *ngIf="displayMoneyInTheBankDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="bankInfo"
+        popoverTitle="Money in the bank"
+      ></i>
+      <ng-template #bankInfo>
+        <p><b>Checking: </b> {{ moneyInChecking }}</p>
+        <p><b>Savings: </b>{{ moneyInSavings }}</p>
+        <p><b>RRSP: </b>{{ moneyInRrsp }}</p>
+        <p><b>TFSA: </b>{{ moneyInTfsa }}</p>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Unclaimed money:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ moneyUnclaimed }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Other Money:
+      </strong>
+    </div>
+    <div class="col-xl-3">{{ moneyOther }}</div>
+    <ng-container *ngIf="displayOtherMoneyDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="otherInfo"
+        popoverTitle="Other Money"
+      ></i>
+      <ng-template #otherInfo>
+        <p><b>Cash: </b> {{ moneyCash }}</p>
+        <p><b>Gift Card: </b>{{ moneyGiftCard }}</p>
+      </ng-template>
+    </ng-container>
+  </div>
+  <hr />
+  <app-money-list></app-money-list>
+</div>

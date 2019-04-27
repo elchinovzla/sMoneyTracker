@@ -1,11 +1,11 @@
 import { Routes, RouterModule } from '@angular/router';
-import { ExpenseEstimatorComponent } from './expense-estimator.component';
+import { MoneyComponent } from './money.component';
 import { NgModule } from '@angular/core';
 
 const routes: Routes = [
   {
     path: '',
-    component: ExpenseEstimatorComponent
+    component: MoneyComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ExpenseEstimatorRoutingModule { }
+export class MoneyRoutingModule { }

@@ -17,7 +17,7 @@ export class ExpenseEstimatorService {
   }>();
   private expenseEstimatorStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   getExpenseEstimatorUpdateListener() {
     return this.expenseEstimatorUpdated.asObservable();
