@@ -152,7 +152,7 @@ exports.getMoneyInfo = (req, res, next) => {
   })
     .catch(error => {
       res.status(500).json({
-        message: 'Failed to get an estimated expense: ' + error
+        message: 'Failed to get a Money Info: ' + error
       });
     });
 };

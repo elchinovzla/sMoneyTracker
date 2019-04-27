@@ -23,14 +23,14 @@
         <div class="modal-content">
           <div class="modal-body mx-6">
             <div class="input-group mb-2 mr-sm-2">
-              <div class="col-xl-6">
+              <div class="col-xl-4">
                 <label>Description</label>
               </div>
-              <div class="col-xl-3">
+              <div class="col-xl-5">
                 <input
                   id="description"
                   type="text"
-                  class="py-0"
+                  class="py-0 text-box"
                   placeholder="Description"
                   formControlName="description"
                 />
@@ -42,11 +42,11 @@
               >
             </div>
             <div class="input-group mb-2 mr-sm-2">
-              <div class="col-xl-6">
+              <div class="col-xl-4">
                 <label>Expense Type</label>
               </div>
-              <div class="col-xl-3">
-                <select formControlName="expenseType">
+              <div class="col-xl-5">
+                <select formControlName="expenseType" class="text-box">
                   <option
                     *ngFor="let key of keys"
                     [value]="key"
@@ -61,18 +61,22 @@
                 >Please enter a valid Expense Type</mat-error
               >
             </div>
-            <label class="sr-only" for="amount">Expense Amount</label>
             <div class="input-group mb-2 mr-sm-2">
-              <div class="input-group-prepend">
-                <div class="input-group-text">$</div>
+              <div class="col-xl-4">
+                <label>Amount</label>
               </div>
-              <input
-                type="text"
-                class="form-control py-0"
-                id="amount"
-                placeholder="Expense Amount"
-                formControlName="amount"
-              />
+              <div class="col-xl-5">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="amount"
+                    placeholder="Amount"
+                    formControlName="amount"
+                  />
+                </div>
+              </div>
             </div>
             <div class="input-group mb-2 mr-sm-2">
               <mat-error *ngIf="form.get('amount').invalid" class="error"

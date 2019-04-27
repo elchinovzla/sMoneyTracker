@@ -39,15 +39,8 @@ router.get('/salary/:id', expenseEstimatorController.getSalary);
 
 router.patch('/salary/:id', expenseEstimatorController.updateSalary);
 
-router.get('/salaryByOwner/:id', expenseEstimatorController.getSalaryByOwner);
-
 router.get(
-  '/expense-estimatorByOwner/:id',
-  expenseEstimatorController.getMonthlyExpensesByOwner
-);
-
-router.get(
-  '/expense-estimator-detailedByOwner/:id',
+  '/expense-estimator-detailedByOwner/:createdById',
   expenseEstimatorController.getDetailedMonthlyExpensesByOwner
 );
 

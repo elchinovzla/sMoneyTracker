@@ -204,16 +204,20 @@ export class ExpenseEstimatorService {
       );
   }
 
-  getSalaryByOwner(createdById: string) {
+  getExpectedExpenseAmountsByOwner(createdById: string) {
     return this.http.get<{
       salaryId: string;
       monthlySalaryAmount: number;
-    }>(EXPENSE_BACK_END_URL + 'salaryByOwner/' + createdById);
-  }
-
-  getExpectedExpenseAmountsByOwner(createdById: string) {
-    return this.http.get<{
       monthlyTotalExpectedExpenseAmount: number;
-    }>(EXPENSE_BACK_END_URL + 'expense-estimatorByOwner/' + createdById);
+      monthlyTotalEstimatedSpareAmount: number;
+      budgetDineOutAmount: number;
+      budgetGiftAmount: number;
+      budgetGroceryAmount: number;
+      budgetHouseAmount: number;
+      budgetMembershipAmount: number;
+      budgetOtherAmount: number;
+      budgetTransportationAmount: number;
+      budgetTravelAmount: number;
+    }>(EXPENSE_BACK_END_URL + 'expense-estimator-detailedByOwner/' + createdById)
   }
 }

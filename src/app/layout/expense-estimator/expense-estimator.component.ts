@@ -15,34 +15,56 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class ExpenseEstimatorComponent implements OnInit {
   monthlySalary: string;
   monthlyTotalExpectedExpense: string;
+  monthlyTotalEstimatedSpare: string;
+  budgetDineOut: string;
+  budgetGift: string;
+  budgetGrocery: string;
+  budgetHouse: string;
+  budgetMembership: string;
+  budgetOther: string;
+  budgetTransportation: string;
+  budgetTravel: string;
+  displayBudgetDetails: boolean;
   private salaryId: string;
 
   constructor(
     private modalService: NgbModal,
     public expenseEstimatorService: ExpenseEstimatorService,
     public authService: AuthService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.expenseEstimatorService
-      .getSalaryByOwner(this.authService.getUserId())
-      .subscribe(
-        (salaryData: { salaryId: string; monthlySalaryAmount: number }) => {
-          this.salaryId = salaryData.salaryId;
-          this.monthlySalary = this.convertToMoney(
-            salaryData.monthlySalaryAmount
-          );
-        }
-      );
     this.expenseEstimatorService
       .getExpectedExpenseAmountsByOwner(this.authService.getUserId())
       .subscribe(
         (expectedExpenseData: {
+          salaryId: string;
+          monthlySalaryAmount: number;
           monthlyTotalExpectedExpenseAmount: number;
+          monthlyTotalEstimatedSpareAmount: number;
+          budgetDineOutAmount: number;
+          budgetGiftAmount: number;
+          budgetGroceryAmount: number;
+          budgetHouseAmount: number;
+          budgetMembershipAmount: number;
+          budgetOtherAmount: number;
+          budgetTransportationAmount: number;
+          budgetTravelAmount: number;
         }) => {
-          this.monthlyTotalExpectedExpense = this.convertToMoney(
-            expectedExpenseData.monthlyTotalExpectedExpenseAmount
-          );
+          let expectedExpenseAmount = expectedExpenseData.monthlyTotalExpectedExpenseAmount;
+          this.salaryId = expectedExpenseData.salaryId;
+          this.monthlySalary = this.convertToMoney(expectedExpenseData.monthlySalaryAmount);
+          this.monthlyTotalExpectedExpense = this.convertToMoney(expectedExpenseAmount);
+          this.monthlyTotalEstimatedSpare = this.convertToMoney(expectedExpenseData.monthlyTotalEstimatedSpareAmount);
+          this.budgetDineOut = this.convertToMoney(expectedExpenseData.budgetDineOutAmount);
+          this.budgetGift = this.convertToMoney(expectedExpenseData.budgetGiftAmount);
+          this.budgetGrocery = this.convertToMoney(expectedExpenseData.budgetGroceryAmount);
+          this.budgetHouse = this.convertToMoney(expectedExpenseData.budgetHouseAmount);
+          this.budgetMembership = this.convertToMoney(expectedExpenseData.budgetMembershipAmount);
+          this.budgetOther = this.convertToMoney(expectedExpenseData.budgetOtherAmount);
+          this.budgetTransportation = this.convertToMoney(expectedExpenseData.budgetTransportationAmount);
+          this.budgetTravel = this.convertToMoney(expectedExpenseData.budgetTravelAmount);
+          this.displayBudgetDetails = expectedExpenseAmount > 0;
         }
       );
   }
@@ -61,6 +83,9 @@ export class ExpenseEstimatorComponent implements OnInit {
   }
 
   convertToMoney(amount: Number): string {
-    return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    if (amount) {
+      return '$' + amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
+    return '$0.00';
   }
 }

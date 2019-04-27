@@ -9,7 +9,7 @@
           Salary
         </button>
       </div>
-      <div class="col-xl-3">
+      <div class="col-xl-2">
         <button
           class="btn btn-dark my-2 my-sm-0"
           (click)="openCreateEstimatedExpense()"
@@ -32,10 +32,37 @@
   <div class="row">
     <div class="col-xl-4">
       <strong>
+        Monthly Expected Spared Money:
+      </strong>
+    </div>
+    <div class="col-xl-2">{{ monthlyTotalEstimatedSpare }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-4">
+      <strong>
         Monthly Total Expected Expense:
       </strong>
     </div>
-    <div class="col-xl-3">{{ monthlyTotalExpectedExpense }}</div>
+    <div class="col-xl-2">{{ monthlyTotalExpectedExpense }}</div>
+    <ng-container *ngIf="displayBudgetDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="bankInfo"
+        popoverTitle="Money in the bank"
+      ></i>
+      <ng-template #bankInfo>
+        <p><b>Dine Out: </b> {{ budgetDineOut }}</p>
+        <p><b>Gift: </b>{{ budgetGift }}</p>
+        <p><b>Grocery: </b>{{ budgetGrocery }}</p>
+        <p><b>House: </b>{{ budgetHouse }}</p>
+        <p><b>Membership: </b> {{ budgetMembership }}</p>
+        <p><b>Other: </b>{{ budgetOther }}</p>
+        <p><b>Transportation: </b>{{ budgetTransportation }}</p>
+        <p><b>Travel: </b>{{ budgetTravel }}</p>
+      </ng-template>
+    </ng-container>
   </div>
   <hr />
   <app-expense-estimate-list></app-expense-estimate-list>
