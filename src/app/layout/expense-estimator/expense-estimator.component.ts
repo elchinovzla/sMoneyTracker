@@ -88,4 +88,8 @@ export class ExpenseEstimatorComponent implements OnInit {
     }
     return '$0.00';
   }
+
+  isValueAvailable(amount: String): boolean {
+    return amount !== this.convertToMoney(0);
+  }
 }

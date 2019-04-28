@@ -14,10 +14,6 @@ import { MoneyService } from '../money.service';
 })
 export class MoneyCreateComponent implements OnInit, OnDestroy {
   public moneyId: string;
-  enteredDescription = '';
-  enteredMoneyType = '';
-  enteredAmount = '';
-  enteredNote = '';
   money: Money;
   form: FormGroup;
   moneyTypes = MoneyType;

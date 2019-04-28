@@ -6,6 +6,7 @@ const userRoutes = require('./routes/user');
 const expenseEstimatorRoutes = require('./routes/expense-estimator');
 const incomeRoutes = require('./routes/income');
 const moneyRoutes = require('./routes/money');
+const savingsRoutes = require('./routes/savings');
 const dbCredentials = require('./middleware/db-credentials');
 
 const app = express();
@@ -47,5 +48,6 @@ app.use('/api/user', userRoutes);
 app.use('/api/expense-estimator', expenseEstimatorRoutes);
 app.use('/api/income', incomeRoutes);
 app.use('/api/money', moneyRoutes);
+app.use('/api/savings', savingsRoutes);
 
 module.exports = app;

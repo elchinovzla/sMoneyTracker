@@ -11,7 +11,7 @@ const EXPENSE_TYPE = {
   OTHER: 'OTHER',
   TRANSPORTATION: 'TRANSPORTATION',
   TRAVEL: 'TRAVEL'
-}
+};
 
 exports.createEstimatedExpense = (req, res, next) => {
   const expense = new EstimatedExpense({

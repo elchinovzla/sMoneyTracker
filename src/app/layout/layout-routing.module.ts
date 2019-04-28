@@ -28,6 +28,10 @@ const routes: Routes = [
       {
         path: 'money',
         loadChildren: './money/money.module#MoneyModule'
+      },
+      {
+        path: 'savings',
+        loadChildren: './savings/savings.module#SavingsModule'
       }
     ]
   }

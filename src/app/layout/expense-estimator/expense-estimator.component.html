@@ -49,18 +49,36 @@
         class="fa fa-info-circle"
         type="button"
         placement="right"
-        [ngbPopover]="bankInfo"
-        popoverTitle="Money in the bank"
+        [ngbPopover]="expensesInfo"
+        popoverTitle="Expected Expenses"
       ></i>
-      <ng-template #bankInfo>
-        <p><b>Dine Out: </b> {{ budgetDineOut }}</p>
-        <p><b>Gift: </b>{{ budgetGift }}</p>
-        <p><b>Grocery: </b>{{ budgetGrocery }}</p>
-        <p><b>House: </b>{{ budgetHouse }}</p>
-        <p><b>Membership: </b> {{ budgetMembership }}</p>
-        <p><b>Other: </b>{{ budgetOther }}</p>
-        <p><b>Transportation: </b>{{ budgetTransportation }}</p>
-        <p><b>Travel: </b>{{ budgetTravel }}</p>
+      <ng-template #expensesInfo>
+        <div class="pop-over">
+          <p *ngIf="isValueAvailable(budgetDineOut)">
+            <b>Dine Out: </b> {{ budgetDineOut }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetGift)">
+            <b>Gift: </b>{{ budgetGift }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetGrocery)">
+            <b>Grocery: </b>{{ budgetGrocery }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetHouse)">
+            <b>House: </b>{{ budgetHouse }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetMembership)">
+            <b>Membership: </b> {{ budgetMembership }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetOther)">
+            <b>Other: </b>{{ budgetOther }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetTransportation)">
+            <b>Transportation: </b>{{ budgetTransportation }}
+          </p>
+          <p *ngIf="isValueAvailable(budgetTravel)">
+            <b>Travel: </b>{{ budgetTravel }}
+          </p>
+        </div>
       </ng-template>
     </ng-container>
   </div>

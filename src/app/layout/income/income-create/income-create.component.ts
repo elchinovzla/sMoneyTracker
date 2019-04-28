@@ -13,10 +13,6 @@ import { IncomeService } from '../income.service';
 })
 export class IncomeCreateComponent implements OnInit, OnDestroy {
   public incomeId: string;
-  enteredName = '';
-  enteredAmount = '';
-  enteredDate = '';
-  enteredNote = '';
   income: Income;
   form: FormGroup;
 

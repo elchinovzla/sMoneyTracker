@@ -1,0 +1,63 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-nav mr-auto">
+      <h2 class="text-muted">Savings</h2>
+    </div>
+    <div class="row">
+      <div class="col-xl-3">
+        <button class="btn btn-dark my-2 my-sm-0" (click)="openCreateSavings()">
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          Savings
+        </button>
+      </div>
+    </div>
+  </nav>
+  <hr />
+  <div class="row">
+    <div class="col-xl-3">
+      <strong>
+        Total Savings:
+      </strong>
+    </div>
+    <div class="col-xl-2">{{ totalSavings }}</div>
+    <ng-container *ngIf="displayTotalSavingsDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="totalSavingsInfo"
+        popoverTitle="Total Savings"
+      ></i>
+      <ng-template #totalSavingsInfo>
+        <div class="pop-over">
+          <p *ngIf="isValueAvailable(savingsDineOut)">
+            <b>Dine Out: </b> {{ savingsDineOut }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsGift)">
+            <b>Gift: </b>{{ savingsGift }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsGrocery)">
+            <b>Grocery: </b>{{ savingsGrocery }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsHouse)">
+            <b>House: </b>{{ savingsHouse }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsMembership)">
+            <b>Membership: </b> {{ savingsMembership }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsOther)">
+            <b>Other: </b>{{ savingsOther }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsTransportation)">
+            <b>Transportation: </b>{{ savingsTransportation }}
+          </p>
+          <p *ngIf="isValueAvailable(savingsTravel)">
+            <b>Travel: </b>{{ savingsTravel }}
+          </p>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+  <hr />
+  <app-savings-list></app-savings-list>
+</div>
