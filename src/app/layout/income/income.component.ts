@@ -64,8 +64,7 @@ export class IncomeComponent implements OnInit {
 
   updateEarningsInfo() {
     let dateValue = this.form.value.date;
-    let dateString = dateValue.year + '-' + dateValue.month + '-' + dateValue.day + 'T00:00:00';
-    let date = new Date(dateString);
+    let date = new Date(dateValue.year, dateValue.month - 1, dateValue.day);
     this.selectedDate = this.formatDate(date);
     this.incomeService
       .getMonthlyTotalIncome(date, this.authService.getUserId())
@@ -77,6 +76,6 @@ export class IncomeComponent implements OnInit {
       .subscribe(total => {
         this.annualIncome = this.convertToMoney(total.annualIncome);
       });
-      this.incomeList.loadIncomeList(date);
+    this.incomeList.loadIncomeList(date);
   }
 }

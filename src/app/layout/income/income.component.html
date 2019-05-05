@@ -28,36 +28,35 @@
     </div>
   </form>
   <div class="row datepicker-input">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>Month:</strong>
     </div>
-    <div class="col-xl-4">
-      <label class="dateFormat">{{ selectedDate }}</label>
+    <div class="col-info">
       <button
         class="input-group-addon btn-dark"
         (click)="d.toggle()"
         type="button"
       >
         <i class="far fa-calendar-alt" aria-hidden="true"></i>
-        Change Date
+        {{ selectedDate }}
       </button>
     </div>
   </div>
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>
         Monthly Total Earnings:
       </strong>
     </div>
-    <div class="col-xl-3">{{ monthlyIncome }}</div>
+    <div class="col-info">{{ monthlyIncome }}</div>
   </div>
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>
         Annual Total Earnings:
       </strong>
     </div>
-    <div class="col-xl-3">{{ annualIncome }}</div>
+    <div class="col-info">{{ annualIncome }}</div>
   </div>
   <hr />
   <app-income-list></app-income-list>

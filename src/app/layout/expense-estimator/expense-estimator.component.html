@@ -22,28 +22,28 @@
   </nav>
   <hr />
   <div class="row">
-    <div class="col-xl-4">
+    <div class="col-xl-4 col-label">
       <strong>
         Monthly Salary:
       </strong>
     </div>
-    <div class="col-xl-3">{{ monthlySalary }}</div>
+    <div class="col-info">{{ monthlySalary }}</div>
   </div>
   <div class="row">
-    <div class="col-xl-4">
+    <div class="col-xl-4 col-label">
       <strong>
         Monthly Expected Spared Money:
       </strong>
     </div>
-    <div class="col-xl-2">{{ monthlyTotalEstimatedSpare }}</div>
+    <div class="col-info">{{ monthlyTotalEstimatedSpare }}</div>
   </div>
   <div class="row">
-    <div class="col-xl-4">
+    <div class="col-xl-4 col-label">
       <strong>
         Monthly Total Expected Expense:
       </strong>
     </div>
-    <div class="col-xl-2">{{ monthlyTotalExpectedExpense }}</div>
+    <div class="col-info">{{ monthlyTotalExpectedExpense }}</div>
     <ng-container *ngIf="displayBudgetDetails">
       <i
         class="fa fa-info-circle"

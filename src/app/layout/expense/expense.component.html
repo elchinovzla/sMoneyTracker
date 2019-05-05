@@ -1,0 +1,137 @@
+<div>
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="navbar-nav mr-auto">
+      <h2 class="text-muted">Expenses</h2>
+    </div>
+    <div class="row">
+      <div class="col-xl-3">
+        <button class="btn btn-dark my-2 my-sm-0" (click)="openCreateExpense()">
+          <i class="fas fa-plus" aria-hidden="true"></i>
+          Expense
+        </button>
+      </div>
+    </div>
+  </nav>
+  <hr />
+  <form [formGroup]="form">
+    <div style="position: relative">
+      <div class="input-group date">
+        <input
+          id="date"
+          type="hidden"
+          formControlName="date"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          required
+        />
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong>Month:</strong>
+    </div>
+    <div class="col-info col-date">
+      <button
+        class="input-group-addon btn-dark"
+        (click)="d.toggle()"
+        type="button"
+      >
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        {{ selectedDate }}
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong>
+        Total Monthly Expense:
+      </strong>
+    </div>
+    <div class="col-info">{{ totalMonthlyExpense }}</div>
+    <ng-container *ngIf="displayMonthlyExpenseDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="monthlyExpenseInfo"
+        popoverTitle="Monthly Expenses"
+      ></i>
+      <ng-template #monthlyExpenseInfo>
+        <div class="pop-over">
+          <p *ngIf="isValueAvailable(monthlyExpenseDineOut)">
+            <b>Dine Out: </b> {{ monthlyExpenseDineOut }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseGift)">
+            <b>Gift: </b>{{ monthlyExpenseGift }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseGrocery)">
+            <b>Grocery: </b>{{ monthlyExpenseGrocery }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseHouse)">
+            <b>House: </b>{{ monthlyExpenseHouse }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseMembership)">
+            <b>Membership: </b> {{ monthlyExpenseMembership }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseOther)">
+            <b>Other: </b>{{ monthlyExpenseOther }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseTransportation)">
+            <b>Transportation: </b>{{ monthlyExpenseTransportation }}
+          </p>
+          <p *ngIf="isValueAvailable(monthlyExpenseTravel)">
+            <b>Travel: </b>{{ monthlyExpenseTravel }}
+          </p>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong>
+        Total Annual Expense:
+      </strong>
+    </div>
+    <div class="col-info">{{ totalAnnualExpense }}</div>
+    <ng-container *ngIf="displayAnnualExpenseDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="annualExpenseInfo"
+        popoverTitle="Annual Expenses"
+      ></i>
+      <ng-template #annualExpenseInfo>
+        <div class="pop-over">
+          <p *ngIf="isValueAvailable(annualExpenseDineOut)">
+            <b>Dine Out: </b> {{ annualExpenseDineOut }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseGift)">
+            <b>Gift: </b>{{ annualExpenseGift }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseGrocery)">
+            <b>Grocery: </b>{{ annualExpenseGrocery }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseHouse)">
+            <b>House: </b>{{ annualExpenseHouse }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseMembership)">
+            <b>Membership: </b> {{ annualExpenseMembership }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseOther)">
+            <b>Other: </b>{{ annualExpenseOther }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseTransportation)">
+            <b>Transportation: </b>{{ annualExpenseTransportation }}
+          </p>
+          <p *ngIf="isValueAvailable(annualExpenseTravel)">
+            <b>Travel: </b>{{ annualExpenseTravel }}
+          </p>
+        </div>
+      </ng-template>
+    </ng-container>
+  </div>
+  <hr />
+  <app-expense-list></app-expense-list>
+</div>

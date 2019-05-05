@@ -14,12 +14,12 @@
   </nav>
   <hr />
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>
         Money in the bank:
       </strong>
     </div>
-    <div class="col-xl-2">{{ moneyInTheBank }}</div>
+    <div class="col-info">{{ moneyInTheBank }}</div>
     <ng-container *ngIf="displayMoneyInTheBankDetails">
       <i
         class="fa fa-info-circle"
@@ -37,20 +37,20 @@
     </ng-container>
   </div>
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>
         Unclaimed money:
       </strong>
     </div>
-    <div class="col-xl-2">{{ moneyUnclaimed }}</div>
+    <div class="info">{{ moneyUnclaimed }}</div>
   </div>
   <div class="row">
-    <div class="col-xl-3">
+    <div class="col-xl-3 col-label">
       <strong>
         Other Money:
       </strong>
     </div>
-    <div class="col-xl-2">{{ moneyOther }}</div>
+    <div class="col-info">{{ moneyOther }}</div>
     <ng-container *ngIf="displayOtherMoneyDetails">
       <i
         class="fa fa-info-circle"

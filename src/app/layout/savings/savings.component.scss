@@ -3,3 +3,11 @@
   width: 200px;
   overflow: auto;
 }
+.col-label {
+  flex: 0 0 33.33%;
+  max-width: 300px;
+}
+.col-info {
+  flex: 0 0 33.33%;
+  max-width: 120px;
+}

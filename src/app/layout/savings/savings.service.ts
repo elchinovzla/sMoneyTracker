@@ -92,6 +92,28 @@ export class SavingsService {
       });
   }
 
+  getSavingsEntriesForDropDown(createdById: string) {
+    const queryParams = `?createdById=${createdById}`;
+    return this.http
+      .get<{ message: string; savingsEntries: any }>(
+        SAVINGS_BACK_END_URL + 'savings' + queryParams
+      )
+      .pipe(
+        map(savingsData => {
+          return {
+            savingsEntries: savingsData.savingsEntries.map(
+              savings => {
+                return {
+                  id: savings._id,
+                  description: savings.description
+                };
+              }
+            )
+          };
+        })
+      )
+  }
+
   getSavingsTotalCount(createdById: string) {
     return this.http.get<{ savingsTotalCount: number }>(
       SAVINGS_BACK_END_URL + 'savings-count/' + createdById

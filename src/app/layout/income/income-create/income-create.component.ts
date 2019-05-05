@@ -65,12 +65,11 @@ export class IncomeCreateComponent implements OnInit, OnDestroy {
       return;
     }
     let date = this.form.value.date;
-    let dateString = date.year + '-' + date.month + '-' + date.day + 'T00:00:00';
     if (this.mode === 'create') {
       this.incomeService.createIncome(
         this.form.value.name,
         this.form.value.amount,
-        new Date(dateString),
+        new Date(date.year, date.month - 1, date.day),
         this.form.value.note,
         this.authService.getUserId()
       );
@@ -79,7 +78,7 @@ export class IncomeCreateComponent implements OnInit, OnDestroy {
         this.incomeId,
         this.form.value.name,
         this.form.value.amount,
-        new Date(dateString),
+        new Date(date.year, date.month - 1, date.day),
         this.form.value.note
       );
     }

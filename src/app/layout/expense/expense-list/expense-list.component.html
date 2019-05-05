@@ -1,0 +1,93 @@
+<ngb-tabset (tabChange)="selectedTab($event.nextId)" type="pills">
+  <ngb-tab
+    *ngFor="let category of categories"
+    [title]="category.name"
+    [id]="category.expenseType"
+  >
+    <ng-template ngbTabContent>
+      <mat-accordion
+        multi="true"
+        *ngIf="expenses.length > 0; else noExpense"
+        class="accordion md-accordion accordion-blocks"
+      >
+        <mat-expansion-panel *ngFor="let expense of expenses" class="card mb-1">
+          <mat-expansion-panel-header class="card-header z-depth-1">
+            <div class="container">
+              <div class="d-flex">
+                <div class="mr-auto col-xl-8 col-lg-6">
+                  <h4 class="text white-text mb-0 py-3 mt-1">
+                    {{ expense.description }}
+                  </h4>
+                </div>
+                <div class="mr-auto col-xl-1 col-lg-1 align-items-end">
+                  <h5 class="text-uppercase white-text mb-0 py-3 mt-1">
+                    <span class="badge badge-dark">{{
+                      expense.date | date: 'MMM dd, yyyy'
+                    }}</span>
+                  </h5>
+                </div>
+                <div class="mr-auto col-xl-1 col-lg-1 align-items-end">
+                  <h5 class="text-uppercase white-text mb-0 py-3 mt-1">
+                    <span class="badge badge-dark">{{
+                      convertToMoney(expense.amount)
+                    }}</span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+          </mat-expansion-panel-header>
+          <div class="card-body rgba-black-light white-text z-depth-1">
+            <div>
+              <h5>
+                Expense Type
+                <span class="badge badge-info">{{
+                  makeEnumPretty(expense.expenseType)
+                }}</span>
+              </h5>
+            </div>
+          </div>
+          <div class="card-body rgba-black-light white-text z-depth-1">
+            <div>
+              <h5>
+                Savings
+                <span class="badge badge-info">{{ expense.savingsId }}</span>
+              </h5>
+            </div>
+          </div>
+          <div class="card-body rgba-black-light white-text z-depth-1">
+            <div>
+              <h5>
+                Note
+                <span class="badge badge-info">{{ expense.note }}</span>
+              </h5>
+            </div>
+          </div>
+          <mat-action-row>
+            <button
+              class="btn btn-primary my-2 my-sm-0 z-depth-2 mr-1"
+              (click)="edit(expense)"
+            >
+              Edit
+            </button>
+            <button
+              class="btn btn-danger my-2 my-sm-0 z-depth-2"
+              (click)="delete(expense)"
+            >
+              Delete
+            </button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <mat-paginator
+        [length]="expenseTotalCount"
+        [pageSize]="expensesPerPage"
+        (page)="onChangedPage($event)"
+        [hidePageSize]="true"
+        [showFirstLastButtons]="true"
+      ></mat-paginator>
+      <ng-template #noExpense>
+        <h3>No Data</h3>
+      </ng-template>
+    </ng-template>
+  </ngb-tab>
+</ngb-tabset>
