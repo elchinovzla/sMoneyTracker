@@ -154,6 +154,31 @@ export class ExpenseService {
     )
   }
 
+  getDashboardInfo(date: Date, createdById: string) {
+    const queryParams =
+      `?createdById=${createdById}` +
+      `&date=${date.toDateString()}`;
+    return this.http
+      .get<{ message: string; dashboardData: any }>(
+        EXPENSE_BACK_END_URL + 'expense-dashboard' + queryParams
+      )
+      .pipe(
+        map(dashboardData => {
+          return {
+            dashboardInfo: dashboardData.dashboardData.map(
+              entry => {
+                return {
+                  expenseType: entry.expenseType,
+                  actualAmount: entry.actualAmount,
+                  budgetAmount: entry.budgetAmount,
+                  difference: entry.difference
+                };
+              })
+          };
+        })
+      );
+  }
+
   updateExpense(
     id: string,
     description: string,

@@ -1,19 +1,111 @@
 <div [@routerTransition]>
   <h2 class="text-muted">Dashboard</h2>
+  <hr />
+  <form [formGroup]="form">
+    <div style="position: relative">
+      <div class="input-group date">
+        <input
+          id="date"
+          type="hidden"
+          formControlName="date"
+          ngbDatepicker
+          #d="ngbDatepicker"
+          required
+        />
+      </div>
+    </div>
+  </form>
   <div class="row">
-    <div class="col-xl-3 col-lg-6">
-      <app-stat [bgClass]="'primary'" [icon]="'fa-comments'" [count]="26" [label]="'New Comments!'"></app-stat>
+    <div class="col-xl-1 col-label">
+      <strong>Month:</strong>
     </div>
-    <div class="col-xl-3 col-lg-6">
-      <app-stat [bgClass]="'warning'" [icon]="'fa-tasks'" [count]="12" [label]="'New task!'"></app-stat>
-    </div>
-    <div class="col-xl-3 col-lg-6">
-      <app-stat [bgClass]="'success'" [icon]="'fa-shopping-cart'" [count]="124" [label]="'New Orders!'"></app-stat>
-    </div>
-    <div class="col-xl-3 col-lg-6">
-      <app-stat [bgClass]="'danger'" [icon]="'fa-support'" [count]="13" [label]="'New Tickets!'"></app-stat>
+    <div class="col-info col-date">
+      <button
+        class="input-group-addon btn-dark"
+        (click)="d.toggle()"
+        type="button"
+      >
+        <i class="far fa-calendar-alt" aria-hidden="true"></i>
+        {{ selectedDate }}
+      </button>
     </div>
   </div>
   <hr />
-  <ngb-alert [type]="alert.type" (close)="closeAlert(alert)" *ngFor="let alert of alerts">{{ alert.message }}</ngb-alert>
+  <div class="row">
+    <div class="col col-sm-6">
+      <div class="card mb-3">
+        <div class="card-header text-uppercase">
+          <strong>Actual Summary</strong>
+        </div>
+        <div class="card-body">
+          <canvas
+            baseChart
+            height="150px"
+            [data]="pieChartData"
+            [labels]="pieChartLabels"
+            [chartType]="pieChartType"
+            [colors]="chartColors"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col col-sm-6">
+      <div class="card mb-3">
+        <div class="card-header text-uppercase">
+          <strong>Budget vs Actual</strong>
+        </div>
+        <div class="card-body">
+          <canvas
+            baseChart
+            [datasets]="barChartData"
+            [labels]="barChartLabels"
+            [options]="barChartOptions"
+            [legend]="barChartLegend"
+            [chartType]="barChartType"
+          >
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col col-table">
+      <div class="card mb-3">
+        <div class="card-header text-uppercase">
+          <strong>Summary By Expense Type</strong>
+        </div>
+        <div class="card-body">
+          <table class="table table-hover table-striped">
+            <thead>
+              <tr>
+                <th class="text-left">Category</th>
+                <th class="text-right">Budget</th>
+                <th class="text-right">Actual</th>
+                <th class="text-right">Difference</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let expense of dashboardData">
+                <td class="text-left">
+                  {{ makeEnumPretty(expense.expenseType) }}
+                </td>
+                <td class="text-right">
+                  {{ convertToMoney(expense.budgetAmount) }}
+                </td>
+                <td class="text-right">
+                  {{ convertToMoney(expense.actualAmount) }}
+                </td>
+                <td class="text-right">
+                  <p [ngClass]="expense.difference < 0 ? 'text-red' : ''">
+                    {{ convertToMoney(expense.difference) }}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

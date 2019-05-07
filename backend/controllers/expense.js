@@ -1,4 +1,5 @@
 const Expense = require('../models/expense');
+const ExpenseEstimator = require('../models/estimated-expense');
 const Dinero = require('dinero.js');
 Dinero.defaultCurrency = 'CAD';
 const Moment = require('moment');
@@ -213,6 +214,32 @@ exports.getAnnualExpenseInfo = (req, res, next) => {
     });
 };
 
+exports.getDashboardInfo = (req, res, next) => {
+  const date = new Date(req.query.date);
+  const startDate = new Date(date.getFullYear(), date.getMonth());
+  const endDate = Moment(startDate).add(1, 'month').toDate();
+  Promise.all([
+    ExpenseEstimator.find({
+      createdById: req.query.createdById
+    }),
+    Expense.find({
+      date: {
+        $gte: startDate,
+        $lt: endDate
+      },
+      createdById: req.query.createdById
+    })
+  ]).then(results => {
+    res.status(200).json({
+      dashboardData: getDashboardInfo(results)
+    });
+  }).catch(error => {
+    res.status(500).json({
+      message: 'Failed to get dashboard info: ' + error
+    });
+  });
+};
+
 exports.updateExpense = (req, res, next) => {
   Expense.findOneAndUpdate(
     { _id: req.body.id },
@@ -276,3 +303,19 @@ function getTotal(expenses) {
   });
   return totalCount;
 };
+
+function getDashboardInfo(results) {
+  let dashboardInfo = [];
+  for (let value in EXPENSE_TYPE) {
+    let budgetAmount = Dinero({ amount: Math.round(getTotalExpenseAmount(results[0], EXPENSE_TYPE[value]) * 100) });
+    let actualAmount = Dinero({ amount: Math.round(getTotalExpenseAmount(results[1], EXPENSE_TYPE[value]) * 100) });
+    let difference = budgetAmount.subtract(actualAmount);
+    dashboardInfo.push({
+      expenseType: EXPENSE_TYPE[value],
+      actualAmount: actualAmount.getAmount() / 100,
+      budgetAmount: budgetAmount.getAmount() / 100,
+      difference: difference.getAmount() / 100
+    });
+  }
+  return dashboardInfo;
+}

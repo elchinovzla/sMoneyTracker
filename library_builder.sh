@@ -16,3 +16,5 @@ npm install --save angular-notifier;
 npm install --save nodemailer;
 npm install --save dinero.js;
 npm install --save moment;
+npm install --save ng2-charts;
+npm install angular-chart.js --save;
