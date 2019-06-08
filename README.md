@@ -1,27 +1,20 @@
 # SMoneyTracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.2.
+This web application is created to keep track of daily expenses, budget based on a monthly salary and how much is available within each category, bank accounts and savings.
 
-## Development server
+This project was created in order to put on practice the knowledge acquired within the udemy course: https://www.udemy.com/angular-2-and-nodejs-the-practical-guide/
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+The features implemented with their corresponding screen shots are located in: https://www.pivotaltracker.com/n/projects/2235846 within the done section
 
-## Code scaffolding
+## Notes
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+The missing tests are coming in the near future after I learn how to work with Protractor, please stay tuned!
 
-## Build
+## Install required libraries
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+run the script ./library_builder.sh
 
-## Running unit tests
+## Run the application
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+run the script ./startAngular.sh (front end)
+run the script ./startNode.sh (back end-please use a different terminal's tab)

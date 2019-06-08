@@ -7,6 +7,7 @@
       routerLink="/dashboard"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
+      *ngIf="!isUserAdmin"
     >
       <i class="fas fa-tachometer-alt"></i>
       &nbsp;
@@ -16,6 +17,7 @@
       routerLink="/expense-estimator"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
+      *ngIf="!isUserAdmin"
     >
       <i class="fas fa-tasks"></i>
       &nbsp;
@@ -25,6 +27,7 @@
       routerLink="/money"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
+      *ngIf="!isUserAdmin"
     >
       <i class="fas fa-dollar-sign"></i>
       &nbsp;
@@ -34,6 +37,7 @@
       routerLink="/income"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
+      *ngIf="!isUserAdmin"
     >
       <i class="fas fa-wallet"></i>
       &nbsp;
