@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MoneyService } from '../money.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { MoneyCreateComponent } from '../money-create/money-create.component';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-money-list',

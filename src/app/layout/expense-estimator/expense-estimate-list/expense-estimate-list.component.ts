@@ -5,7 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ExpenseEstimatorService } from '../expense-estimator.service';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ExpenseEstimateCreateComponent } from '../expense-estimate-create/expense-estimate-create.component';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-expense-estimate-list',

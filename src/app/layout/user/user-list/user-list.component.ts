@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { User } from '../user.model';
 import { Subscription } from 'rxjs';
 import { UserService } from '../user.service';
-import { PageEvent } from '@angular/material';
+import { PageEvent } from '@angular/material/paginator';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UserModifyComponent } from '../user-modify/user-modify.component';
 
