@@ -1,6 +1,6 @@
 {
   "name": "s-money-tracker",
-  "version": "1.0.11",
+  "version": "1.0.14",
   "license": "SONNY INC",
   "private": true,
   "description": "Backend for sMoneyTracker",
