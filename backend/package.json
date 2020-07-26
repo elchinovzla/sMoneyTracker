@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "license": "SONNY INC",
   "private": true,
+  "description": "Backend for sMoneyTracker",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
   "dependencies": {
     "bcryptjs": "2.4.3",
     "body-parser": "1.19.0",
