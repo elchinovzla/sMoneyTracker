@@ -40,6 +40,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+package-lock.json
 
 # System Files
 .DS_Store
@@ -49,8 +50,3 @@ Thumbs.db
 .firebase/
 .firebaserc
 firebase.json
-
-# Private data
-backend/middleware/db-credentials.js
-backend/middleware/email-sender-credentials.js
-package-lock.json
