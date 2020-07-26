@@ -1,6 +1,6 @@
 {
   "name": "s-money-tracker",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "SONNY INC",
   "scripts": {
     "ng": "ng",
@@ -8,8 +8,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "start:server": "nodemon ./backend/server.js"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
