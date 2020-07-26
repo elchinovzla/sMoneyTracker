@@ -14,7 +14,7 @@ import { IncomeListComponent } from './income-list/income-list.component';
   animations: [routerTransition()]
 })
 export class IncomeComponent implements OnInit {
-  @ViewChild(IncomeListComponent) private incomeList: IncomeListComponent;
+  @ViewChild('incomeList', { static: true, read: IncomeListComponent}) incomeList: IncomeListComponent;
   monthlyIncome: String;
   annualIncome: String;
   selectedDate: String;

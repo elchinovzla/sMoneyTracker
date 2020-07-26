@@ -14,7 +14,7 @@ import { ExpenseListComponent } from './expense-list/expense-list.component';
   animations: [routerTransition()]
 })
 export class ExpenseComponent implements OnInit {
-  @ViewChild(ExpenseListComponent) private expenseList: ExpenseListComponent;
+  @ViewChild('expenseList', {static: true, read:ExpenseListComponent}) expenseList: ExpenseListComponent;
   selectedDate: String;
   form: FormGroup;
   monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
