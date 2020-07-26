@@ -1,22 +1,23 @@
-import express from 'express';
-import { json } from 'body-parser';
-import { connect } from 'mongoose';
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
-import userRoutes from './routes/user';
-import expenseEstimatorRoutes from './routes/expense-estimator';
-import incomeRoutes from './routes/income';
-import moneyRoutes from './routes/money';
-import savingsRoutes from './routes/savings';
-import expenseRoutes from './routes/expense';
-import { USER_NAME, PASSWORD } from './middleware/db-credentials';
+const userRoutes = require('./routes/user');
+const expenseEstimatorRoutes = require('./routes/expense-estimator');
+const incomeRoutes = require('./routes/income');
+const moneyRoutes = require('./routes/money');
+const savingsRoutes = require('./routes/savings');
+const expenseRoutes = require('./routes/expense');
+const dbCredentials = require('./middleware/db-credentials');
 
 const app = express();
 
-connect(
+mongoose
+  .connect(
     'mongodb+srv://' +
-    USER_NAME +
+    dbCredentials.USER_NAME +
     ':' +
-    PASSWORD +
+    dbCredentials.PASSWORD +
     '@cluster0-fkcx5.mongodb.net/smoney-tracker',
     {
       useNewUrlParser: true
@@ -29,7 +30,7 @@ connect(
     console.log('Connection failed!');
   });
 
-app.use(json());
+app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -51,4 +52,4 @@ app.use('/api/money', moneyRoutes);
 app.use('/api/savings', savingsRoutes);
 app.use('/api/expense', expenseRoutes);
 
-export default app;
+module.exports = app;
