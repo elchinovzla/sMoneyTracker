@@ -1,6 +1,6 @@
 {
   "name": "s-money-tracker",
-  "version": "0.0.0",
+  "version": "1.0.11",
   "license": "SONNY INC",
   "private": true,
   "description": "Backend for sMoneyTracker",
@@ -8,6 +8,9 @@
     "start": "node server.js",
     "server-prod": "node server.js",
     "server": "nodemon server.js"
+  },
+  "engines": {
+    "node": "12.x"
   },
   "dependencies": {
     "bcryptjs": "2.4.3",
