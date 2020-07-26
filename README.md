@@ -17,4 +17,5 @@ run the script ./library_builder.sh
 ## Run the application
 
 run the script ./startAngular.sh (front end)
-run the script ./startNode.sh (back end-please use a different terminal's tab)
+
+P.S. In order to run the back-end code please clone the project https://github.com/elchinovzla/sMoneyTracker_backend

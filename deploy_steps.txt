@@ -2,7 +2,6 @@ DEPLOY IN FIREBASE
 * ng build --prod
 * sudo npm install -g firebase-tools
 * firebase login
-* firebase use --add
 * firebase init
 * firebase deploy
 * firebase open hosting:site
@@ -10,9 +9,3 @@ DEPLOY IN FIREBASE
 UPDATE FIREBASE SOLUTION
 * ng build --prod
 * firebase deploy
-
-UPDATE HEROKU APP
-** make sure you are in the backend folder
-* git add .
-* git commit -m "update backend"
-* git push heroku master
