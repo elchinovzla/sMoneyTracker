@@ -1,3 +1,3 @@
-const USER_NAME = 'sonnyng.business@gmail.com';
-const PASSWORD = 'nitke4-giwxud-kIrtux';
+const USER_NAME = 'email@domain.com';
+const PASSWORD = 'emailPassword';
 module.exports = { USER_NAME, PASSWORD};
