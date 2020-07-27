@@ -1,62 +1,61 @@
 <div class="login-page" [@routerTransition]>
-  <div class="row justify-content-md-center">
-    <div class="col-md-4">
-      <img src="assets/logo/logo-light.png" width="250px" alt="sMoneyTracker" />
-      <form
-        (submit)="onLogin(loginForm)"
-        #loginForm="ngForm"
-        *ngIf="!userIsAuthenticated"
-      >
-        <div class="form-content">
-          <div class="form-group">
-            <input
-              name="email"
-              ngModel
-              type="email"
-              class="form-control input-underline input-lg"
-              #emailInput="ngModel"
-              placeholder="E-Mail"
-              email
-            />
-            <mat-error *ngIf="emailInput.invalid" class="error"
-              >Please enter a valid email</mat-error
-            >
-          </div>
-          <div class="form-group">
-            <input
-              [type]="showPassword.checked ? 'text' : 'password'"
-              name="password"
-              ngModel
-              class="form-control input-underline input-lg"
-              #passwordInput="ngModel"
-              placeholder="Password"
-            />
-            <mat-error *ngIf="passwordInput.invalid" class="error"
-              >Please enter a valid password</mat-error
-            >
-          </div>
-        </div>
-        <div class="d-flex justify-content-around">
-          <div class="col">
-            <mat-checkbox #showPassword class="link"
-              >Show Password</mat-checkbox
-            >
-          </div>
-          <div class="col">
-            <a class="link" (click)="openForgotPassword()">Forgot password?</a>
-          </div>
-        </div>
-        <br />
-        <button
-          mat-raised-button
-          class="btn btn-block my-4"
-          type="submit"
-          *ngIf="!isLoading"
+    <div class="row justify-content-md-center">
+      <div class="col-md-4">
+        <img src="assets/logo/logo-light.png" width="250px" alt="sMoneyTracker" />
+        <form
+          (submit)="onLogin(loginForm)"
+          #loginForm="ngForm"
+          *ngIf="!userIsAuthenticated"
         >
-          Sign In
-          <i class="fas fa-sign-in-alt"></i>
-        </button>
-      </form>
+          <div class="form-content">
+            <div class="form-group">
+              <input
+                name="email"
+                ngModel
+                type="email"
+                class="form-control input-underline input-lg"
+                #emailInput="ngModel"
+                placeholder="E-Mail"
+                email
+              />
+              <mat-error *ngIf="emailInput.invalid" class="error"
+                >Please enter a valid email</mat-error
+              >
+            </div>
+            <div class="form-group">
+              <input
+                [type]="showPassword.checked ? 'text' : 'password'"
+                name="password"
+                ngModel
+                class="form-control input-underline input-lg"
+                #passwordInput="ngModel"
+                placeholder="Password"
+              />
+              <mat-error *ngIf="passwordInput.invalid" class="error"
+                >Please enter a valid password</mat-error
+              >
+            </div>
+          </div>
+          <div class="d-flex justify-content-around">
+            <div class="col">
+              <mat-checkbox #showPassword class="link"
+                >Show Password</mat-checkbox
+              >
+            </div>
+            <div class="col">
+              <a class="link" (click)="openForgotPassword()">Forgot password?</a>
+            </div>
+          </div>
+          <br />
+          <button
+            mat-raised-button
+            class="btn btn-block my-4"
+            type="submit"
+          >
+            Sign In
+            <i class="fas fa-sign-in-alt"></i>
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
 </div>

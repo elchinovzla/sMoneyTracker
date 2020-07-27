@@ -50,7 +50,3 @@ Thumbs.db
 .firebase/
 .firebaserc
 firebase.json
-
-# Private data
-backend/middleware/db-credentials.js
-backend/middleware/email-sender-credentials.js

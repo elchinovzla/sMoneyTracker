@@ -1,4 +1,4 @@
-$topnav-background-color: #2c3531;
+$topnav-background-color: #264653;
 :host {
   display: block;
 }
@@ -90,11 +90,11 @@ $topnav-background-color: #2c3531;
   }
 
   .error {
-    color: #ffcb9a;
+    color: #e63946;
   }
 
   .link {
-    color: #d9b08c;
+    color: #e9c46a;
   }
 
   .link:hover {
@@ -102,14 +102,15 @@ $topnav-background-color: #2c3531;
   }
 
   .mat-raised-button {
-    color: #d1e8e2;
-    background-color: #116466;
+    color: #264653;
+    background-color: #e9c46a;
+    border: 2px solid #e0e0e0;
     font-size: large;
     max-width: 150px;
   }
 
   .mat-raised-button:hover {
-    color: #116466;
+    color: #264653;
     background-color: #d1e8e2;
   }
 }

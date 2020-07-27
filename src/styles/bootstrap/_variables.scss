@@ -36,16 +36,16 @@ $grays: map-merge((
   "900": $gray-900
 ), $grays);
 
-$blue:    #007bff !default;
+$blue:    #264653 !default;
 $indigo:  #6610f2 !default;
 $purple:  #6f42c1 !default;
 $pink:    #e83e8c !default;
-$red:     #dc3545 !default;
+$red:     #e63946 !default;
 $orange:  #fd7e14 !default;
 $yellow:  #ffc107 !default;
 $green:   #28a745 !default;
 $teal:    #20c997 !default;
-$cyan:    #17a2b8 !default;
+$cyan:    #264653 !default;
 
 $colors: () !default;
 $colors: map-merge((
@@ -210,7 +210,7 @@ $border-radius-lg:            .3rem !default;
 $border-radius-sm:            .2rem !default;
 
 $component-active-color:      $white !default;
-$component-active-bg:         theme-color("primary") !default;
+$component-active-bg:         #343A40 !default;
 
 $caret-width:                 .3em !default;
 

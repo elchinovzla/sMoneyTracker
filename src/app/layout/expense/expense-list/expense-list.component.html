@@ -3,6 +3,7 @@
     *ngFor="let category of categories"
     [title]="category.name"
     [id]="category.expenseType"
+    class="tab-menu"
   >
     <ng-template ngbTabContent>
       <mat-accordion
@@ -46,7 +47,7 @@
               </h5>
             </div>
           </div>
-          <div class="card-body rgba-black-light white-text z-depth-1">
+          <div class="card-body rgba-black-light white-text z-depth-1" *ngIf=expense.savingsId>
             <div>
               <h5>
                 Savings
@@ -54,7 +55,7 @@
               </h5>
             </div>
           </div>
-          <div class="card-body rgba-black-light white-text z-depth-1">
+          <div class="card-body rgba-black-light white-text z-depth-1" *ngIf=expense.note>
             <div>
               <h5>
                 Note
