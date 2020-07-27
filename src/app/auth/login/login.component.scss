@@ -1,4 +1,4 @@
-$topnav-background-color: #264653;
+$topnav-background-color: #343a40;
 :host {
   display: block;
 }
@@ -102,7 +102,7 @@ $topnav-background-color: #264653;
   }
 
   .mat-raised-button {
-    color: #264653;
+    color: #343a40;
     background-color: #e9c46a;
     border: 2px solid #e0e0e0;
     font-size: large;
@@ -110,7 +110,7 @@ $topnav-background-color: #264653;
   }
 
   .mat-raised-button:hover {
-    color: #264653;
-    background-color: #d1e8e2;
+    color: #343a40;
+    background-color: #e0e0e0;
   }
 }

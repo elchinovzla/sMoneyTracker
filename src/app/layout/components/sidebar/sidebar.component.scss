@@ -1,4 +1,4 @@
-$topnav-background-color: #264653;
+$topnav-background-color: #343a40;
 .sidebar {
   border-radius: 0;
   position: fixed;
@@ -81,7 +81,6 @@ $topnav-background-color: #264653;
       background: darken($topnav-background-color, 5%);
     }
     .panel-collapse {
-      border-radious: 0;
       border: none;
       .panel-body {
         .list-group-item {
