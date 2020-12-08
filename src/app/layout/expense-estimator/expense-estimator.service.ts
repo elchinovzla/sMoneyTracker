@@ -211,7 +211,7 @@ export class ExpenseEstimatorService {
 
     this.http
       .get<{ message: string; estimatedExpense: any }>(
-        EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator-new' + queryParams
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator' + queryParams
       )
       .pipe(
         map((expenseEstimatorData) => {
