@@ -1,18 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from 'src/app/router.animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SalaryComponent } from './salary/salary.component';
 import { ExpenseEstimateCreateComponent } from './expense-estimate-create/expense-estimate-create.component';
 import { ExpenseEstimatorService } from './expense-estimator.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ExpenseEstimateListComponent } from './expense-estimate-list/expense-estimate-list.component';
 
 @Component({
   selector: 'app-expense-estimator',
   templateUrl: './expense-estimator.component.html',
   styleUrls: ['./expense-estimator.component.scss'],
-  animations: [routerTransition()]
+  animations: [routerTransition()],
 })
 export class ExpenseEstimatorComponent implements OnInit {
+  @ViewChild('estimatedExpenseList', {
+    static: true,
+    read: ExpenseEstimateListComponent,
+  })
+  estimatedExpenseList: ExpenseEstimateListComponent;
   monthlySalary: string;
   monthlyTotalExpectedExpense: string;
   monthlyTotalEstimatedSpare: string;
@@ -31,47 +37,15 @@ export class ExpenseEstimatorComponent implements OnInit {
     private modalService: NgbModal,
     public expenseEstimatorService: ExpenseEstimatorService,
     public authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.expenseEstimatorService
-      .getExpectedExpenseAmountsByOwner(this.authService.getUserId())
-      .subscribe(
-        (expectedExpenseData: {
-          salaryId: string;
-          monthlySalaryAmount: number;
-          monthlyTotalExpectedExpenseAmount: number;
-          monthlyTotalEstimatedSpareAmount: number;
-          budgetDineOutAmount: number;
-          budgetGiftAmount: number;
-          budgetGroceryAmount: number;
-          budgetHouseAmount: number;
-          budgetMembershipAmount: number;
-          budgetOtherAmount: number;
-          budgetTransportationAmount: number;
-          budgetTravelAmount: number;
-        }) => {
-          let expectedExpenseAmount = expectedExpenseData.monthlyTotalExpectedExpenseAmount;
-          this.salaryId = expectedExpenseData.salaryId;
-          this.monthlySalary = this.convertToMoney(expectedExpenseData.monthlySalaryAmount);
-          this.monthlyTotalExpectedExpense = this.convertToMoney(expectedExpenseAmount);
-          this.monthlyTotalEstimatedSpare = this.convertToMoney(expectedExpenseData.monthlyTotalEstimatedSpareAmount);
-          this.budgetDineOut = this.convertToMoney(expectedExpenseData.budgetDineOutAmount);
-          this.budgetGift = this.convertToMoney(expectedExpenseData.budgetGiftAmount);
-          this.budgetGrocery = this.convertToMoney(expectedExpenseData.budgetGroceryAmount);
-          this.budgetHouse = this.convertToMoney(expectedExpenseData.budgetHouseAmount);
-          this.budgetMembership = this.convertToMoney(expectedExpenseData.budgetMembershipAmount);
-          this.budgetOther = this.convertToMoney(expectedExpenseData.budgetOtherAmount);
-          this.budgetTransportation = this.convertToMoney(expectedExpenseData.budgetTransportationAmount);
-          this.budgetTravel = this.convertToMoney(expectedExpenseData.budgetTravelAmount);
-          this.displayBudgetDetails = expectedExpenseAmount > 0;
-        }
-      );
+    this.updateEstimatedExpenses();
   }
 
   openCreateSalary() {
     const salaryComponent = this.modalService.open(SalaryComponent, {
-      centered: true
+      centered: true,
     });
     if (this.salaryId) {
       salaryComponent.componentInstance.salaryId = this.salaryId;
@@ -91,5 +65,66 @@ export class ExpenseEstimatorComponent implements OnInit {
 
   isValueAvailable(amount: String): boolean {
     return amount !== this.convertToMoney(0);
+  }
+
+  updateEstimatedExpenses() {
+    this.expenseEstimatorService
+      .getExpectedExpenseAmountsByOwner(this.authService.getUserId())
+      .subscribe(
+        (expectedExpenseData: {
+          salaryId: string;
+          monthlySalaryAmount: number;
+          monthlyTotalExpectedExpenseAmount: number;
+          monthlyTotalEstimatedSpareAmount: number;
+          budgetDineOutAmount: number;
+          budgetGiftAmount: number;
+          budgetGroceryAmount: number;
+          budgetHouseAmount: number;
+          budgetMembershipAmount: number;
+          budgetOtherAmount: number;
+          budgetTransportationAmount: number;
+          budgetTravelAmount: number;
+        }) => {
+          let expectedExpenseAmount =
+            expectedExpenseData.monthlyTotalExpectedExpenseAmount;
+          this.salaryId = expectedExpenseData.salaryId;
+          this.monthlySalary = this.convertToMoney(
+            expectedExpenseData.monthlySalaryAmount
+          );
+          this.monthlyTotalExpectedExpense = this.convertToMoney(
+            expectedExpenseAmount
+          );
+          this.monthlyTotalEstimatedSpare = this.convertToMoney(
+            expectedExpenseData.monthlyTotalEstimatedSpareAmount
+          );
+          this.budgetDineOut = this.convertToMoney(
+            expectedExpenseData.budgetDineOutAmount
+          );
+          this.budgetGift = this.convertToMoney(
+            expectedExpenseData.budgetGiftAmount
+          );
+          this.budgetGrocery = this.convertToMoney(
+            expectedExpenseData.budgetGroceryAmount
+          );
+          this.budgetHouse = this.convertToMoney(
+            expectedExpenseData.budgetHouseAmount
+          );
+          this.budgetMembership = this.convertToMoney(
+            expectedExpenseData.budgetMembershipAmount
+          );
+          this.budgetOther = this.convertToMoney(
+            expectedExpenseData.budgetOtherAmount
+          );
+          this.budgetTransportation = this.convertToMoney(
+            expectedExpenseData.budgetTransportationAmount
+          );
+          this.budgetTravel = this.convertToMoney(
+            expectedExpenseData.budgetTravelAmount
+          );
+          this.displayBudgetDetails = expectedExpenseAmount > 0;
+        }
+      );
+
+    this.estimatedExpenseList.setExpenseList(null);
   }
 }

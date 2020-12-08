@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 import { Salary } from './salary.model';
 import { map } from 'rxjs/operators';
 
-const EXPENSE_BACK_END_URL = environment.apiUrl + '/expense-estimator/';
+const EXPENSE_ESTIMATOR_BACK_END_URL =
+  environment.apiUrl + '/expense-estimator/';
 
 @Injectable({ providedIn: 'root' })
 export class ExpenseEstimatorService {
@@ -17,7 +18,7 @@ export class ExpenseEstimatorService {
   }>();
   private expenseEstimatorStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getExpenseEstimatorUpdateListener() {
     return this.expenseEstimatorUpdated.asObservable();
@@ -38,63 +39,22 @@ export class ExpenseEstimatorService {
       description: description,
       expenseType: expenseType,
       amount: amount,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
       .post<{ message: string }>(
-        EXPENSE_BACK_END_URL + 'expense-estimator',
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator',
         expenseEstimateData
       )
       .subscribe(
         () => {
           this.router.navigate(['/expense-estimator']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseEstimatorStatusListener.next(true);
         }
       );
-  }
-
-  getExpenseEstimates(
-    expenseEstimatesPerPage: number,
-    currentPage: number,
-    createdById: string
-  ) {
-    const queryParams = `?pagesize=${expenseEstimatesPerPage}&page=${currentPage}&createdById=${createdById}`;
-    this.http
-      .get<{ message: string; estimatedExpenses: any }>(
-        EXPENSE_BACK_END_URL + 'expense-estimator' + queryParams
-      )
-      .pipe(
-        map(expenseEstimateData => {
-          return {
-            expenseEstimates: expenseEstimateData.estimatedExpenses.map(
-              expenseEstimate => {
-                return {
-                  id: expenseEstimate._id,
-                  description: expenseEstimate.description,
-                  expenseType: expenseEstimate.expenseType,
-                  amount: expenseEstimate.amount,
-                  createdById: expenseEstimate.createdById
-                };
-              }
-            )
-          };
-        })
-      )
-      .subscribe(transformedExpenseData => {
-        this.expenseEstimates = transformedExpenseData.expenseEstimates;
-        this.expenseEstimatorUpdated.next({
-          expenseEstimates: [...this.expenseEstimates]
-        });
-      });
-  }
-
-  getExpenseEstimateTotalCount(createdById: string) {
-    return this.http.get<{ maxEstimatedExpenses: number }>(
-      EXPENSE_BACK_END_URL + 'expense-estimator-count/' + createdById
-    );
   }
 
   getExpenseEstimate(id: string) {
@@ -104,7 +64,7 @@ export class ExpenseEstimatorService {
       expenseType: string;
       amount: number;
       createdBy: string;
-    }>(EXPENSE_BACK_END_URL + 'expense-estimator/' + id);
+    }>(EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator/' + id);
   }
 
   updateExpenseEstimate(
@@ -118,18 +78,18 @@ export class ExpenseEstimatorService {
       description: description,
       expenseType: expenseType,
       amount: amount,
-      createdById: ''
+      createdById: '',
     };
     this.http
       .patch<{ message: string }>(
-        EXPENSE_BACK_END_URL + 'update-expense-estimator/' + id,
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'update-expense-estimator/' + id,
         expenseEstimateData
       )
       .subscribe(
         () => {
           this.router.navigate(['/expense-estimator']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseEstimatorStatusListener.next(true);
         }
@@ -139,13 +99,13 @@ export class ExpenseEstimatorService {
   deleteExpenseEstimate(id: string) {
     this.http
       .delete<{ message: string }>(
-        EXPENSE_BACK_END_URL + 'expense-estimator/' + id
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator/' + id
       )
       .subscribe(
         () => {
           this.router.navigate(['/expense-estimator']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseEstimatorStatusListener.next(true);
         }
@@ -157,15 +117,18 @@ export class ExpenseEstimatorService {
       id: '',
       salaryType: salaryType,
       amount: amount,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
-      .post<{ message: string }>(EXPENSE_BACK_END_URL + 'salary', salaryData)
+      .post<{ message: string }>(
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'salary',
+        salaryData
+      )
       .subscribe(
         () => {
           this.router.navigate(['/expense-estimator']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseEstimatorStatusListener.next(true);
         }
@@ -178,7 +141,7 @@ export class ExpenseEstimatorService {
       salaryType: string;
       amount: number;
       createdBy: string;
-    }>(EXPENSE_BACK_END_URL + 'salary/' + id);
+    }>(EXPENSE_ESTIMATOR_BACK_END_URL + 'salary/' + id);
   }
 
   updateSalary(id: string, salaryType: string, amount: number) {
@@ -186,18 +149,18 @@ export class ExpenseEstimatorService {
       id: id,
       salaryType: salaryType,
       amount: amount,
-      createdById: ''
+      createdById: '',
     };
     this.http
       .patch<{ message: string }>(
-        EXPENSE_BACK_END_URL + 'salary/' + id,
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'salary/' + id,
         expenseData
       )
       .subscribe(
         () => {
           this.router.navigate(['/expense-estimator']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseEstimatorStatusListener.next(true);
         }
@@ -218,6 +181,61 @@ export class ExpenseEstimatorService {
       budgetOtherAmount: number;
       budgetTransportationAmount: number;
       budgetTravelAmount: number;
-    }>(EXPENSE_BACK_END_URL + 'expense-estimator-detailedByOwner/' + createdById)
+    }>(
+      EXPENSE_ESTIMATOR_BACK_END_URL +
+        'expense-estimator-detailedByOwner/' +
+        createdById
+    );
+  }
+
+  getExpenseEstimatorTotalCount(createdById: string, expenseType: string) {
+    const queryParams =
+      `?createdById=${createdById}` + `&expenseType=${expenseType}`;
+
+    return this.http.get<{ totalCount: number }>(
+      EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator-count' + queryParams
+    );
+  }
+
+  getEstimatedExpenses(
+    expensesPerPage: number,
+    currentPage: number,
+    createdById: string,
+    expenseType: string
+  ) {
+    const queryParams =
+      `?pageSize=${expensesPerPage}` +
+      `&page=${currentPage}` +
+      `&createdById=${createdById}` +
+      `&expenseType=${expenseType}`;
+
+    this.http
+      .get<{ message: string; estimatedExpense: any }>(
+        EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator-new' + queryParams
+      )
+      .pipe(
+        map((expenseEstimatorData) => {
+          return {
+            estimatedExpense: expenseEstimatorData.estimatedExpense.map(
+              (estimatedExpense) => {
+                return {
+                  id: estimatedExpense._id,
+                  description: estimatedExpense.description,
+                  expenseType: estimatedExpense.expenseType,
+                  amount: estimatedExpense.amount,
+                  createdById: estimatedExpense.createdById,
+                };
+              }
+            ),
+          };
+        })
+      )
+      .subscribe((transformedExpenseEstimatorData) => {
+        this.expenseEstimates =
+          transformedExpenseEstimatorData.estimatedExpense;
+        this.expenseEstimatorUpdated.next({
+          expenseEstimates: [...this.expenseEstimates],
+        });
+      });
   }
 }

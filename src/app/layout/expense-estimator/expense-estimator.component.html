@@ -23,25 +23,19 @@
   <hr />
   <div class="row">
     <div class="col-xl-4 col-label">
-      <strong>
-        Monthly Salary:
-      </strong>
+      <strong> Monthly Salary: </strong>
     </div>
     <div class="col-info">{{ monthlySalary }}</div>
   </div>
   <div class="row">
     <div class="col-xl-4 col-label">
-      <strong>
-        Monthly Expected Spared Money:
-      </strong>
+      <strong> Monthly Expected Spared Money: </strong>
     </div>
     <div class="col-info">{{ monthlyTotalEstimatedSpare }}</div>
   </div>
   <div class="row">
     <div class="col-xl-4 col-label">
-      <strong>
-        Monthly Total Expected Expense:
-      </strong>
+      <strong> Monthly Total Expected Expense: </strong>
     </div>
     <div class="col-info">{{ monthlyTotalExpectedExpense }}</div>
     <ng-container *ngIf="displayBudgetDetails">
@@ -83,5 +77,5 @@
     </ng-container>
   </div>
   <hr />
-  <app-expense-estimate-list></app-expense-estimate-list>
+  <app-expense-estimate-list #estimatedExpenseList></app-expense-estimate-list>
 </div>

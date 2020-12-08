@@ -10,39 +10,39 @@ const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'prefix' },
       {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: './dashboard/dashboard.module#DashboardModule',
       },
       {
         path: 'user',
-        loadChildren: './user/user.module#UserModule'
+        loadChildren: './user/user.module#UserModule',
       },
       {
         path: 'expense-estimator',
         loadChildren:
-          './expense-estimator/expense-estimator.module#ExpenseEstimatorModule'
+          './expense-estimator/expense-estimator.module#ExpenseEstimatorModule',
       },
       {
         path: 'income',
-        loadChildren: './income/income.module#IncomeModule'
+        loadChildren: './income/income.module#IncomeModule',
       },
       {
         path: 'money',
-        loadChildren: './money/money.module#MoneyModule'
+        loadChildren: './money/money.module#MoneyModule',
       },
       {
         path: 'savings',
-        loadChildren: './savings/savings.module#SavingsModule'
+        loadChildren: './savings/savings.module#SavingsModule',
       },
       {
         path: 'expense',
-        loadChildren: './expense/expense.module#ExpenseModule'
-      }
-    ]
-  }
+        loadChildren: './expense/expense.module#ExpenseModule',
+      },
+    ],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class LayoutRoutingModule { }
+export class LayoutRoutingModule {}

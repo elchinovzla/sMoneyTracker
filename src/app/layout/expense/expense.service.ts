@@ -16,7 +16,7 @@ export class ExpenseService {
   }>();
   private expenseStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getExpenseUpdateListener() {
     return this.expenseUpdated.asObservable();
@@ -43,25 +43,30 @@ export class ExpenseService {
       date: date,
       savingsId: savingsId,
       note: note,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
-      .post<{ message: string }>(EXPENSE_BACK_END_URL + 'expense',
-        expenseData)
+      .post<{ message: string }>(EXPENSE_BACK_END_URL + 'expense', expenseData)
       .subscribe(
         () => {
           this.router.navigate(['/expense']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseStatusListener.next(true);
         }
       );
   }
 
-  getExpenses(expensesPerPage: number, currentPage: number, createdById: string, expenseType: string, date: Date) {
+  getExpenses(
+    expensesPerPage: number,
+    currentPage: number,
+    createdById: string,
+    expenseType: string,
+    date: Date
+  ) {
     const queryParams =
-      `?pagesize=${expensesPerPage}` +
+      `?pageSize=${expensesPerPage}` +
       `&page=${currentPage}` +
       `&createdById=${createdById}` +
       `&expenseType=${expenseType}` +
@@ -71,28 +76,27 @@ export class ExpenseService {
         EXPENSE_BACK_END_URL + 'expense' + queryParams
       )
       .pipe(
-        map(expenseData => {
+        map((expenseData) => {
           return {
-            expenses: expenseData.expenses.map(
-              expense => {
-                return {
-                  id: expense._id,
-                  description: expense.description,
-                  expenseType: expense.expenseType,
-                  amount: expense.amount,
-                  date: expense.date,
-                  savingsId: expense.savingsId,
-                  note: expense.note,
-                  createdById: expense.createdById
-                };
-              })
+            expenses: expenseData.expenses.map((expense) => {
+              return {
+                id: expense._id,
+                description: expense.description,
+                expenseType: expense.expenseType,
+                amount: expense.amount,
+                date: expense.date,
+                savingsId: expense.savingsId,
+                note: expense.note,
+                createdById: expense.createdById,
+              };
+            }),
           };
         })
       )
-      .subscribe(transformedExpenseData => {
+      .subscribe((transformedExpenseData) => {
         this.expenses = transformedExpenseData.expenses;
         this.expenseUpdated.next({
-          expenses: [...this.expenses]
+          expenses: [...this.expenses],
         });
       });
   }
@@ -123,57 +127,51 @@ export class ExpenseService {
   getMonthlyExpenseInfo(date: Date, createdById: string) {
     const queryParams = `?createdById=${createdById}&date=${date.toDateString()}`;
     return this.http.get<{
-      totalExpenseAmount: number,
-      totalExpenseDineOutAmount: number,
-      totalExpenseGiftAmount: number,
-      totalExpenseGroceryAmount: number,
-      totalExpenseHouseAmount: number,
-      totalExpenseMembershipAmount: number,
-      totalExpenseOtherAmount: number,
-      totalExpenseTransportationAmount: number,
-      totalExpenseTravelAmount: number
-    }>(
-      EXPENSE_BACK_END_URL + 'monthly-infoByOwnerId' + queryParams
-    )
+      totalExpenseAmount: number;
+      totalExpenseDineOutAmount: number;
+      totalExpenseGiftAmount: number;
+      totalExpenseGroceryAmount: number;
+      totalExpenseHouseAmount: number;
+      totalExpenseMembershipAmount: number;
+      totalExpenseOtherAmount: number;
+      totalExpenseTransportationAmount: number;
+      totalExpenseTravelAmount: number;
+    }>(EXPENSE_BACK_END_URL + 'monthly-infoByOwnerId' + queryParams);
   }
 
   getAnnualExpenseInfo(date: Date, createdById: string) {
     const queryParams = `?createdById=${createdById}&date=${date.toDateString()}`;
     return this.http.get<{
-      totalExpenseAmount: number,
-      totalExpenseDineOutAmount: number,
-      totalExpenseGiftAmount: number,
-      totalExpenseGroceryAmount: number,
-      totalExpenseHouseAmount: number,
-      totalExpenseMembershipAmount: number,
-      totalExpenseOtherAmount: number,
-      totalExpenseTransportationAmount: number,
-      totalExpenseTravelAmount: number
-    }>(
-      EXPENSE_BACK_END_URL + 'annual-infoByOwnerId' + queryParams
-    )
+      totalExpenseAmount: number;
+      totalExpenseDineOutAmount: number;
+      totalExpenseGiftAmount: number;
+      totalExpenseGroceryAmount: number;
+      totalExpenseHouseAmount: number;
+      totalExpenseMembershipAmount: number;
+      totalExpenseOtherAmount: number;
+      totalExpenseTransportationAmount: number;
+      totalExpenseTravelAmount: number;
+    }>(EXPENSE_BACK_END_URL + 'annual-infoByOwnerId' + queryParams);
   }
 
   getDashboardInfo(date: Date, createdById: string) {
     const queryParams =
-      `?createdById=${createdById}` +
-      `&date=${date.toDateString()}`;
+      `?createdById=${createdById}` + `&date=${date.toDateString()}`;
     return this.http
       .get<{ message: string; dashboardData: any }>(
         EXPENSE_BACK_END_URL + 'expense-dashboard' + queryParams
       )
       .pipe(
-        map(dashboardData => {
+        map((dashboardData) => {
           return {
-            dashboardInfo: dashboardData.dashboardData.map(
-              entry => {
-                return {
-                  expenseType: entry.expenseType,
-                  actualAmount: entry.actualAmount,
-                  budgetAmount: entry.budgetAmount,
-                  difference: entry.difference
-                };
-              })
+            dashboardInfo: dashboardData.dashboardData.map((entry) => {
+              return {
+                expenseType: entry.expenseType,
+                actualAmount: entry.actualAmount,
+                budgetAmount: entry.budgetAmount,
+                difference: entry.difference,
+              };
+            }),
           };
         })
       );
@@ -196,18 +194,15 @@ export class ExpenseService {
       date: date,
       savingsId: savingsId,
       note: note,
-      createdById: ''
+      createdById: '',
     };
     this.http
-      .patch<{ message: string }>(
-        EXPENSE_BACK_END_URL + 'expense',
-        expenseData
-      )
+      .patch<{ message: string }>(EXPENSE_BACK_END_URL + 'expense', expenseData)
       .subscribe(
         () => {
           this.router.navigate(['/expense']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseStatusListener.next(true);
         }
@@ -215,12 +210,13 @@ export class ExpenseService {
   }
 
   deleteExpense(id: string) {
-    this.http.delete<{ message: string }>(EXPENSE_BACK_END_URL + 'expense/' + id)
+    this.http
+      .delete<{ message: string }>(EXPENSE_BACK_END_URL + 'expense/' + id)
       .subscribe(
         () => {
           this.router.navigate(['/expense']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.expenseStatusListener.next(true);
         }
