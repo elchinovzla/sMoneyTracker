@@ -15,9 +15,7 @@
   <hr />
   <div class="row">
     <div class="col-xl-3 col-label">
-      <strong>
-        Money in the bank:
-      </strong>
+      <strong> Money in the bank: </strong>
     </div>
     <div class="col-info">{{ moneyInTheBank }}</div>
     <ng-container *ngIf="displayMoneyInTheBankDetails">
@@ -31,6 +29,29 @@
       <ng-template #bankInfo>
         <p><b>Checking: </b> {{ moneyInChecking }}</p>
         <p><b>Savings: </b>{{ moneyInSavings }}</p>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Unclaimed money: </strong>
+    </div>
+    <div class="info">{{ moneyUnclaimed }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Money Invested: </strong>
+    </div>
+    <div class="col-info">{{ moneyInvested }}</div>
+    <ng-container *ngIf="displayMoneyInvestedDetails">
+      <i
+        class="fa fa-info-circle"
+        type="button"
+        placement="right"
+        [ngbPopover]="investmentInfo"
+        popoverTitle="Money Invested"
+      ></i>
+      <ng-template #investmentInfo>
         <p><b>RRSP: </b>{{ moneyInRrsp }}</p>
         <p><b>TFSA: </b>{{ moneyInTfsa }}</p>
       </ng-template>
@@ -38,17 +59,7 @@
   </div>
   <div class="row">
     <div class="col-xl-3 col-label">
-      <strong>
-        Unclaimed money:
-      </strong>
-    </div>
-    <div class="info">{{ moneyUnclaimed }}</div>
-  </div>
-  <div class="row">
-    <div class="col-xl-3 col-label">
-      <strong>
-        Other Money:
-      </strong>
+      <strong> Other Money: </strong>
     </div>
     <div class="col-info">{{ moneyOther }}</div>
     <ng-container *ngIf="displayOtherMoneyDetails">

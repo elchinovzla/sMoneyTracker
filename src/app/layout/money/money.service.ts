@@ -16,7 +16,7 @@ export class MoneyService {
   }>();
   private moneyStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getMoneyUpdateListener() {
     return this.moneyUpdated.asObservable();
@@ -39,17 +39,15 @@ export class MoneyService {
       moneyType: moneyType,
       amount: amount,
       note: note,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
-      .post<{ message: string }>(
-        MONEY_BACK_END_URL + 'money', moneyData
-      )
+      .post<{ message: string }>(MONEY_BACK_END_URL + 'money', moneyData)
       .subscribe(
         () => {
           this.router.navigate(['/money']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.moneyStatusListener.next(true);
         }
@@ -67,27 +65,25 @@ export class MoneyService {
         MONEY_BACK_END_URL + 'money' + queryParams
       )
       .pipe(
-        map(moneyData => {
+        map((moneyData) => {
           return {
-            moneyEntries: moneyData.moneyEntries.map(
-              money => {
-                return {
-                  id: money._id,
-                  description: money.description,
-                  moneyType: money.moneyType,
-                  amount: money.amount,
-                  note: money.note,
-                  createdById: money.createdById
-                };
-              }
-            )
+            moneyEntries: moneyData.moneyEntries.map((money) => {
+              return {
+                id: money._id,
+                description: money.description,
+                moneyType: money.moneyType,
+                amount: money.amount,
+                note: money.note,
+                createdById: money.createdById,
+              };
+            }),
           };
         })
       )
-      .subscribe(transformedMoneyData => {
+      .subscribe((transformedMoneyData) => {
         this.moneyEntries = transformedMoneyData.moneyEntries;
         this.moneyUpdated.next({
-          moneyEntries: [...this.moneyEntries]
+          moneyEntries: [...this.moneyEntries],
         });
       });
   }
@@ -102,7 +98,7 @@ export class MoneyService {
     return this.http.get<{
       _id: string;
       description: string;
-      moneyType: string,
+      moneyType: string;
       amount: number;
       note: string;
       createdBy: string;
@@ -112,6 +108,7 @@ export class MoneyService {
   getMoneyInfo(createdById: string) {
     return this.http.get<{
       moneyInTheBank: number;
+      moneyInvested: number;
       moneyUnclaimed: number;
       moneyOther: number;
       moneyInChecking: number;
@@ -136,27 +133,35 @@ export class MoneyService {
       moneyType: moneyType,
       amount: amount,
       note: note,
-      createdById: ''
+      createdById: '',
     };
-    this.http.patch<{ message: string }>(
-      MONEY_BACK_END_URL + 'update-money/' + id,
-      moneyData
-    ).subscribe(() => {
-      this.router.navigate(['/money']);
-    }, error => {
-      console.log(error);
-      this.moneyStatusListener.next(true);
-    });
+    this.http
+      .patch<{ message: string }>(
+        MONEY_BACK_END_URL + 'update-money/' + id,
+        moneyData
+      )
+      .subscribe(
+        () => {
+          this.router.navigate(['/money']);
+        },
+        (error) => {
+          console.log(error);
+          this.moneyStatusListener.next(true);
+        }
+      );
   }
 
   deleteMoney(id: string) {
-    this.http.delete<{ message: string }>(
-      MONEY_BACK_END_URL + 'money/' + id
-    ).subscribe(() => {
-      this.router.navigate(['/money']);
-    }, error => {
-      console.log(error);
-      this.moneyStatusListener.next(true);
-    })
+    this.http
+      .delete<{ message: string }>(MONEY_BACK_END_URL + 'money/' + id)
+      .subscribe(
+        () => {
+          this.router.navigate(['/money']);
+        },
+        (error) => {
+          console.log(error);
+          this.moneyStatusListener.next(true);
+        }
+      );
   }
 }

@@ -9,10 +9,11 @@ import { MoneyCreateComponent } from './money-create/money-create.component';
   selector: 'app-money',
   templateUrl: './money.component.html',
   styleUrls: ['./money.component.scss'],
-  animations: [routerTransition()]
+  animations: [routerTransition()],
 })
 export class MoneyComponent implements OnInit {
   moneyInTheBank: string;
+  moneyInvested: string;
   moneyUnclaimed: string;
   moneyOther: string;
   moneyInChecking: string;
@@ -22,19 +23,22 @@ export class MoneyComponent implements OnInit {
   moneyCash: string;
   moneyGiftCard: string;
   displayMoneyInTheBankDetails: boolean;
+  displayMoneyInvestedDetails: boolean;
   displayOtherMoneyDetails: boolean;
 
   constructor(
     private modalService: NgbModal,
     public moneyService: MoneyService,
     public authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.moneyService.getMoneyInfo(this.authService.getUserId())
+    this.moneyService
+      .getMoneyInfo(this.authService.getUserId())
       .subscribe(
         (moneyInfoData: {
           moneyInTheBank: number;
+          moneyInvested: number;
           moneyUnclaimed: number;
           moneyOther: number;
           moneyInChecking: number;
@@ -44,16 +48,26 @@ export class MoneyComponent implements OnInit {
           moneyCash: number;
           moneyGiftCard: number;
         }) => {
-          this.moneyInTheBank = this.convertToMoney(moneyInfoData.moneyInTheBank);
-          this.moneyUnclaimed = this.convertToMoney(moneyInfoData.moneyUnclaimed);
+          this.moneyInTheBank = this.convertToMoney(
+            moneyInfoData.moneyInTheBank
+          );
+          this.moneyInvested = this.convertToMoney(moneyInfoData.moneyInvested);
+          this.moneyUnclaimed = this.convertToMoney(
+            moneyInfoData.moneyUnclaimed
+          );
           this.moneyOther = this.convertToMoney(moneyInfoData.moneyOther);
-          this.moneyInChecking = this.convertToMoney(moneyInfoData.moneyInChecking);
-          this.moneyInSavings = this.convertToMoney(moneyInfoData.moneyInSavings);
+          this.moneyInChecking = this.convertToMoney(
+            moneyInfoData.moneyInChecking
+          );
+          this.moneyInSavings = this.convertToMoney(
+            moneyInfoData.moneyInSavings
+          );
           this.moneyInRrsp = this.convertToMoney(moneyInfoData.moneyInRrsp);
           this.moneyInTfsa = this.convertToMoney(moneyInfoData.moneyInTfsa);
           this.moneyCash = this.convertToMoney(moneyInfoData.moneyCash);
           this.moneyGiftCard = this.convertToMoney(moneyInfoData.moneyGiftCard);
           this.displayMoneyInTheBankDetails = moneyInfoData.moneyInTheBank > 0;
+          this.displayMoneyInvestedDetails = moneyInfoData.moneyInvested > 0;
           this.displayOtherMoneyDetails = moneyInfoData.moneyOther > 0;
         }
       );
