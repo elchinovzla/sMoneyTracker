@@ -16,7 +16,7 @@ export class IncomeService {
   }>();
   private incomeStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getIncomeUpdateListener() {
     return this.incomeUpdated.asObservable();
@@ -39,49 +39,52 @@ export class IncomeService {
       amount: amount,
       date: date,
       note: note,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
-      .post<{ message: string }>(INCOME_BACK_END_URL + 'income',
-        incomeData)
+      .post<{ message: string }>(INCOME_BACK_END_URL + 'income', incomeData)
       .subscribe(
         () => {
           this.router.navigate(['/income']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.incomeStatusListener.next(true);
         }
       );
   }
 
-  getIncomes(incomesPerPage: number, currentPage: number, createdById: string, date: Date) {
-    const queryParams = `?pagesize=${incomesPerPage}&page=${currentPage}&createdById=${createdById}&date=${date.toDateString()}`;
+  getIncomes(
+    incomesPerPage: number,
+    currentPage: number,
+    createdById: string,
+    date: Date
+  ) {
+    const queryParams = `?pageSize=${incomesPerPage}&page=${currentPage}&createdById=${createdById}&date=${date.toDateString()}`;
     this.http
       .get<{ message: string; incomes: any }>(
         INCOME_BACK_END_URL + 'income' + queryParams
       )
       .pipe(
-        map(incomeData => {
+        map((incomeData) => {
           return {
-            incomes: incomeData.incomes.map(
-              income => {
-                return {
-                  id: income._id,
-                  name: income.name,
-                  amount: income.amount,
-                  date: income.date,
-                  note: income.note,
-                  createdById: income.createdById
-                };
-              })
+            incomes: incomeData.incomes.map((income) => {
+              return {
+                id: income._id,
+                name: income.name,
+                amount: income.amount,
+                date: income.date,
+                note: income.note,
+                createdById: income.createdById,
+              };
+            }),
           };
         })
       )
-      .subscribe(transformedIncomeData => {
+      .subscribe((transformedIncomeData) => {
         this.incomes = transformedIncomeData.incomes;
         this.incomeUpdated.next({
-          incomes: [...this.incomes]
+          incomes: [...this.incomes],
         });
       });
   }
@@ -117,7 +120,7 @@ export class IncomeService {
       amount: amount,
       date: date,
       note: note,
-      createdById: ''
+      createdById: '',
     };
     this.http
       .patch<{ message: string }>(
@@ -128,7 +131,7 @@ export class IncomeService {
         () => {
           this.router.navigate(['/income']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.incomeStatusListener.next(true);
         }
@@ -136,12 +139,13 @@ export class IncomeService {
   }
 
   deleteIncome(id: string) {
-    this.http.delete<{ message: string }>(INCOME_BACK_END_URL + 'income/' + id)
+    this.http
+      .delete<{ message: string }>(INCOME_BACK_END_URL + 'income/' + id)
       .subscribe(
         () => {
           this.router.navigate(['/income']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.incomeStatusListener.next(true);
         }
@@ -152,13 +156,13 @@ export class IncomeService {
     const queryParams = `?createdById=${createdById}&date=${date.toDateString()}`;
     return this.http.get<{ monthlyIncome: number }>(
       INCOME_BACK_END_URL + 'monthly-total' + queryParams
-    )
+    );
   }
 
   getAnnualTotalIncome(date: Date, createdById: string) {
     const queryParams = `?createdById=${createdById}&date=${date.toDateString()}`;
     return this.http.get<{ annualIncome: number }>(
       INCOME_BACK_END_URL + 'annual-total' + queryParams
-    )
+    );
   }
 }

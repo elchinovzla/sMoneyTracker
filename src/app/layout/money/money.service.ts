@@ -59,7 +59,7 @@ export class MoneyService {
     currentPage: number,
     createdById: string
   ) {
-    const queryParams = `?pagesize=${moneyEntriesPerPage}&page=${currentPage}&createdById=${createdById}`;
+    const queryParams = `?pageSize=${moneyEntriesPerPage}&page=${currentPage}&createdById=${createdById}`;
     this.http
       .get<{ message: string; moneyEntries: any }>(
         MONEY_BACK_END_URL + 'money' + queryParams

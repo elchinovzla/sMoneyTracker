@@ -16,7 +16,7 @@ export class SavingsService {
   }>();
   private savingsStatusListener = new Subject<boolean>();
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   getSavingsUpdateListener() {
     return this.savingsUpdated.asObservable();
@@ -39,17 +39,15 @@ export class SavingsService {
       expenseType: expenseType,
       amount: amount,
       note: note,
-      createdById: createdById
+      createdById: createdById,
     };
     this.http
-      .post<{ message: string }>(
-        SAVINGS_BACK_END_URL + 'savings', savingsData
-      )
+      .post<{ message: string }>(SAVINGS_BACK_END_URL + 'savings', savingsData)
       .subscribe(
         () => {
           this.router.navigate(['/savings']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.savingsStatusListener.next(true);
         }
@@ -61,33 +59,31 @@ export class SavingsService {
     currentPage: number,
     createdById: string
   ) {
-    const queryParams = `?pagesize=${savingsEntriesPerPage}&page=${currentPage}&createdById=${createdById}`;
+    const queryParams = `?pageSize=${savingsEntriesPerPage}&page=${currentPage}&createdById=${createdById}`;
     this.http
       .get<{ message: string; savingsEntries: any }>(
         SAVINGS_BACK_END_URL + 'savings' + queryParams
       )
       .pipe(
-        map(savingsData => {
+        map((savingsData) => {
           return {
-            savingsEntries: savingsData.savingsEntries.map(
-              savings => {
-                return {
-                  id: savings._id,
-                  description: savings.description,
-                  expenseType: savings.expenseType,
-                  amount: savings.amount,
-                  note: savings.note,
-                  createdById: savings.createdById
-                };
-              }
-            )
+            savingsEntries: savingsData.savingsEntries.map((savings) => {
+              return {
+                id: savings._id,
+                description: savings.description,
+                expenseType: savings.expenseType,
+                amount: savings.amount,
+                note: savings.note,
+                createdById: savings.createdById,
+              };
+            }),
           };
         })
       )
-      .subscribe(transformedSavingsData => {
+      .subscribe((transformedSavingsData) => {
         this.savingsEntries = transformedSavingsData.savingsEntries;
         this.savingsUpdated.next({
-          savingsEntries: [...this.savingsEntries]
+          savingsEntries: [...this.savingsEntries],
         });
       });
   }
@@ -99,19 +95,17 @@ export class SavingsService {
         SAVINGS_BACK_END_URL + 'savings' + queryParams
       )
       .pipe(
-        map(savingsData => {
+        map((savingsData) => {
           return {
-            savingsEntries: savingsData.savingsEntries.map(
-              savings => {
-                return {
-                  id: savings._id,
-                  description: savings.description
-                };
-              }
-            )
+            savingsEntries: savingsData.savingsEntries.map((savings) => {
+              return {
+                id: savings._id,
+                description: savings.description,
+              };
+            }),
           };
         })
-      )
+      );
   }
 
   getSavingsTotalCount(createdById: string) {
@@ -124,7 +118,7 @@ export class SavingsService {
     return this.http.get<{
       _id: string;
       description: string;
-      expenseType: string,
+      expenseType: string;
       amount: number;
       note: string;
       createdBy: string;
@@ -133,15 +127,15 @@ export class SavingsService {
 
   getSavingsInfo(createdById: string) {
     return this.http.get<{
-      totalSavingsAmount: number,
-      totalSavingsDineOutAmount: number,
-      totalSavingsGiftAmount: number,
-      totalSavingsGroceryAmount: number,
-      totalSavingsHouseAmount: number,
-      totalSavingsMembershipAmount: number,
-      totalSavingsOtherAmount: number,
-      totalSavingsTransportationAmount: number,
-      totalSavingsTravelAmount: number
+      totalSavingsAmount: number;
+      totalSavingsDineOutAmount: number;
+      totalSavingsGiftAmount: number;
+      totalSavingsGroceryAmount: number;
+      totalSavingsHouseAmount: number;
+      totalSavingsMembershipAmount: number;
+      totalSavingsOtherAmount: number;
+      totalSavingsTransportationAmount: number;
+      totalSavingsTravelAmount: number;
     }>(SAVINGS_BACK_END_URL + 'savings-infoByOwner/' + createdById);
   }
 
@@ -158,27 +152,35 @@ export class SavingsService {
       expenseType: expenseType,
       amount: amount,
       note: note,
-      createdById: ''
+      createdById: '',
     };
-    this.http.patch<{ message: string }>(
-      SAVINGS_BACK_END_URL + 'update-savings/' + id,
-      savingsData
-    ).subscribe(() => {
-      this.router.navigate(['/savings']);
-    }, error => {
-      console.log(error);
-      this.savingsStatusListener.next(true);
-    });
+    this.http
+      .patch<{ message: string }>(
+        SAVINGS_BACK_END_URL + 'update-savings/' + id,
+        savingsData
+      )
+      .subscribe(
+        () => {
+          this.router.navigate(['/savings']);
+        },
+        (error) => {
+          console.log(error);
+          this.savingsStatusListener.next(true);
+        }
+      );
   }
 
   deleteSavings(id: string) {
-    this.http.delete<{ message: string }>(
-      SAVINGS_BACK_END_URL + 'savings/' + id
-    ).subscribe(() => {
-      this.router.navigate(['/savings']);
-    }, error => {
-      console.log(error);
-      this.savingsStatusListener.next(true);
-    })
+    this.http
+      .delete<{ message: string }>(SAVINGS_BACK_END_URL + 'savings/' + id)
+      .subscribe(
+        () => {
+          this.router.navigate(['/savings']);
+        },
+        (error) => {
+          console.log(error);
+          this.savingsStatusListener.next(true);
+        }
+      );
   }
 }

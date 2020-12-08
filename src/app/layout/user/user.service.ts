@@ -17,33 +17,33 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getUsers(usersPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${usersPerPage}&page=${currentPage}`;
+    const queryParams = `?pageSize=${usersPerPage}&page=${currentPage}`;
     this.http
       .get<{ message: string; users: any; maxUsers: number }>(
         BACK_END_URL + queryParams
       )
       .pipe(
-        map(userData => {
+        map((userData) => {
           return {
-            users: userData.users.map(user => {
+            users: userData.users.map((user) => {
               return {
                 id: user._id,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email,
                 isAdmin: user.isAdmin,
-                isActive: user.isActive
+                isActive: user.isActive,
               };
             }),
-            maxUsers: userData.maxUsers
+            maxUsers: userData.maxUsers,
           };
         })
       )
-      .subscribe(transformedUserData => {
+      .subscribe((transformedUserData) => {
         this.users = transformedUserData.users;
         this.userUpdated.next({
           users: [...this.users],
-          userCount: transformedUserData.maxUsers
+          userCount: transformedUserData.maxUsers,
         });
       });
   }
@@ -75,7 +75,7 @@ export class UserService {
       email: '',
       password: '',
       isAdmin: isAdmin,
-      isActive: isActive
+      isActive: isActive,
     };
     this.http
       .patch<{ message: string }>(BACK_END_URL + 'modify/' + id, userData)
@@ -83,7 +83,7 @@ export class UserService {
         () => {
           this.router.navigate(['/user']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.userStatusListener.next(true);
         }
@@ -104,7 +104,7 @@ export class UserService {
       email: email,
       password: password,
       isAdmin: false,
-      isActive: false
+      isActive: false,
     };
     this.http
       .patch<{ message: string }>(BACK_END_URL + 'profile/' + id, userData)
@@ -112,7 +112,7 @@ export class UserService {
         () => {
           this.router.navigate(['/dashboard']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.userStatusListener.next(true);
         }
@@ -127,7 +127,7 @@ export class UserService {
       email: email,
       password: password,
       isAdmin: false,
-      isActive: false
+      isActive: false,
     };
     this.http
       .patch<{ message: string }>(BACK_END_URL + 'resetpassword', userData)
@@ -135,7 +135,7 @@ export class UserService {
         () => {
           this.router.navigate(['/auth/login']);
         },
-        error => {
+        (error) => {
           console.log(error);
           this.userStatusListener.next(true);
         }
