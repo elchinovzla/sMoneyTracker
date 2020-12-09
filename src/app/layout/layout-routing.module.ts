@@ -37,6 +37,11 @@ const routes: Routes = [
         path: 'expense',
         loadChildren: './expense/expense.module#ExpenseModule',
       },
+      {
+        path: 'yearly-balance',
+        loadChildren:
+          './yearly-balance/yearly-balance.module#YearlyBalanceModule',
+      },
     ],
   },
 ];

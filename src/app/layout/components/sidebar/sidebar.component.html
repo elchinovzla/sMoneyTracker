@@ -29,7 +29,7 @@
       class="list-group-item"
       *ngIf="!isUserAdmin"
     >
-      <i class="fas fa-dollar-sign"></i>
+      <i class="fas fa-university" aria-hidden="true"></i>
       &nbsp;
       <span>Monetary Info</span>
     </a>
@@ -63,16 +63,16 @@
       &nbsp;
       <span>Manage Spendings</span>
     </a>
-    <!-- <a
-      routerLink="/dashboard"
+    <a
+      routerLink="/yearly-balance"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
       *ngIf="!isUserAdmin"
     >
-      <i class="fas fa-file-invoice-dollar"></i>
+      <i class="fas fa-balance-scale" aria-hidden="true"></i>
       &nbsp;
-      <span>Reports</span>
-    </a> -->
+      <span>Yearly Balances</span>
+    </a>
     <a
       routerLink="/user"
       [routerLinkActive]="['router-link-active']"

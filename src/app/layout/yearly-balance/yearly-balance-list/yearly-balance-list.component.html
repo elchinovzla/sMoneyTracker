@@ -1,0 +1,76 @@
+<mat-accordion
+  multi="true"
+  *ngIf="yearlyBalanceEntries.length > 0; else noYearlyBalanceEntries"
+  class="accordion md-accordion accordion-blocks"
+>
+  <mat-expansion-panel
+    *ngFor="let yearlyBalance of yearlyBalanceEntries"
+    class="card mb-1"
+  >
+    <mat-expansion-panel-header class="card-header z-depth-1">
+      <div class="container">
+        <div class="d-flex">
+          <div class="mr-auto col-xl-8 col-lg-6">
+            <h4 class="text white-text mb-0 py-3 mt-1">
+              {{ yearlyBalance.description }}
+            </h4>
+          </div>
+          <div class="mr-auto col-xl-1 col-lg-1 align-items-end">
+            <h5 class="text-uppercase white-text mb-0 py-3 mt-1">
+              <span class="badge badge-dark">{{
+                convertToMoney(yearlyBalance.amount)
+              }}</span>
+            </h5>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel-header>
+    <div class="card-body rgba-black-light white-text z-depth-1">
+      <h5>
+        Start Date
+        <span class="badge badge-info">{{
+          yearlyBalance.startDate | date
+        }}</span>
+      </h5>
+      <h5>
+        End Date
+        <span class="badge badge-info">{{ yearlyBalance.endDate | date }}</span>
+      </h5>
+    </div>
+    <div
+      class="card-body rgba-black-light white-text z-depth-1"
+      *ngIf="yearlyBalance.note"
+    >
+      <div>
+        <h5>
+          Note
+          <span class="badge badge-info">{{ yearlyBalance.note }}</span>
+        </h5>
+      </div>
+    </div>
+    <mat-action-row>
+      <button
+        class="btn btn-primary my-2 my-sm-0 z-depth-2 mr-1"
+        (click)="edit(yearlyBalance)"
+      >
+        Edit
+      </button>
+      <button
+        class="btn btn-danger my-2 my-sm-0 z-depth-2"
+        (click)="delete(yearlyBalance)"
+      >
+        Delete
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-paginator
+  [length]="yearlyBalanceTotalCount"
+  [pageSize]="yearlyBalanceEntriesPerPage"
+  (page)="onChangedPage($event)"
+  [hidePageSize]="true"
+  [showFirstLastButtons]="true"
+></mat-paginator>
+<ng-template #noYearlyBalanceEntries>
+  <h3>No Data</h3>
+</ng-template>
