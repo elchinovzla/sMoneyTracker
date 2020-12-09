@@ -29,7 +29,20 @@
         </div>
       </div>
     </mat-expansion-panel-header>
-    <div class="card-body rgba-black-light white-text z-depth-1" *ngIf=savings.note>
+    <div class="card-body rgba-black-light white-text z-depth-1">
+      <div>
+        <h5>
+          Saving Amount per Month
+          <span class="badge badge-info">{{
+            convertToMoney(savings.amountPerMonth)
+          }}</span>
+        </h5>
+      </div>
+    </div>
+    <div
+      class="card-body rgba-black-light white-text z-depth-1"
+      *ngIf="savings.note"
+    >
       <div>
         <h5>
           Note
@@ -38,6 +51,12 @@
       </div>
     </div>
     <mat-action-row>
+      <button
+        class="btn btn-secondary my-2 my-sm-0 z-depth-2 mr-1"
+        (click)="createExpense(savings)"
+      >
+        Save for this expense
+      </button>
       <button
         class="btn btn-primary my-2 my-sm-0 z-depth-2 mr-1"
         (click)="edit(savings)"

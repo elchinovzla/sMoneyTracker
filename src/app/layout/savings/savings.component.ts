@@ -9,10 +9,11 @@ import { SavingsCreateComponent } from './savings-create/savings-create.componen
   selector: 'app-savings',
   templateUrl: './savings.component.html',
   styleUrls: ['./savings.component.scss'],
-  animations: [routerTransition()]
+  animations: [routerTransition()],
 })
 export class SavingsComponent implements OnInit {
   totalSavings: string;
+  totalSavingsPerMonth: string;
   savingsDineOut: string;
   savingsGift: string;
   savingsGrocery: string;
@@ -27,13 +28,15 @@ export class SavingsComponent implements OnInit {
     private modalService: NgbModal,
     public savingsService: SavingsService,
     public authService: AuthService
-  ) { }
+  ) {}
 
   ngOnInit() {
-    this.savingsService.getSavingsInfo(this.authService.getUserId())
+    this.savingsService
+      .getSavingsInfo(this.authService.getUserId())
       .subscribe(
         (savingsInfoData: {
           totalSavingsAmount: number;
+          totalSavingsAmountPerMonth: number;
           totalSavingsDineOutAmount: number;
           totalSavingsGiftAmount: number;
           totalSavingsGroceryAmount: number;
@@ -43,16 +46,38 @@ export class SavingsComponent implements OnInit {
           totalSavingsTransportationAmount: number;
           totalSavingsTravelAmount: number;
         }) => {
-          this.totalSavings = this.convertToMoney(savingsInfoData.totalSavingsAmount);
-          this.savingsDineOut = this.convertToMoney(savingsInfoData.totalSavingsDineOutAmount);
-          this.savingsGift = this.convertToMoney(savingsInfoData.totalSavingsGiftAmount);
-          this.savingsGrocery = this.convertToMoney(savingsInfoData.totalSavingsGroceryAmount);
-          this.savingsHouse = this.convertToMoney(savingsInfoData.totalSavingsHouseAmount);
-          this.savingsMembership = this.convertToMoney(savingsInfoData.totalSavingsMembershipAmount);
-          this.savingsOther = this.convertToMoney(savingsInfoData.totalSavingsOtherAmount);
-          this.savingsTransportation = this.convertToMoney(savingsInfoData.totalSavingsTransportationAmount);
-          this.savingsTravel = this.convertToMoney(savingsInfoData.totalSavingsTravelAmount);
-          this.displayTotalSavingsDetails = savingsInfoData.totalSavingsAmount > 0;
+          this.totalSavings = this.convertToMoney(
+            savingsInfoData.totalSavingsAmount
+          );
+          this.totalSavingsPerMonth = this.convertToMoney(
+            savingsInfoData.totalSavingsAmountPerMonth
+          );
+          this.savingsDineOut = this.convertToMoney(
+            savingsInfoData.totalSavingsDineOutAmount
+          );
+          this.savingsGift = this.convertToMoney(
+            savingsInfoData.totalSavingsGiftAmount
+          );
+          this.savingsGrocery = this.convertToMoney(
+            savingsInfoData.totalSavingsGroceryAmount
+          );
+          this.savingsHouse = this.convertToMoney(
+            savingsInfoData.totalSavingsHouseAmount
+          );
+          this.savingsMembership = this.convertToMoney(
+            savingsInfoData.totalSavingsMembershipAmount
+          );
+          this.savingsOther = this.convertToMoney(
+            savingsInfoData.totalSavingsOtherAmount
+          );
+          this.savingsTransportation = this.convertToMoney(
+            savingsInfoData.totalSavingsTransportationAmount
+          );
+          this.savingsTravel = this.convertToMoney(
+            savingsInfoData.totalSavingsTravelAmount
+          );
+          this.displayTotalSavingsDetails =
+            savingsInfoData.totalSavingsAmount > 0;
         }
       );
   }

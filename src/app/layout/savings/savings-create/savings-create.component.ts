@@ -10,7 +10,7 @@ import { SavingsService } from '../savings.service';
 @Component({
   selector: 'app-savings-create',
   templateUrl: './savings-create.component.html',
-  styleUrls: ['./savings-create.component.scss']
+  styleUrls: ['./savings-create.component.scss'],
 })
 export class SavingsCreateComponent implements OnInit, OnDestroy {
   public savingsId: string;
@@ -37,19 +37,29 @@ export class SavingsCreateComponent implements OnInit, OnDestroy {
       description: new FormControl(null, { validators: [Validators.required] }),
       expenseType: new FormControl(null, { validators: [Validators.required] }),
       amount: new FormControl(null, {
-        validators: [Validators.required, Validators.pattern(this.moneyPattern)]
+        validators: [
+          Validators.required,
+          Validators.pattern(this.moneyPattern),
+        ],
       }),
-      note: new FormControl(null)
+      amountPerMonth: new FormControl(null, {
+        validators: [
+          Validators.required,
+          Validators.pattern(this.moneyPattern),
+        ],
+      }),
+      note: new FormControl(null),
     });
     if (this.savingsId) {
       this.savingsService
         .getSavingsById(this.savingsId)
-        .subscribe(savingsData => {
+        .subscribe((savingsData) => {
           this.form.setValue({
             description: savingsData.description,
             expenseType: ExpenseType[savingsData.expenseType],
             amount: savingsData.amount,
-            note: savingsData.note
+            amountPerMonth: savingsData.amountPerMonth,
+            note: savingsData.note,
           });
         });
       this.mode = 'edit';
@@ -69,6 +79,7 @@ export class SavingsCreateComponent implements OnInit, OnDestroy {
         this.form.value.description,
         ExpenseType[this.form.value.expenseType],
         this.form.value.amount,
+        this.form.value.amountPerMonth,
         this.form.value.note,
         this.authService.getUserId()
       );
@@ -78,7 +89,8 @@ export class SavingsCreateComponent implements OnInit, OnDestroy {
         this.form.value.description,
         ExpenseType[this.form.value.expenseType],
         this.form.value.amount,
-        this.form.value.note,
+        this.form.value.amountPerMonth,
+        this.form.value.note
       );
     }
 

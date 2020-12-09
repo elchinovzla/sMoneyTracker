@@ -30,6 +30,7 @@ export class SavingsService {
     description: string,
     expenseType: string,
     amount: number,
+    amountPerMonth: number,
     note: string,
     createdById: string
   ) {
@@ -38,6 +39,7 @@ export class SavingsService {
       description: description,
       expenseType: expenseType,
       amount: amount,
+      amountPerMonth: amountPerMonth,
       note: note,
       createdById: createdById,
     };
@@ -73,6 +75,7 @@ export class SavingsService {
                 description: savings.description,
                 expenseType: savings.expenseType,
                 amount: savings.amount,
+                amountPerMonth: savings.amountPerMonth,
                 note: savings.note,
                 createdById: savings.createdById,
               };
@@ -120,6 +123,7 @@ export class SavingsService {
       description: string;
       expenseType: string;
       amount: number;
+      amountPerMonth: number;
       note: string;
       createdBy: string;
     }>(SAVINGS_BACK_END_URL + 'savings/' + id);
@@ -128,6 +132,7 @@ export class SavingsService {
   getSavingsInfo(createdById: string) {
     return this.http.get<{
       totalSavingsAmount: number;
+      totalSavingsAmountPerMonth: number;
       totalSavingsDineOutAmount: number;
       totalSavingsGiftAmount: number;
       totalSavingsGroceryAmount: number;
@@ -144,14 +149,16 @@ export class SavingsService {
     description: string,
     expenseType: string,
     amount: number,
+    amountPerMonth: number,
     note: string
   ) {
     const savingsData: Savings = {
-      id: id,
-      description: description,
-      expenseType: expenseType,
-      amount: amount,
-      note: note,
+      id,
+      description,
+      expenseType,
+      amount,
+      amountPerMonth,
+      note,
       createdById: '',
     };
     this.http

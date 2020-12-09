@@ -11,7 +11,7 @@ import { ExpenseType } from '../../expense-estimator/expense-type';
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.component.html',
-  styleUrls: ['./expense-list.component.scss']
+  styleUrls: ['./expense-list.component.scss'],
 })
 export class ExpenseListComponent implements OnInit, OnDestroy {
   private date: Date;
@@ -37,11 +37,11 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
       { expenseType: ExpenseType.MEMBERSHIP, name: 'Membership' },
       { expenseType: ExpenseType.OTHER, name: 'Other' },
       { expenseType: ExpenseType.TRANSPORTATION, name: 'Transportation' },
-      { expenseType: ExpenseType.TRAVEL, name: 'Travel' }
-    ]
+      { expenseType: ExpenseType.TRAVEL, name: 'Travel' },
+    ];
   }
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.expenseSub.unsubscribe();
@@ -49,7 +49,7 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
 
   edit(expense: Expense) {
     const activeModal = this.modalService.open(ExpenseCreateComponent, {
-      centered: true
+      centered: true,
     });
     activeModal.componentInstance.expenseId = expense.id;
   }
@@ -88,10 +88,12 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     this.date = date;
     this.expenseType = expenseType;
     this.expenseService
-      .getExpenseTotalCount(this.authService.getUserId(),
+      .getExpenseTotalCount(
+        this.authService.getUserId(),
         expenseType ? ExpenseType[expenseType] : '',
-        date)
-      .subscribe(totalData => {
+        date
+      )
+      .subscribe((totalData) => {
         this.expenseTotalCount = totalData.totalCount;
       });
     this.expenseService.getExpenses(
@@ -103,15 +105,13 @@ export class ExpenseListComponent implements OnInit, OnDestroy {
     );
     this.expenseSub = this.expenseService
       .getExpenseUpdateListener()
-      .subscribe((expenseData: {
-        expenses: Expense[]
-      }) => {
+      .subscribe((expenseData: { expenses: Expense[] }) => {
         this.expenses = expenseData.expenses;
       });
   }
 
   selectedTab(expenseType: ExpenseType) {
     this.currentPage = 1;
-    this.setExpenseList(this.date, expenseType)
+    this.setExpenseList(this.date, expenseType);
   }
 }

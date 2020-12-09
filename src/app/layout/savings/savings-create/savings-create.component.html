@@ -60,7 +60,7 @@
             </div>
             <div class="input-group mb-2 mr-sm-2">
               <div class="col-xl-4">
-                <label>Amount</label>
+                <label>Total Amount Saved</label>
               </div>
               <div class="col-xl-5">
                 <div class="input-group-prepend">
@@ -77,7 +77,31 @@
             </div>
             <div class="input-group mb-2 mr-sm-2">
               <mat-error *ngIf="form.get('amount').invalid" class="error"
-                >Please enter a valid amount</mat-error
+                >Please enter a valid total amount saved</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-4">
+                <label>Amount Saved Per Month</label>
+              </div>
+              <div class="col-xl-5">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="amountPerMonth"
+                    placeholder="Amount"
+                    formControlName="amountPerMonth"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error
+                *ngIf="form.get('amountPerMonth').invalid"
+                class="error"
+                >Please enter a valid amount saved per month</mat-error
               >
             </div>
             <div class="input-group mb-2 mr-sm-2">
