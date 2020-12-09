@@ -13,7 +13,7 @@ import { SavingsRoutingModule } from './savings-routing.module';
   declarations: [
     SavingsComponent,
     SavingsCreateComponent,
-    SavingsListComponent
+    SavingsListComponent,
   ],
   imports: [
     CommonModule,
@@ -22,9 +22,9 @@ import { SavingsRoutingModule } from './savings-routing.module';
     NgbModule,
     PageHeaderModule,
     SavingsRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   exports: [SavingsCreateComponent],
-  entryComponents: [SavingsCreateComponent]
+  entryComponents: [SavingsCreateComponent],
 })
-export class SavingsModule { }
+export class SavingsModule {}
