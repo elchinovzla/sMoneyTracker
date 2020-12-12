@@ -27,11 +27,11 @@
       </div>
     </div>
   </form>
-  <div class="row datepicker-input">
+  <div class="row">
     <div class="col-xl-3 col-label">
       <strong>Month:</strong>
     </div>
-    <div class="col-info">
+    <div class="col-info col-date">
       <button
         class="input-group-addon btn-dark"
         (click)="d.toggle()"
@@ -42,19 +42,16 @@
       </button>
     </div>
   </div>
+  <hr />
   <div class="row">
     <div class="col-xl-3 col-label">
-      <strong>
-        Monthly Total Earnings:
-      </strong>
+      <strong> Monthly Total Earnings: </strong>
     </div>
     <div class="col-info">{{ monthlyIncome }}</div>
   </div>
   <div class="row">
     <div class="col-xl-3 col-label">
-      <strong>
-        Annual Total Earnings:
-      </strong>
+      <strong> Annual Total Earnings: </strong>
     </div>
     <div class="col-info">{{ annualIncome }}</div>
   </div>

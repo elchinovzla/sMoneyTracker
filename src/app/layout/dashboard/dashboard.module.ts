@@ -1,11 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NgbCarouselModule, NgbAlertModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbCarouselModule,
+  NgbAlertModule,
+  NgbModule,
+} from '@ng-bootstrap/ng-bootstrap';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { StatModule } from '../../shared';
 import { ChartsModule } from 'ng2-charts';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material-modules';
 
 @NgModule({
   imports: [
@@ -17,10 +22,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     StatModule,
     ReactiveFormsModule,
     ChartsModule,
-    NgbModule
+    NgbModule,
+    MaterialModule,
   ],
-  declarations: [
-    DashboardComponent
-  ]
+  declarations: [DashboardComponent],
 })
-export class DashboardModule { }
+export class DashboardModule {}

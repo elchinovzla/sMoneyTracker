@@ -33,7 +33,7 @@ export class YearlyBalanceService {
     createdById: string
   ) {
     const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year, 11, 31);
+    const endDate = new Date(year + 1, 0, 1);
     const selectedYear = startDate.getFullYear();
 
     const yearlyBalanceData: YearlyBalance = {
@@ -119,7 +119,7 @@ export class YearlyBalanceService {
 
   updateYearlyBalance(id: string, year: number, amount: number, note: string) {
     const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year, 11, 31);
+    const endDate = new Date(year + 1, 0, 1);
     const selectedYear = startDate.getFullYear();
 
     const yearlyBalanceData: YearlyBalance = {

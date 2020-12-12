@@ -32,43 +32,60 @@
   </div>
   <hr />
   <div class="row">
-    <div class="col col-sm-6">
-      <div class="card mb-3">
-        <div class="card-header text-uppercase">
-          <strong>Actual Summary</strong>
-        </div>
-        <div class="card-body">
-          <canvas
-            baseChart
-            height="150px"
-            [data]="pieChartData"
-            [labels]="pieChartLabels"
-            [chartType]="pieChartType"
-            [colors]="chartColors"
-          >
-          </canvas>
-        </div>
-      </div>
+    <div class="col-xl-3 col-label">
+      <strong> Income For Current Month: </strong>
     </div>
-    <div class="col col-sm-6">
-      <div class="card mb-3">
-        <div class="card-header text-uppercase">
-          <strong>Budget vs Actual</strong>
-        </div>
-        <div class="card-body">
-          <canvas
-            baseChart
-            [datasets]="barChartData"
-            [labels]="barChartLabels"
-            [options]="barChartOptions"
-            [legend]="barChartLegend"
-            [chartType]="barChartType"
-          >
-          </canvas>
-        </div>
+    <div class="col-info">{{ convertToMoney(monthIncome) }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Expense For Current Month: </strong>
+    </div>
+    <div class="col-info">{{ convertToMoney(monthExpense) }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Annual Income: </strong>
+    </div>
+    <div class="col-info">{{ convertToMoney(annualIncome) }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Annual Expense: </strong>
+    </div>
+    <div class="col-info">{{ convertToMoney(annualExpense) }}</div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Curent Balance: </strong>
+    </div>
+    <div class="col-info">
+      <div [ngClass]="currentBalance < 0 ? 'text-red' : ''">
+        {{ convertToMoney(currentBalance) }}
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Available Money: </strong>
+    </div>
+    <div class="col-info">
+      <div [ngClass]="availableMoney < 0 ? 'text-red' : ''">
+        {{ convertToMoney(availableMoney) }}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xl-3 col-label">
+      <strong> Expectations Difference: </strong>
+    </div>
+    <div class="col-info">
+      <div [ngClass]="delta < 0 ? 'text-red' : ''">
+        {{ convertToMoney(delta) }}
+      </div>
+    </div>
+  </div>
+  <hr />
   <div class="row">
     <div class="col col-table">
       <div class="card mb-3">
