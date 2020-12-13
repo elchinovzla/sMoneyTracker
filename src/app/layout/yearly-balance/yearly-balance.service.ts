@@ -32,13 +32,12 @@ export class YearlyBalanceService {
     note: string,
     createdById: string
   ) {
-    const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year + 1, 0, 1);
-    const selectedYear = startDate.getFullYear();
+    const startDate = this.getYearStartDate(year);
+    const endDate = this.getYearEndDate(year);
 
     const yearlyBalanceData: YearlyBalance = {
       id: '',
-      description: this.getDescription(selectedYear),
+      description: this.getDescription(year),
       startDate,
       endDate,
       amount,
@@ -118,13 +117,12 @@ export class YearlyBalanceService {
   }
 
   updateYearlyBalance(id: string, year: number, amount: number, note: string) {
-    const startDate = new Date(year, 0, 1);
-    const endDate = new Date(year + 1, 0, 1);
-    const selectedYear = startDate.getFullYear();
+    const startDate = this.getYearStartDate(year);
+    const endDate = this.getYearEndDate(year);
 
     const yearlyBalanceData: YearlyBalance = {
       id,
-      description: this.getDescription(selectedYear),
+      description: this.getDescription(year),
       startDate,
       endDate,
       amount,
@@ -166,5 +164,13 @@ export class YearlyBalanceService {
 
   getDescription(selectedYear: number): string {
     return 'Balance for ' + selectedYear;
+  }
+
+  getYearStartDate(year: number): Date {
+    return new Date('1 January ' + year + ' 00:00:00');
+  }
+
+  getYearEndDate(year: number): Date {
+    return new Date('31 December ' + year + ' 23:59:00');
   }
 }
