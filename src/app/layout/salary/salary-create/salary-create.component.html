@@ -1,0 +1,105 @@
+<div class="modal-header">
+  <h4 class="modal-title" *ngIf="salaryId; else createNew">Update Salary</h4>
+  <ng-template #createNew>
+    <h4 class="modal-title">Create New Salary</h4>
+  </ng-template>
+  <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form" (submit)="onSaveSalary()">
+    <div
+      tabindex="1"
+      role="dialog"
+      aria-labelledby="myModalLabel"
+      aria-hidden="false"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body mx-6">
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-4">
+                <label>Salary</label>
+              </div>
+              <div class="col-xl-5">
+                <input
+                  id="description"
+                  type="text"
+                  class="py-0 text-box"
+                  placeholder="Description"
+                  formControlName="description"
+                />
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('description').invalid" class="error"
+                >Please enter a valid description</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-6">
+                <label>Frequency of Payment</label>
+              </div>
+              <div class="col-xl-3">
+                <select formControlName="salaryType">
+                  <option
+                    *ngFor="let key of keys"
+                    [value]="key"
+                    [label]="salaryTypes[key]"
+                  >
+                    {{ makeEnumPretty(salaryTypes[key]) }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('salaryType').invalid" class="error"
+                >Please enter a valid Frequency of payment</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <div class="col-xl-4">
+                <label>Balance Amount</label>
+              </div>
+              <div class="col-xl-5">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">$</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="amount"
+                    placeholder="Amount"
+                    formControlName="amount"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <mat-error *ngIf="form.get('amount').invalid" class="error"
+                >Please enter a valid Balance Amount</mat-error
+              >
+            </div>
+            <div class="input-group mb-2 mr-sm-2">
+              <fieldset>
+                <textarea
+                  class="form-control py-0"
+                  id="note"
+                  placeholder="Note"
+                  formControlName="note"
+                  class="text-area"
+                ></textarea>
+              </fieldset>
+            </div>
+          </div>
+          <div class="modal-footer d-flex justify-content-center">
+            <button class="btn btn-primary" type="submit">Save</button>
+            <button type="button" class="btn btn-secondary" (click)="onClose()">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

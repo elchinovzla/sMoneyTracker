@@ -39,9 +39,19 @@
       class="list-group-item"
       *ngIf="!isUserAdmin"
     >
-      <i class="fas fa-wallet"></i>
+      <i class="fas fa-hand-holding-usd"></i>
       &nbsp;
       <span>Manage Earnings</span>
+    </a>
+    <a
+      routerLink="/salary"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item"
+      *ngIf="!isUserAdmin"
+    >
+      <i class="fas fa-money-check-alt"></i>
+      &nbsp;
+      <span>Manage Salaries</span>
     </a>
     <a
       routerLink="/savings"

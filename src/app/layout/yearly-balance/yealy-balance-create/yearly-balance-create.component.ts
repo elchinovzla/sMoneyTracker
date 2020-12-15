@@ -7,7 +7,7 @@ import { YearlyBalance } from '../yearly-balance.model';
 import { YearlyBalanceService } from '../yearly-balance.service';
 
 @Component({
-  selector: 'app-savings-create',
+  selector: 'app-yearly-balance-create',
   templateUrl: './yearly-balance-create.component.html',
   styleUrls: ['./yearly-balance-create.component.scss'],
 })

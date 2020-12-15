@@ -42,6 +42,10 @@ const routes: Routes = [
         loadChildren:
           './yearly-balance/yearly-balance.module#YearlyBalanceModule',
       },
+      {
+        path: 'salary',
+        loadChildren: './salary/salary.module#SalaryModule',
+      },
     ],
   },
 ];

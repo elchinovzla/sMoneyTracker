@@ -4,7 +4,6 @@ import { ExpenseEstimate } from './expense-estimate.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Salary } from './salary.model';
 import { map } from 'rxjs/operators';
 
 const EXPENSE_ESTIMATOR_BACK_END_URL =
@@ -100,61 +99,6 @@ export class ExpenseEstimatorService {
     this.http
       .delete<{ message: string }>(
         EXPENSE_ESTIMATOR_BACK_END_URL + 'expense-estimator/' + id
-      )
-      .subscribe(
-        () => {
-          this.router.navigate(['/expense-estimator']);
-        },
-        (error) => {
-          console.log(error);
-          this.expenseEstimatorStatusListener.next(true);
-        }
-      );
-  }
-
-  createSalary(salaryType: string, amount: number, createdById: string) {
-    const salaryData: Salary = {
-      id: '',
-      salaryType: salaryType,
-      amount: amount,
-      createdById: createdById,
-    };
-    this.http
-      .post<{ message: string }>(
-        EXPENSE_ESTIMATOR_BACK_END_URL + 'salary',
-        salaryData
-      )
-      .subscribe(
-        () => {
-          this.router.navigate(['/expense-estimator']);
-        },
-        (error) => {
-          console.log(error);
-          this.expenseEstimatorStatusListener.next(true);
-        }
-      );
-  }
-
-  getSalary(id: string) {
-    return this.http.get<{
-      _id: string;
-      salaryType: string;
-      amount: number;
-      createdBy: string;
-    }>(EXPENSE_ESTIMATOR_BACK_END_URL + 'salary/' + id);
-  }
-
-  updateSalary(id: string, salaryType: string, amount: number) {
-    const expenseData: Salary = {
-      id: id,
-      salaryType: salaryType,
-      amount: amount,
-      createdById: '',
-    };
-    this.http
-      .patch<{ message: string }>(
-        EXPENSE_ESTIMATOR_BACK_END_URL + 'salary/' + id,
-        expenseData
       )
       .subscribe(
         () => {

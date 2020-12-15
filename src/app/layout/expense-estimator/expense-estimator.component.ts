@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { routerTransition } from 'src/app/router.animations';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SalaryComponent } from './salary/salary.component';
 import { ExpenseEstimateCreateComponent } from './expense-estimate-create/expense-estimate-create.component';
 import { ExpenseEstimatorService } from './expense-estimator.service';
 import { AuthService } from 'src/app/auth/auth.service';
@@ -31,7 +30,6 @@ export class ExpenseEstimatorComponent implements OnInit {
   budgetTransportation: string;
   budgetTravel: string;
   displayBudgetDetails: boolean;
-  private salaryId: string;
 
   constructor(
     private modalService: NgbModal,
@@ -41,15 +39,6 @@ export class ExpenseEstimatorComponent implements OnInit {
 
   ngOnInit() {
     this.updateEstimatedExpenses();
-  }
-
-  openCreateSalary() {
-    const salaryComponent = this.modalService.open(SalaryComponent, {
-      centered: true,
-    });
-    if (this.salaryId) {
-      salaryComponent.componentInstance.salaryId = this.salaryId;
-    }
   }
 
   openCreateEstimatedExpense() {
@@ -72,7 +61,6 @@ export class ExpenseEstimatorComponent implements OnInit {
       .getExpectedExpenseAmountsByOwner(this.authService.getUserId())
       .subscribe(
         (expectedExpenseData: {
-          salaryId: string;
           monthlySalaryAmount: number;
           monthlyTotalExpectedExpenseAmount: number;
           monthlyTotalEstimatedSpareAmount: number;
@@ -87,7 +75,6 @@ export class ExpenseEstimatorComponent implements OnInit {
         }) => {
           let expectedExpenseAmount =
             expectedExpenseData.monthlyTotalExpectedExpenseAmount;
-          this.salaryId = expectedExpenseData.salaryId;
           this.monthlySalary = this.convertToMoney(
             expectedExpenseData.monthlySalaryAmount
           );

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { ExpenseEstimatorComponent } from './expense-estimator.component';
-import { SalaryComponent } from './salary/salary.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from 'src/app/material-modules';
@@ -15,7 +14,6 @@ import { ExpenseEstimateListComponent } from './expense-estimate-list/expense-es
     ExpenseEstimatorComponent,
     ExpenseEstimateCreateComponent,
     ExpenseEstimateListComponent,
-    SalaryComponent
   ],
   imports: [
     CommonModule,
@@ -24,9 +22,9 @@ import { ExpenseEstimateListComponent } from './expense-estimate-list/expense-es
     NgbModule,
     PageHeaderModule,
     ExpenseEstimatorRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
-  exports: [ExpenseEstimateCreateComponent, SalaryComponent],
-  entryComponents: [ExpenseEstimateCreateComponent, SalaryComponent]
+  exports: [ExpenseEstimateCreateComponent],
+  entryComponents: [ExpenseEstimateCreateComponent],
 })
 export class ExpenseEstimatorModule {}

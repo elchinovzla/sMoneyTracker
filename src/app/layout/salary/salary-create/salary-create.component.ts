@@ -1,22 +1,19 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AuthService } from 'src/app/auth/auth.service';
 import { Salary } from '../salary.model';
-import { ExpenseEstimatorService } from '../expense-estimator.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { SalaryService } from '../salary.service';
 import { SalaryType } from '../salary-type';
 
 @Component({
-  selector: 'app-salary',
-  templateUrl: './salary.component.html',
-  styleUrls: ['./salary.component.scss']
+  selector: 'app-salary-create',
+  templateUrl: './salary-create.component.html',
+  styleUrls: ['./salary-create.component.scss'],
 })
-export class SalaryComponent implements OnInit, OnDestroy {
+export class SalaryCreateComponent implements OnInit, OnDestroy {
   public salaryId: string;
-  enteredSalaryType = '';
-  enteredAmount = '';
   salary: Salary;
   form: FormGroup;
   salaryTypes = SalaryType;
@@ -28,8 +25,8 @@ export class SalaryComponent implements OnInit, OnDestroy {
 
   constructor(
     private activeModal: NgbActiveModal,
-    private expenseEstimatorService: ExpenseEstimatorService,
-    private authService: AuthService
+    private authService: AuthService,
+    private salaryService: SalaryService
   ) {
     this.keys = Object.keys(this.salaryTypes).filter(Number);
   }
@@ -37,21 +34,30 @@ export class SalaryComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authStatusSub = this.authService.getAuthStatusListener().subscribe();
     this.form = new FormGroup({
+      description: new FormControl(null, {
+        validators: [Validators.required],
+      }),
       salaryType: new FormControl(null, { validators: [Validators.required] }),
       amount: new FormControl(null, {
-        validators: [Validators.required, Validators.pattern(this.moneyPattern)]
-      })
+        validators: [
+          Validators.required,
+          Validators.pattern(this.moneyPattern),
+        ],
+      }),
+      note: new FormControl(null),
     });
     if (this.salaryId) {
-      this.expenseEstimatorService
-        .getSalary(this.salaryId)
-        .subscribe(salaryData => {
+      this.salaryService
+        .getSalaryById(this.salaryId)
+        .subscribe((salaryData) => {
           this.form.setValue({
+            description: salaryData.description,
             salaryType: SalaryType[salaryData.salaryType],
-            amount: salaryData.amount
+            amount: salaryData.amount,
+            note: salaryData.note,
           });
-          this.mode = 'edit';
         });
+      this.mode = 'edit';
     }
   }
 
@@ -63,38 +69,41 @@ export class SalaryComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
+
     if (this.mode === 'create') {
-      this.expenseEstimatorService.createSalary(
+      this.salaryService.createSalary(
+        this.form.value.description,
         SalaryType[this.form.value.salaryType],
         this.form.value.amount,
+        this.form.value.note,
         this.authService.getUserId()
       );
     } else {
-      this.expenseEstimatorService.updateSalary(
+      this.salaryService.updateSalary(
         this.salaryId,
+        this.form.value.description,
         SalaryType[this.form.value.salaryType],
-        this.form.value.amount
+        this.form.value.amount,
+        this.form.value.note
       );
     }
 
-    this.onClose();
+    this.activeModal.close();
   }
 
   onClose() {
-    this.form.reset();
     this.activeModal.close();
   }
 
   onDismiss() {
-    this.form.reset();
     this.activeModal.dismiss();
   }
 
-  makeEnumPretty(value:string): string {
+  makeEnumPretty(value: string): string {
     return value
       .toLowerCase()
       .split('_')
-      .map(function(word) {
+      .map(function (word) {
         return word.replace(word[0], word[0].toUpperCase());
       })
       .join('-');
