@@ -1,11 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title" *ngIf="moneyId; else createNew">
-    Update Money Info
-  </h4>
+  <h4 class="modal-title" *ngIf="moneyId; else createNew">Update Money Info</h4>
   <ng-template #createNew>
-    <h4 class="modal-title">
-      Create New Money Info
-    </h4>
+    <h4 class="modal-title">Create New Money Info</h4>
   </ng-template>
   <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
     <span aria-hidden="true">&times;</span>
@@ -50,9 +46,10 @@
                   <option
                     *ngFor="let key of keys"
                     [value]="key"
-                    [label]="moneyTypes[key]"
-                    >{{ makeEnumPretty(moneyTypes[key]) }}</option
+                    [label]="makeEnumPretty(moneyTypes[key])"
                   >
+                    {{ makeEnumPretty(moneyTypes[key]) }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -69,12 +66,12 @@
                 <div class="input-group-prepend">
                   <div class="input-group-text">$</div>
                   <input
-                  type="text"
-                  class="form-control"
-                  id="amount"
-                  placeholder="Amount"
-                  formControlName="amount"
-                />
+                    type="text"
+                    class="form-control"
+                    id="amount"
+                    placeholder="Amount"
+                    formControlName="amount"
+                  />
                 </div>
               </div>
             </div>
@@ -96,9 +93,7 @@
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button class="btn btn-primary" type="submit">
-              Save
-            </button>
+            <button class="btn btn-primary" type="submit">Save</button>
             <button type="button" class="btn btn-secondary" (click)="onClose()">
               Close
             </button>

@@ -46,7 +46,7 @@
                   <option
                     *ngFor="let key of keys"
                     [value]="key"
-                    [label]="salaryTypes[key]"
+                    [label]="makeEnumPretty(salaryTypes[key])"
                   >
                     {{ makeEnumPretty(salaryTypes[key]) }}
                   </option>

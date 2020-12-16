@@ -1,11 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title" *ngIf="expenseId; else createNew">
-    Update Expense
-  </h4>
+  <h4 class="modal-title" *ngIf="expenseId; else createNew">Update Expense</h4>
   <ng-template #createNew>
-    <h4 class="modal-title">
-      Create New Expense
-    </h4>
+    <h4 class="modal-title">Create New Expense</h4>
   </ng-template>
   <button type="button" class="close" aria-label="Close" (click)="onDismiss()">
     <span aria-hidden="true">&times;</span>
@@ -50,9 +46,10 @@
                   <option
                     *ngFor="let key of keys"
                     [value]="key"
-                    [label]="expenseTypes[key]"
-                    >{{ makeEnumPretty(expenseTypes[key]) }}</option
+                    [label]="makeEnumPretty(expenseTypes[key])"
                   >
+                    {{ makeEnumPretty(expenseTypes[key]) }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -124,8 +121,9 @@
                     *ngFor="let savings of availableSavings"
                     [value]="savings.id"
                     [label]="savings.description"
-                    >{{ savings.description }}</option
                   >
+                    {{ savings.description }}
+                  </option>
                 </select>
               </div>
             </div>
@@ -145,9 +143,7 @@
             </div>
           </div>
           <div class="modal-footer d-flex justify-content-center">
-            <button class="btn btn-primary" type="submit">
-              Save
-            </button>
+            <button class="btn btn-primary" type="submit">Save</button>
             <button type="button" class="btn btn-secondary" (click)="onClose()">
               Close
             </button>
