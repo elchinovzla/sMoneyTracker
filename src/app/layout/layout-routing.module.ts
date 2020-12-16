@@ -46,6 +46,10 @@ const routes: Routes = [
         path: 'salary',
         loadChildren: './salary/salary.module#SalaryModule',
       },
+      {
+        path: 'report',
+        loadChildren: './report/report.module#ReportModule',
+      },
     ],
   },
 ];

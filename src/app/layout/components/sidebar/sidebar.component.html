@@ -74,6 +74,16 @@
       <span>Manage Spendings</span>
     </a>
     <a
+      routerLink="/report"
+      [routerLinkActive]="['router-link-active']"
+      class="list-group-item"
+      *ngIf="!isUserAdmin"
+    >
+      <i class="fas fa-file-pdf"></i>
+      &nbsp;
+      <span>Reports</span>
+    </a>
+    <a
       routerLink="/yearly-balance"
       [routerLinkActive]="['router-link-active']"
       class="list-group-item"
