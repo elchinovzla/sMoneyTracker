@@ -15,14 +15,14 @@ export class ReportService {
     endDate: Date,
     keyword: string
   ) {
-    // const queryParams =
-    //   `?startDate=${startDate}` +
-    //   `&endDate=${endDate}` +
-    //   `&keyword=${keyword}` +
-    //   `&createdById=${createdById}`;
-    // this.http.get<{ message: string; reportData: Report }>(
-    //   REPORT_BACK_END_URL + 'allExpenses' + queryParams
-    // );
+    const queryParams =
+      `?startDate=${startDate}` +
+      `&endDate=${endDate}` +
+      `&keyword=${keyword}` +
+      `&createdById=${createdById}`;
+    return this.http.get<{ message: string; reportData: Report }>(
+      REPORT_BACK_END_URL + 'only-expense' + queryParams
+    );
   }
 
   getAllIncomesReport(
@@ -31,49 +31,34 @@ export class ReportService {
     endDate: Date,
     keyword: string
   ) {
-    // const queryParams =
-    //   `?startDate=${startDate}` +
-    //   `&endDate=${endDate}` +
-    //   `&keyword=${keyword}` +
-    //   `&createdById=${createdById}`;
-    // this.http.get<{ message: string; reportData: Report }>(
-    //   REPORT_BACK_END_URL + 'allIncomes' + queryParams
-    // );
+    const queryParams =
+      `?startDate=${startDate}` +
+      `&endDate=${endDate}` +
+      `&keyword=${keyword}` +
+      `&createdById=${createdById}`;
+    return this.http.get<{ message: string; reportData: Report }>(
+      REPORT_BACK_END_URL + 'only-income' + queryParams
+    );
   }
 
   getAllSummaryReport(createdById: string, startDate: Date, endDate: Date) {
-    // const queryParams =
-    //   `?startDate=${startDate}` +
-    //   `&endDate=${endDate}` +
-    //   `&createdById=${createdById}`;
-    // this.http.get<{ message: string; reportData: Report }>(
-    //   REPORT_BACK_END_URL + 'summary' + queryParams
-    // );
+    const queryParams =
+      `?startDate=${startDate}` +
+      `&endDate=${endDate}` +
+      `&createdById=${createdById}`;
+    return this.http.get<{ message: string; reportData: Report }>(
+      REPORT_BACK_END_URL + 'summary' + queryParams
+    );
   }
 
-  getTestingData(): Report {
-    return {
-      totalIncome: 150000,
-      totalOutcome: 155000,
-      activities: [
-        {
-          date: new Date(),
-          transactions: [
-            {
-              id: 1,
-              transactionDescription: 'testing',
-              transactionAmount: 150000,
-              transactionType: 'INCOME',
-            },
-            {
-              id: 2,
-              transactionDescription: 'testing outcome',
-              transactionAmount: 155000,
-              transactionType: 'OUTCOME',
-            },
-          ],
-        },
-      ],
-    };
+  getTestingData(createdById: string, startDate: Date, endDate: Date) {
+    const queryParams =
+      `?startDate=${startDate}` +
+      `&endDate=${endDate}` +
+      `&createdById=${createdById}`;
+
+    return this.http.get<{ message: string; reportData: Report }>(
+      REPORT_BACK_END_URL + 'testing' + queryParams
+    );
   }
 }

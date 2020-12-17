@@ -1,17 +1,16 @@
 export interface Report {
+  reportName: string;
+  fromDate: Date;
+  toDate: Date;
   totalIncome: number;
   totalOutcome: number;
-  activities: [
-    {
-      date: Date;
-      transactions: {
-        [index: number]: {
-          id: number;
-          transactionDescription: string;
-          transactionAmount: number;
-          transactionType: string;
-        };
-      };
-    }
-  ];
+  activities: Array<{
+    date: Date;
+    transactions: Array<{
+      id: number;
+      transactionDescription: string;
+      transactionAmount: number;
+      transactionType: string;
+    }>;
+  }>;
 }

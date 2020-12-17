@@ -1,22 +1,163 @@
 <div>
   <nav class="navbar navbar-expand-lg navbar-light">
     <div class="navbar-nav mr-auto">
-      <h2 class="text-muted">Reports</h2>
+      <h2 class="text-muted">Report</h2>
     </div>
   </nav>
   <hr />
-  <div class="row">
-    <div class="col-xl-3">
-      <button
-        class="btn btn-dark my-2 my-sm-0"
-        (click)="openCreateTestReport()"
-      >
-        Create Test Report
-      </button>
-    </div>
+  <div class="modal-body">
+    <form [formGroup]="form" (submit)="createReport()">
+      <mat-grid-list cols="5" rowHeight="30px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <strong>Report Type</strong>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <strong>From</strong>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <strong>To</strong>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <strong>Keyword</strong>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="3" class="col-xl-3">
+          <button class="btn btn-dark my-2 my-sm-0" type="submit">
+            Create Report
+          </button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <select formControlName="reportType" class="text-box">
+            <option
+              *ngFor="let key of keys"
+              [value]="key"
+              [label]="makeEnumPretty(reportTypes[key])"
+            >
+              {{ makeEnumPretty(reportTypes[key]) }}
+            </option>
+          </select>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <input
+            id="fromDate"
+            type="date"
+            class="py-0"
+            formControlName="fromDate"
+            placeholder="yyyy-mm-dd"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <input
+            id="toDate"
+            type="date"
+            class="py-0"
+            formControlName="toDate"
+            placeholder="yyyy-mm-dd"
+            ngbDatepicker
+            #d="ngbDatepicker"
+          />
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="col-xl-3">
+          <input
+            id="keyword"
+            formControlName="keyword"
+            class="form-control py-0 text-box"
+            matInput
+          />
+        </mat-grid-tile>
+        <mat-grid-tile
+          [colspan]="1"
+          [rowspan]="1"
+          class="input-group mb-2 mr-sm-2"
+        >
+          <mat-error *ngIf="form.get('reportType').invalid" class="error"
+            >* Required</mat-error
+          >
+        </mat-grid-tile>
+        <mat-grid-tile
+          [colspan]="1"
+          [rowspan]="1"
+          class="input-group mb-2 mr-sm-2"
+        >
+          <mat-error *ngIf="form.get('fromDate').invalid" class="error"
+            >* Required</mat-error
+          >
+        </mat-grid-tile>
+        <mat-grid-tile
+          [colspan]="1"
+          [rowspan]="1"
+          class="input-group mb-2 mr-sm-2"
+        >
+          <mat-error *ngIf="form.get('toDate').invalid" class="error"
+            >* Required</mat-error
+          >
+        </mat-grid-tile>
+        <mat-grid-tile
+          [colspan]="1"
+          [rowspan]="1"
+          class="input-group mb-2 mr-sm-2"
+        >
+        </mat-grid-tile>
+      </mat-grid-list>
+    </form>
   </div>
   <hr />
-  <div class="col-md-8" id="htmlData" #htmlData>
-    <p>Hello World!</p>
+  <div style="display: none">
+    <div
+      class="col-md-8 container"
+      id="reportSummary"
+      #reportSummary
+      width="800px"
+      *ngIf="report"
+    >
+      <div class="row">
+        <h1>{{ report.reportName }}</h1>
+      </div>
+      <div class="row">
+        <h4>Report for:</h4>
+        {{ userName }}
+      </div>
+      <div class="row">
+        <h4>Between Dates:</h4>
+        {{ report.fromDate | date: 'MMM dd, yyyy' }}
+        <span><strong>&</strong></span>
+        {{ report.toDate | date: 'MMM dd, yyyy' }}
+      </div>
+      <div class="row" *ngIf="report.totalIncome">
+        <h4>Total Income:</h4>
+        {{ convertToMoney(report.totalIncome) }}
+      </div>
+      <div class="row" *ngIf="report.totalOutcome">
+        <h4>Total Outcome:</h4>
+        {{ convertToMoney(report.totalOutcome) }}
+      </div>
+    </div>
+    <div
+      class="col-md-8 container"
+      id="reportData"
+      #reportData
+      *ngIf="report"
+      width="800px"
+    >
+      <mat-list>
+        <mat-list-item *ngFor="let activity of report.activities">
+          <h4 matLine>{{ activity.date | date: 'MMM dd, yyyy' }}</h4>
+          <mat-list-item *ngFor="let transaction of activity.transactions">
+            <p matLine>
+              <span
+                ><strong>{{ transaction.transactionDescription }}</strong>
+              </span>
+              <span>
+                <i>({{ transaction.transactionType }}): </i></span
+              >
+              <span class="demo-2">
+                {{ convertToMoney(transaction.transactionAmount) }}
+              </span>
+            </p>
+          </mat-list-item>
+        </mat-list-item>
+      </mat-list>
+    </div>
   </div>
 </div>
