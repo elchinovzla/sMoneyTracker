@@ -4,13 +4,11 @@ export interface Report {
   toDate: Date;
   totalIncome: number;
   totalOutcome: number;
-  activities: Array<{
+  transactions: Array<{
+    id: number;
     date: Date;
-    transactions: Array<{
-      id: number;
-      transactionDescription: string;
-      transactionAmount: number;
-      transactionType: string;
-    }>;
+    transactionDescription: string;
+    transactionAmount: number;
+    transactionType: string;
   }>;
 }

@@ -18,11 +18,7 @@ import { RecoverPasswordComponent } from './auth/recover-password/recover-passwo
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ErrorComponent,
-    RecoverPasswordComponent
-  ],
+  declarations: [AppComponent, ErrorComponent, RecoverPasswordComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -33,15 +29,15 @@ import { FormsModule } from '@angular/forms';
     NotifierModule,
     NgbModule,
     ComponentsModule,
-    FormsModule
+    FormsModule,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   exports: [RecoverPasswordComponent],
-  entryComponents: [ErrorComponent, RecoverPasswordComponent]
+  entryComponents: [ErrorComponent, RecoverPasswordComponent],
 })
 export class AppModule {}

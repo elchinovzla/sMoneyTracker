@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { ReportService } from './report.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReportType } from './report-type';
-import * as jspdf from 'jspdf';
 import { Report } from './report.model';
 import { Subscription } from 'rxjs';
 @Component({
@@ -22,6 +21,7 @@ import { Subscription } from 'rxjs';
 export class ReportComponent implements OnInit, OnDestroy {
   @ViewChild('reportSummary') reportSummary: ElementRef;
   @ViewChild('reportData') reportData: ElementRef;
+  @ViewChild('transactionTable') transactionTable: ElementRef;
 
   form: FormGroup;
   reportTypes = ReportType;
@@ -31,8 +31,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   userName: string;
 
   constructor(
-    public reportService: ReportService,
-    public authService: AuthService
+    private reportService: ReportService,
+    private authService: AuthService
   ) {
     this.keys = Object.keys(this.reportTypes).filter(Number);
   }
@@ -65,16 +65,63 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   async getReportData() {
-    let response = await this.reportService
-      .getTestingData(
-        this.authService.getUserId(),
-        this.form.value.fromDate,
-        this.form.value.toDate
-      )
-      .toPromise();
+    let response;
+    switch (ReportType[this.form.value.reportType]) {
+      case 'INCOME': {
+        response = this.form.value.keyword
+          ? await this.reportService
+              .getAllIncomesReportWithKeyword(
+                this.authService.getUserId(),
+                getDate(this.form.value.fromDate),
+                getDate(this.form.value.toDate),
+                this.form.value.keyword
+              )
+              .toPromise()
+          : await this.reportService
+              .getAllIncomesReport(
+                this.authService.getUserId(),
+                getDate(this.form.value.fromDate),
+                getDate(this.form.value.toDate)
+              )
+              .toPromise();
+        break;
+      }
+      case 'EXPENSE': {
+        response = this.form.value.keyword
+          ? await this.reportService
+              .getAllExpensesReportWithKeyword(
+                this.authService.getUserId(),
+                getDate(this.form.value.fromDate),
+                getDate(this.form.value.toDate),
+                this.form.value.keyword
+              )
+              .toPromise()
+          : await this.reportService
+              .getAllExpensesReport(
+                this.authService.getUserId(),
+                getDate(this.form.value.fromDate),
+                getDate(this.form.value.toDate)
+              )
+              .toPromise();
+        break;
+      }
+      case 'SUMMARY': {
+        response = await this.reportService
+          .getSummaryReport(
+            this.authService.getUserId(),
+            getDate(this.form.value.fromDate),
+            getDate(this.form.value.toDate)
+          )
+          .toPromise();
+        break;
+      }
+    }
+
     this.report = response.reportData;
     await this.waitForHtmlToBeReady();
-    this.createPDF();
+    if (this.report.transactions.length > 0) {
+      this.exportTransactionsToExcel();
+    }
   }
 
   async waitForHtmlToBeReady() {
@@ -84,31 +131,12 @@ export class ReportComponent implements OnInit, OnDestroy {
     }
   }
 
-  createPDF() {
-    const SUMMARY_DATA = this.reportSummary.nativeElement;
-    const REPORT_DATA = this.reportData.nativeElement;
-
-    const handleElement = {
-      '#editor': function () {
-        return true;
-      },
-    };
-
-    const LOGO = new Image();
-    LOGO.src = 'assets/logo/main-logo.png';
-    const pdf = new jspdf('p', 'mm', 'letter');
-
-    pdf.addImage(LOGO, 'png', 150, 15, 50, 20);
-    pdf.fromHTML(SUMMARY_DATA.innerHTML, 15, 15, {
-      width: 200,
-      elementHandlers: handleElement,
-    });
-    pdf.addPage();
-    pdf.fromHTML(REPORT_DATA.innerHTML, 15, 15, {
-      width: 200,
-      elementHandlers: handleElement,
-    });
-    pdf.save('let.pdf');
+  exportTransactionsToExcel() {
+    const date = new Date();
+    const formattedDate = '_' + date.toLocaleDateString().split('/').join('_');
+    console.log(formattedDate);
+    const fileName = ReportType[this.form.value.reportType] + formattedDate;
+    this.reportService.exportTableElmToExcel(this.transactionTable, fileName);
   }
 
   makeEnumPretty(value: string): string {
@@ -137,4 +165,8 @@ export class ReportComponent implements OnInit, OnDestroy {
 
 function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function getDate(dateValue) {
+  return new Date(dateValue.year, dateValue.month - 1, dateValue.day);
 }

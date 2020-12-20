@@ -103,61 +103,66 @@
     </form>
   </div>
   <hr />
-  <div style="display: none">
-    <div
-      class="col-md-8 container"
-      id="reportSummary"
-      #reportSummary
-      width="800px"
-      *ngIf="report"
-    >
+  <div *ngIf="report">
+    <div class="col-md-8" id="reportSummary" #reportSummary>
+      <div>
+        <h2>{{ report.reportName }}</h2>
+      </div>
+      <hr />
       <div class="row">
-        <h1>{{ report.reportName }}</h1>
+        <div class="col-xl-3 col-label">
+          <strong> Report for: </strong>
+        </div>
+        <div>{{ userName }}</div>
       </div>
       <div class="row">
-        <h4>Report for:</h4>
-        {{ userName }}
-      </div>
-      <div class="row">
-        <h4>Between Dates:</h4>
-        {{ report.fromDate | date: 'MMM dd, yyyy' }}
-        <span><strong>&</strong></span>
-        {{ report.toDate | date: 'MMM dd, yyyy' }}
+        <div class="col-xl-3 col-label">
+          <strong> Between Dates: </strong>
+        </div>
+        <div>
+          {{ report.fromDate | date: 'MMM dd, yyyy' }}
+          <span><strong>&</strong></span>
+          {{ report.toDate | date: 'MMM dd, yyyy' }}
+        </div>
       </div>
       <div class="row" *ngIf="report.totalIncome">
-        <h4>Total Income:</h4>
-        {{ convertToMoney(report.totalIncome) }}
+        <div class="col-xl-3 col-label">
+          <strong> Total Income: </strong>
+        </div>
+        <div>{{ convertToMoney(report.totalIncome) }}</div>
       </div>
       <div class="row" *ngIf="report.totalOutcome">
-        <h4>Total Outcome:</h4>
-        {{ convertToMoney(report.totalOutcome) }}
+        <div class="col-xl-3 col-label">
+          <strong> Total Outcome: </strong>
+        </div>
+        <div>{{ convertToMoney(report.totalOutcome) }}</div>
       </div>
     </div>
-    <div
-      class="col-md-8 container"
-      id="reportData"
-      #reportData
-      *ngIf="report"
-      width="800px"
-    >
-      <mat-list>
-        <mat-list-item *ngFor="let activity of report.activities">
-          <h4 matLine>{{ activity.date | date: 'MMM dd, yyyy' }}</h4>
-          <mat-list-item *ngFor="let transaction of activity.transactions">
-            <p matLine>
-              <span
-                ><strong>{{ transaction.transactionDescription }}</strong>
-              </span>
-              <span>
-                <i>({{ transaction.transactionType }}): </i></span
-              >
-              <span class="demo-2">
-                {{ convertToMoney(transaction.transactionAmount) }}
-              </span>
-            </p>
-          </mat-list-item>
-        </mat-list-item>
-      </mat-list>
+    <hr />
+    <div class="col-md-8" id="reportData" #reportData>
+      <table class="table table-sm" #transactionTable>
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Description</th>
+            <th scope="col">Type</th>
+            <th scope="col">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of report.transactions">
+            <td scope="row">{{ transaction.date | date: 'MMM dd, yyyy' }}</td>
+            <td scope="row">{{ transaction.transactionDescription }}</td>
+            <td scope="row">
+              {{ makeEnumPretty(transaction.transactionType) }}
+            </td>
+            <td scope="row">
+              {{ convertToMoney(transaction.transactionAmount) }}
+            </td>
+          </tr>
+          <tr></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
